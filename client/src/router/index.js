@@ -16,7 +16,7 @@ const routes = [
     component: LoginView,
   },
   {
-    path: "/user/:id",
+    path: "/profile",
     name: "profile",
     component: ProfileView,
   },

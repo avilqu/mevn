@@ -15,10 +15,7 @@
         {{ authStore.user.name }}
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <router-link
-          :to="'/user/' + authStore.user._id"
-          class="dropdown-item __link"
-        >
+        <router-link to="/profile" class="dropdown-item __link">
           Profile
         </router-link>
         <a class="dropdown-item __link" @click="authStore.logout()"> Logout </a>
