@@ -1,0 +1,18 @@
+html,
+body {
+  height: 100%;
+  white-space: nowrap;
+}
+
+body {
+  background-color: #101012 !important;
+}
+
+.container-fluid {
+  margin-top: 80px;
+}
+
+.__link:hover {
+  cursor: pointer;
+  color: #198754 !important;
+}

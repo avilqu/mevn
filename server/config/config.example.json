@@ -1,0 +1,44 @@
+{
+  "test": {
+    "NODE_ENV": "test",
+    "HTTP_PORT": 3000,
+    "HTTPS_PORT": 3443,
+    "MONGODB_URI": "mongodb://localhost:27017/db-test",
+    "MAILER_HOST": "smtp.gmail.com",
+    "MAILER_PORT": 587,
+    "MAILER_USER": "xxx",
+    "MAILER_PASS": "xxx",
+    "COOKIE_KEY_1": "xxx",
+    "COOKIE_KEY_2": "xxx",
+    "COOKIE_KEY_3": "xxx",
+    "JWT_SECRET": "xxx"
+  },
+  "dev": {
+    "NODE_ENV": "dev",
+    "HTTP_PORT": 3000,
+    "HTTPS_PORT": 3443,
+    "MONGODB_URI": "mongodb://localhost:27017/db-dev",
+    "MAILER_HOST": "smtp.gmail.com",
+    "MAILER_PORT": 587,
+    "MAILER_USER": "xxx",
+    "MAILER_PASS": "xxx",
+    "COOKIE_KEY_1": "xxx",
+    "COOKIE_KEY_2": "xxx",
+    "COOKIE_KEY_3": "xxx",
+    "JWT_SECRET": "xxx"
+  },
+  "prod": {
+    "NODE_ENV": "prod",
+    "HTTP_PORT": 80,
+    "HTTPS_PORT": 443,
+    "MONGODB_URI": "mongodb://localhost:27017/db",
+    "MAILER_HOST": "smtp.gmail.com",
+    "MAILER_PORT": 587,
+    "MAILER_USER": "xxx",
+    "MAILER_PASS": "xxx",
+    "COOKIE_KEY_1": "xxx",
+    "COOKIE_KEY_2": "xxx",
+    "COOKIE_KEY_3": "xxx",
+    "JWT_SECRET": "xxx"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "mevn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "server": "export NODE_ENV=dev && nodemon server/index.js",
+    "dev": "(cd client && vue serve) & npm run server"
+  },
+  "author": "Adrien Vilquin Barrajon",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3"
+  }
+}
