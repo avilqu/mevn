@@ -9,16 +9,12 @@ const User = require("./../config/db").mongoose.model("user");
 // const { auth, authAdmin } = require("./../lib/authGuards");
 
 const login = (req, res, next) => {
-  return (req, res, next) => {
-    if (!req.body.email || !req.body.password)
-      next(new AppError("wrong-credentials"));
+  return async (req, res, next) => {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user.password) next(new AppError("unverified-user"));
     else
       passport.authenticate("local", (err, user, info) => {
-        if (err) {
-          console.log("error during server login");
-
-          return next(err);
-        }
+        if (err) return next(err);
         req.login(user, (err) => {
           if (err) return next(err);
           res.json({ status: "success", data: user });
@@ -36,7 +32,7 @@ const sendPasswordToken = async (req, res, next) => {
     console.log(req.body);
 
     const user = await User.findOne({ email: req.body.email });
-    if (!user) next(new AppError("no-user"));
+    if (!user) return next(new AppError("no-user"));
     else {
       const token = user.generateToken();
       await mailer.resetPassword({
@@ -59,7 +55,7 @@ const sendPasswordToken = async (req, res, next) => {
 const createPassword = async (req, res, next) => {
   try {
     let user = await User.findOne({ _id: req.params.id });
-    if (!user) next(new AppError("no-user"));
+    if (!user) return next(new AppError("no-user"));
     else if (user.verifyToken(req.params.token)) {
       user.password = req.body.password;
       user.verified = true;
@@ -79,13 +75,14 @@ const createUser = async (req, res, next) => {
   try {
     let user;
     user = await User.findOne({ email: req.body.email });
-    if (user) next(new AppError("existing-item"));
-    user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      role: req.body.role,
-      verified: false,
-    });
+    if (user) return next(new AppError("existing-user"));
+    else
+      user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role,
+        verified: false,
+      });
 
     await user.save();
     const token = user.generateToken();
