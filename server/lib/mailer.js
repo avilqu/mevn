@@ -80,15 +80,12 @@ const mailer = {
         ' +
       footer;
 
-    console.log("about to send email");
     const response = await transport.sendMail({
       from: '"' + options.short + '" <' + options.sender + ">",
       to: args.email,
       subject: "Activate your account",
       html: message,
     });
-    console.log("email sent");
-    console.log(response);
   },
 
   resetPassword: async (args) => {

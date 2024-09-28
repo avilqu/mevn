@@ -64,6 +64,17 @@ const apiClient = {
       return e;
     }
   },
+
+  async getUserList() {
+    const alertStore = useAlertStore();
+    try {
+      let res = await axios.get("/api/user/list");
+      if (res.status === "error") alertStore.error(res.message);
+      return res.data.users;
+    } catch (e) {
+      return e;
+    }
+  },
 };
 
 export default apiClient;

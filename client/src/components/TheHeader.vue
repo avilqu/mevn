@@ -8,10 +8,6 @@
 
     <div v-if="authStore.user._id">
       <ul class="nav">
-        <li class="nav-item">
-          <router-link to="/profile" class="nav-link">Profile</router-link>
-        </li>
-
         <li class="nav-item dropdown">
           <router-link
             class="nav-link dropdown-toggle"
@@ -24,8 +20,16 @@
           </router-link>
           <ul class="dropdown-menu">
             <li>
+              <strong>Users</strong>
+            </li>
+            <li>
               <router-link to="/user/list" class="dropdown-item" href="#">
                 User list
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/user/create" class="dropdown-item" href="#">
+                Create user
               </router-link>
             </li>
           </ul>

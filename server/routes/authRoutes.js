@@ -23,14 +23,24 @@ const login = (req, res, next) => {
   };
 };
 
+const getUserList = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    res.json({
+      status: "success",
+      data: { users },
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
 // const getActiveUser = async (req, res) => {
 //   res.json({ status: "success", data: { user: req.user } });
 // };
 
 const sendPasswordToken = async (req, res, next) => {
   try {
-    console.log(req.body);
-
     const user = await User.findOne({ email: req.body.email });
     if (!user) return next(new AppError("no-user"));
     else {
@@ -104,12 +114,13 @@ const createUser = async (req, res, next) => {
 };
 
 router.post("/login", login());
-router.get("/logout", (req, res, next) => {
-  req.logout(() => res.json({ status: "success" }));
-});
+router.get("/user/list", getUserList);
 // router.get("/user/profile", auth, getActiveUser);
 router.post("/user/create", createUser);
 router.post("/user/reset-password", sendPasswordToken);
 router.post("/user/:id/password/:token", createPassword);
+router.get("/logout", (req, res, next) => {
+  req.logout(() => res.json({ status: "success" }));
+});
 
 module.exports = router;

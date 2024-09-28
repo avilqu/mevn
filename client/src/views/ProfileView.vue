@@ -1,7 +1,7 @@
 <template>
   <div class="col-sm-12">
     <h2>{{ authStore.user.name }}</h2>
-    <p class="__secondary">ID: {{ authStore.user._id }}</p>
+    <p class="secondary">ID: {{ authStore.user._id }}</p>
 
     <br />
 
