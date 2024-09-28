@@ -1,10 +1,39 @@
 <template>
-  <nav class="navbar bg-dark mb-4 fixed-top shadow">
+  <nav
+    class="navbar bg-dark border-bottom mb-4 fixed-top justify-content-start"
+  >
     <router-link to="/" class="navbar-brand">
       <img src="./../assets/logo.png" />
     </router-link>
 
-    <div v-if="authStore.user._id" class="dropdown">
+    <div v-if="authStore.user._id">
+      <ul class="nav">
+        <li class="nav-item">
+          <router-link to="/profile" class="nav-link">Profile</router-link>
+        </li>
+
+        <li class="nav-item dropdown">
+          <router-link
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Admin
+          </router-link>
+          <ul class="dropdown-menu">
+            <li>
+              <router-link to="/user/list" class="dropdown-item" href="#">
+                User list
+              </router-link>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div v-if="authStore.user._id" class="dropdown ms-auto">
       <button
         class="btn btn-success dropdown-toggle"
         type="button"
