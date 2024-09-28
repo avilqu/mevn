@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/views/LoginView.vue";
+import ProfileView from "@/views/ProfileView.vue";
 import CreatePasswordView from "@/views/CreatePasswordView.vue";
 
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/user/:id",
+    name: "profile",
+    component: ProfileView,
   },
   {
     path: "/user/:id/password/:token",

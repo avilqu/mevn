@@ -6,7 +6,7 @@ import { useAlertStore } from "@/stores/alert";
 const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
   ? { status: { loggedIn: true }, user }
-  : { status: {}, user: null };
+  : { status: {}, user: {} };
 
 export const useAuthStore = defineStore("auth", {
   state: () => initialState,
@@ -15,7 +15,7 @@ export const useAuthStore = defineStore("auth", {
     async login(credentials) {
       const res = await apiClient.login(credentials);
       if (res.status == "success") {
-        localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("user", JSON.stringify(res.data));
         this.status = { loggedIn: true };
         this.user = res.data;
         router.push("/");
@@ -23,7 +23,7 @@ export const useAuthStore = defineStore("auth", {
         const alert = useAlertStore();
         alert.error(res.message);
         this.status = {};
-        this.user = null;
+        this.user = {};
       }
     },
 
@@ -32,7 +32,8 @@ export const useAuthStore = defineStore("auth", {
       if (res.status === "success") {
         localStorage.removeItem("user");
         this.status = {};
-        this.user = null;
+        this.user = {};
+        router.push("/");
       }
     },
   },

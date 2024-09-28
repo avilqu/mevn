@@ -4,7 +4,7 @@
       <img src="./../assets/logo.png" />
     </router-link>
 
-    <div v-if="authStore.user" class="dropdown">
+    <div v-if="authStore.user._id" class="dropdown">
       <button
         class="btn btn-success dropdown-toggle"
         type="button"
@@ -15,7 +15,10 @@
         {{ authStore.user.name }}
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <router-link to="'/user/' + user._id" class="dropdown-item __link">
+        <router-link
+          :to="'/user/' + authStore.user._id"
+          class="dropdown-item __link"
+        >
           Profile
         </router-link>
         <a class="dropdown-item __link" @click="authStore.logout()"> Logout </a>
