@@ -80,7 +80,7 @@ function createUser() {
     !this.v$.name.$invalid &&
     !this.v$.role.$invalid
   )
-    apiClient.createUser(state);
+    apiClient.createUser(state, "admin");
 }
 </script>
 

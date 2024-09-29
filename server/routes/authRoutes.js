@@ -6,21 +6,20 @@ const { AppError } = require("./../lib/errorHandler");
 const { mailer } = require("./../lib/mailer");
 const User = require("./../config/db").mongoose.model("user");
 
-// const { auth, authAdmin } = require("./../lib/authGuards");
+const { auth, authAdmin } = require("./../lib/authGuards");
 
-const login = (req, res, next) => {
-  return async (req, res, next) => {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user.password) next(new AppError("unverified-user"));
-    else
-      passport.authenticate("local", (err, user, info) => {
+const login = async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return next(new AppError("no-user"));
+  if (!user.password) return next(new AppError("unverified-user"));
+  else
+    passport.authenticate("local", (err, user, info) => {
+      if (err) return next(err);
+      req.login(user, (err) => {
         if (err) return next(err);
-        req.login(user, (err) => {
-          if (err) return next(err);
-          res.json({ status: "success", data: user });
-        });
-      })(req, res, next);
-  };
+        res.json({ status: "success", data: user });
+      });
+    })(req, res, next);
 };
 
 const getUserList = async (req, res, next) => {
@@ -83,14 +82,23 @@ const createPassword = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
+    console.log(req.url);
+
     let user;
     user = await User.findOne({ email: req.body.email });
     if (user) return next(new AppError("existing-user"));
-    else
+    if (req.url == "/user/create")
       user = new User({
         name: req.body.name,
         email: req.body.email,
         role: req.body.role,
+        verified: false,
+      });
+    else
+      user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        role: "user",
         verified: false,
       });
 
@@ -113,10 +121,11 @@ const createUser = async (req, res, next) => {
   }
 };
 
-router.post("/login", login());
-router.get("/user/list", getUserList);
+router.post("/login", login);
+router.get("/user/list", auth, authAdmin, getUserList);
 // router.get("/user/profile", auth, getActiveUser);
-router.post("/user/create", createUser);
+router.post("/user/create", auth, authAdmin, createUser);
+router.post("/user/register", createUser);
 router.post("/user/reset-password", sendPasswordToken);
 router.post("/user/:id/password/:token", createPassword);
 router.get("/logout", (req, res, next) => {

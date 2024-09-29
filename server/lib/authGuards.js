@@ -8,7 +8,7 @@ const auth = (req, res, next) => {
 };
 
 const authAdmin = (req, res, next) => {
-  if (req.user.role < 4) {
+  if (req.user.role != "admin") {
     next(new AppError("not-authorized"));
   }
   next();
