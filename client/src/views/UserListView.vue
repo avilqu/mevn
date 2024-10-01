@@ -15,7 +15,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in userList" :key="user._id">
+        <tr
+          @click="getUser(user._id)"
+          v-for="user in state.userList"
+          :key="user._id"
+        >
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.role }}</td>
@@ -28,12 +32,19 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, reactive } from "vue";
 import apiClient from "@/lib/apiClient";
+import router from "@/router";
 
-const userList = ref([]);
+const state = reactive({
+  userList: [],
+});
+
+function getUser(id) {
+  router.push("/user/" + id);
+}
 
 onMounted(async () => {
-  userList.value = await apiClient.getUserList();
+  state.userList = await apiClient.getUserList();
 });
 </script>

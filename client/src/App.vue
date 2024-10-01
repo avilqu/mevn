@@ -7,10 +7,10 @@
 </template>
 
 <script setup>
-import TheHeader from "./components/TheHeader.vue";
-import AlertMessage from "./components/AlertMessage.vue";
+import TheHeader from "@/components/TheHeader.vue";
+import AlertMessage from "@/components/AlertMessage.vue";
 </script>
 
 <style>
-@import "./assets/css/main.css";
+@import "@/assets/css/main.css";
 </style>

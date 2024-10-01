@@ -10,7 +10,6 @@ const apiClient = {
     const alertStore = useAlertStore();
     try {
       let res = await axios.post("/api/login", credentials);
-      console.log(res);
       if (res.status === "error") alertStore.error(res.message);
       return res;
     } catch (e) {
@@ -73,6 +72,17 @@ const apiClient = {
       let res = await axios.get("/api/user/list");
       if (res.status === "error") alertStore.error(res.message);
       return res.data.users;
+    } catch (e) {
+      return e;
+    }
+  },
+
+  async getUser(id) {
+    const alertStore = useAlertStore();
+    try {
+      let res = await axios.get("/api/user/" + id);
+      if (res.status === "error") alertStore.error(res.message);
+      return res.data.user;
     } catch (e) {
       return e;
     }

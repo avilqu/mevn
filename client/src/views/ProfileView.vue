@@ -1,38 +1,25 @@
 <template>
   <div class="col-sm-12">
-    <h2>{{ authStore.user.name }}</h2>
-    <p class="secondary">ID: {{ authStore.user._id }}</p>
-
-    <br />
-
-    <table class="table">
-      <tbody>
-        <tr>
-          <td><strong>User name</strong></td>
-          <td>{{ authStore.user.name }}</td>
-        </tr>
-
-        <tr>
-          <td><strong>Email address</strong></td>
-          <td>{{ authStore.user.email }}</td>
-        </tr>
-
-        <tr>
-          <td><strong>Role</strong></td>
-          <td>{{ authStore.user.role }}</td>
-        </tr>
-
-        <tr>
-          <td><strong>Added on</strong></td>
-          <td>{{ authStore.user.added }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <UserDetails :user="state.user" />
   </div>
 </template>
 
 <script setup>
+import { reactive, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import UserDetails from "@/components/UserDetails.vue";
 import { useAuthStore } from "@/stores/auth";
+import apiClient from "@/lib/apiClient";
 
+const state = reactive({
+  user: {},
+});
+
+const route = useRoute();
 const authStore = useAuthStore();
+
+onMounted(async () => {
+  if (route.path == "/profile") state.user = authStore.user;
+  else state.user = await apiClient.getUser(route.params.id);
+});
 </script>

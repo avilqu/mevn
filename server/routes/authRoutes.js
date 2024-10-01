@@ -34,6 +34,20 @@ const getUserList = async (req, res, next) => {
   }
 };
 
+const getUser = async (req, res, next) => {
+  try {
+    let user = await User.findOne({ _id: req.params.id });
+    if (!user) return next(new AppError("no-user"));
+    else
+      res.json({
+        status: "success",
+        data: { user },
+      });
+  } catch (e) {
+    return next(e);
+  }
+};
+
 // const getActiveUser = async (req, res) => {
 //   res.json({ status: "success", data: { user: req.user } });
 // };
@@ -82,8 +96,6 @@ const createPassword = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    console.log(req.url);
-
     let user;
     user = await User.findOne({ email: req.body.email });
     if (user) return next(new AppError("existing-user"));
@@ -127,6 +139,7 @@ router.get("/user/list", auth, authAdmin, getUserList);
 router.post("/user/create", auth, authAdmin, createUser);
 router.post("/user/register", createUser);
 router.post("/user/reset-password", sendPasswordToken);
+router.get("/user/:id", getUser);
 router.post("/user/:id/password/:token", createPassword);
 router.get("/logout", (req, res, next) => {
   req.logout(() => res.json({ status: "success" }));

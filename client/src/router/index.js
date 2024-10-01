@@ -33,6 +33,11 @@ const routes = [
     component: UserCreateView,
   },
   {
+    path: "/user/:id",
+    name: "user-details",
+    component: ProfileView,
+  },
+  {
     path: "/user/:id/password/:token",
     component: CreatePasswordView,
   },
