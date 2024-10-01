@@ -48,10 +48,6 @@ const getUser = async (req, res, next) => {
   }
 };
 
-// const getActiveUser = async (req, res) => {
-//   res.json({ status: "success", data: { user: req.user } });
-// };
-
 const sendPasswordToken = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -134,12 +130,11 @@ const createUser = async (req, res, next) => {
 };
 
 router.post("/login", login);
-router.get("/user/list", auth, authAdmin, getUserList);
-// router.get("/user/profile", auth, getActiveUser);
-router.post("/user/create", auth, authAdmin, createUser);
+router.get("/user/list", authAdmin, getUserList);
+router.post("/user/create", authAdmin, createUser);
 router.post("/user/register", createUser);
 router.post("/user/reset-password", sendPasswordToken);
-router.get("/user/:id", getUser);
+router.get("/user/:id", authAdmin, getUser);
 router.post("/user/:id/password/:token", createPassword);
 router.get("/logout", (req, res, next) => {
   req.logout(() => res.json({ status: "success" }));
