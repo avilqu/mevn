@@ -6,10 +6,10 @@
       <img src="./../assets/logo.png" />
     </router-link>
 
-    <div v-if="authStore.user._id">
+    <div v-if="authStore.user.role == 'admin'">
       <ul class="nav">
         <li class="nav-item dropdown">
-          <router-link
+          <a
             class="nav-link dropdown-toggle"
             href="#"
             role="button"
@@ -17,7 +17,7 @@
             aria-expanded="false"
           >
             Admin
-          </router-link>
+          </a>
           <ul class="dropdown-menu">
             <li>
               <strong>Users</strong>
