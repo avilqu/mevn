@@ -1,13 +1,7 @@
 <template>
   <div class="col-sm-12 text-center">
     <form class="form-signin text-center">
-      <img
-        class="mb-4"
-        src="./../assets/logo.png"
-        alt=""
-        width="72"
-        height="72"
-      />
+      <img class="mb-4" src="@/assets/logo.png" alt="" width="72" height="72" />
 
       <div v-if="state.displayMode == 'login'">
         <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
@@ -188,5 +182,5 @@ function sendPasswordToken() {
 </script>
 
 <style>
-@import "./../assets/css/login.css";
+@import "@/assets/css/login.css";
 </style>

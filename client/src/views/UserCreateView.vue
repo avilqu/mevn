@@ -85,5 +85,5 @@ function createUser() {
 </script>
 
 <style>
-@import "./../assets/css/login.css";
+@import "@/assets/css/login.css";
 </style>

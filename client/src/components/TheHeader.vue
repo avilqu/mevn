@@ -3,7 +3,7 @@
     class="navbar bg-dark border-bottom mb-4 fixed-top justify-content-start"
   >
     <router-link to="/" class="navbar-brand">
-      <img src="./../assets/logo.png" />
+      <img src="@/assets/logo.png" />
     </router-link>
 
     <div v-if="authStore.user.role == 'admin'">
@@ -76,5 +76,5 @@ const route = useRoute();
 </script>
 
 <style>
-@import "./../assets/css/header.css";
+@import "@/assets/css/header.css";
 </style>
