@@ -19,6 +19,7 @@
           @click="getUser(user._id)"
           v-for="user in state.userList"
           :key="user._id"
+          class="__pointer"
         >
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>

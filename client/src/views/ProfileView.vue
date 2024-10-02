@@ -1,5 +1,9 @@
 <template>
   <div class="col-sm-12">
+    <div v-if="route.path != '/profile'">
+      <router-link to="/user/list">Back to list</router-link>
+      <br /><br />
+    </div>
     <UserDetails :user="state.user" />
   </div>
 </template>

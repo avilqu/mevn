@@ -16,3 +16,7 @@ body {
   cursor: pointer;
   color: #198754 !important;
 }
+
+.__pointer:hover {
+  cursor: pointer;
+}
