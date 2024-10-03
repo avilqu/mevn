@@ -11,7 +11,7 @@
           <th>Email</th>
           <th>Role</th>
           <th>Added</th>
-          <th>Updated</th>
+          <th>Last connected</th>
         </tr>
       </thead>
       <tbody>
@@ -25,7 +25,7 @@
           <td>{{ user.email }}</td>
           <td>{{ user.role }}</td>
           <td>{{ user.added }}</td>
-          <td>{{ user.updated }}</td>
+          <td>{{ user.lastConnected }}</td>
         </tr>
       </tbody>
     </table>

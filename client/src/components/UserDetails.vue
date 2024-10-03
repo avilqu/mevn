@@ -26,6 +26,11 @@
           <td><strong>Added on</strong></td>
           <td>{{ user.added }}</td>
         </tr>
+
+        <tr>
+          <td><strong>Last connected</strong></td>
+          <td>{{ user.lastConnected }}</td>
+        </tr>
       </tbody>
     </table>
   </div>
