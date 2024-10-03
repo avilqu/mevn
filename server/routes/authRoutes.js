@@ -18,6 +18,7 @@ const login = async (req, res, next) => {
       req.login(user, (err) => {
         if (err) return next(err);
         res.json({ status: "success", data: user });
+        user.updateLastConnected();
       });
     })(req, res, next);
 };

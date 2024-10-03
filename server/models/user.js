@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
 
-// const { AuthError } = require("./../lib/errors");
+const { AppError } = require("./../lib/errorHandler");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+    },
+    lastConnected: {
+      type: Date,
+      default: Date.now(),
     },
     role: {
       type: String,
@@ -55,8 +59,13 @@ UserSchema.methods.verifyToken = function (token) {
     const decoded = jwt.verify(token, secret);
     return decoded;
   } catch (e) {
-    throw new Error("invalid-token");
+    throw new AppError("invalid-token");
   }
+};
+
+UserSchema.methods.updateLastConnected = function () {
+  this.lastConnected = Date.now();
+  this.save();
 };
 
 UserSchema.pre("save", function (next) {
