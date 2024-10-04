@@ -87,6 +87,18 @@ const apiClient = {
       return e;
     }
   },
+
+  async updateUser(user) {
+    const alertStore = useAlertStore();
+    try {
+      let res = await axios.post("/api/user/" + user._id + "/update", user);
+      if (res.status === "error") alertStore.error(res.message);
+      else alertStore.success(res.message);
+      return res.data.user;
+    } catch (e) {
+      return e;
+    }
+  },
 };
 
 export default apiClient;
