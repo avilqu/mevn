@@ -2,17 +2,20 @@ const { AppError } = require("./../lib/errorHandler");
 
 const auth = (req, res, next) => {
   if (!req.user) {
-    next(new AppError("not-logged"));
+    return next(new AppError("not-logged"));
   }
-  next();
+  return next();
 };
 
 const authAdmin = (req, res, next) => {
-  if (!req.user) {
-    next(new AppError("not-logged"));
+  if (req.route.path == "/user/:id/update" && req.params.id == req.user.id) {
+    return next();
+  } else if (!req.user) {
+    return next(new AppError("not-logged"));
   } else if (req.user.role != "admin") {
-    next(new AppError("not-authorized"));
+    return next(new AppError("not-authorized"));
   }
+
   next();
 };
 

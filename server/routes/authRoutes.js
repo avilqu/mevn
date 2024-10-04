@@ -49,6 +49,10 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const getActiveUser = async (req, res) => {
+  res.json({ status: "success", data: { user: req.user } });
+};
+
 const sendPasswordToken = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -134,6 +138,8 @@ const updateUser = async (req, res, next) => {
   try {
     let user = await User.findOne({ _id: req.params.id });
     if (!user) return next(new AppError("no-user"));
+    if (req.params.id != req.user.id && req.user.role != "admin")
+      return next(new AppError("not-authorized"));
     await user.updateOne(req.body);
     return res.json({
       status: "success",
@@ -146,6 +152,7 @@ const updateUser = async (req, res, next) => {
 };
 
 router.post("/login", login);
+router.get("/user/profile", auth, getActiveUser);
 router.get("/user/list", authAdmin, getUserList);
 router.post("/user/create", authAdmin, createUser);
 router.post("/user/register", createUser);

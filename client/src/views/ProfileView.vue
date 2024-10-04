@@ -33,7 +33,11 @@
 
           <tr>
             <td><strong>Role</strong></td>
-            <td v-if="state.displayMode == 'edit'">
+            <td
+              v-if="
+                state.displayMode == 'edit' && authStore.user.role == 'admin'
+              "
+            >
               <select
                 class="form-select"
                 id="role-selection"
@@ -59,7 +63,7 @@
       </table>
     </div>
     <br />
-    <div v-if="route.path != '/profile'">
+    <div>
       <button
         v-if="state.displayMode != 'edit'"
         class="btn btn-outline-secondary btn-block"

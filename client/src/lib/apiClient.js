@@ -88,12 +88,25 @@ const apiClient = {
     }
   },
 
+  async getActiveUser() {
+    try {
+      let res = await axios.get("/api/user/profile");
+      console.log(res.data.user);
+
+      return res.data.user;
+    } catch (e) {
+      return e;
+    }
+  },
+
   async updateUser(user) {
     const alertStore = useAlertStore();
     try {
       let res = await axios.post("/api/user/" + user._id + "/update", user);
       if (res.status === "error") alertStore.error(res.message);
-      else alertStore.success(res.message);
+      else {
+        alertStore.success(res.message);
+      }
       return res.data.user;
     } catch (e) {
       return e;
