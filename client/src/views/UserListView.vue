@@ -24,8 +24,8 @@
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.role }}</td>
-          <td>{{ user.added }}</td>
-          <td>{{ user.lastConnected }}</td>
+          <td><DateDisplay :value="user.added" /></td>
+          <td><DateDisplay :value="user.lastConnected" /></td>
         </tr>
       </tbody>
     </table>
@@ -34,8 +34,9 @@
 
 <script setup>
 import { onMounted, reactive } from "vue";
-import apiClient from "@/lib/apiClient";
 import router from "@/router";
+import apiClient from "@/lib/apiClient";
+import DateDisplay from "@/components/DateDisplay";
 
 const state = reactive({
   userList: [],

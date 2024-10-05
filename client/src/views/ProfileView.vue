@@ -52,12 +52,12 @@
 
           <tr>
             <td><strong>Added on</strong></td>
-            <td>{{ state.user.added }}</td>
+            <td><DateDisplay :value="state.user.added" /></td>
           </tr>
 
           <tr>
             <td><strong>Last connected</strong></td>
-            <td>{{ state.user.lastConnected }}</td>
+            <td><DateDisplay :value="state.user.lastConnected" /></td>
           </tr>
         </tbody>
       </table>
@@ -87,6 +87,7 @@ import { reactive, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import apiClient from "@/lib/apiClient";
+import DateDisplay from "@/components/DateDisplay";
 
 const state = reactive({
   user: {},
