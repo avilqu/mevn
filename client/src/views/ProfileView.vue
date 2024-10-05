@@ -83,7 +83,7 @@
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import apiClient from "@/lib/apiClient";
@@ -97,13 +97,16 @@ const state = reactive({
 const route = useRoute();
 const authStore = useAuthStore();
 
-function updateUser() {
-  apiClient.updateUser(state.user);
+async function updateUser() {
+  await apiClient.updateUser(state.user);
   state.displayMode = "";
 }
 
-onMounted(async () => {
+async function refresh() {
   if (route.path == "/profile") state.user = authStore.user;
   else state.user = await apiClient.getUser(route.params.id);
-});
+}
+
+watch(route, refresh);
+onMounted(refresh);
 </script>

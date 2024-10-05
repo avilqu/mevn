@@ -14,5 +14,5 @@
 
 <script setup>
 import { defineProps } from "vue";
-defineProps({ value: Date });
+defineProps({ value: String });
 </script>

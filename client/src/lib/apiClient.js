@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useAlertStore } from "@/stores/alert";
+import { useAuthStore } from "@/stores/auth";
 
 axios.interceptors.response.use(function (res) {
   return res.data;
@@ -101,12 +102,15 @@ const apiClient = {
 
   async updateUser(user) {
     const alertStore = useAlertStore();
+    const authStore = useAuthStore();
     try {
       let res = await axios.post("/api/user/" + user._id + "/update", user);
-      if (res.status === "error") alertStore.error(res.message);
+      if (res.status === "error") return alertStore.error(res.message);
       else {
         alertStore.success(res.message);
       }
+      res = await axios.get("/api/user/profile");
+      authStore.update(res.data.user);
       return res.data.user;
     } catch (e) {
       return e;

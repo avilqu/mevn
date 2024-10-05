@@ -36,5 +36,10 @@ export const useAuthStore = defineStore("auth", {
         router.push("/");
       }
     },
+
+    async update(user) {
+      localStorage.setItem("user", JSON.stringify(user));
+      this.user = user;
+    },
   },
 });
