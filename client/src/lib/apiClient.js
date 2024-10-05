@@ -106,12 +106,24 @@ const apiClient = {
     try {
       let res = await axios.post("/api/user/" + user._id + "/update", user);
       if (res.status === "error") return alertStore.error(res.message);
-      else {
-        alertStore.success(res.message);
-      }
+      else alertStore.success(res.message);
       res = await axios.get("/api/user/profile");
       authStore.update(res.data.user);
       return res.data.user;
+    } catch (e) {
+      return e;
+    }
+  },
+
+  async deleteUser(id) {
+    const authStore = useAuthStore();
+    try {
+      const alertStore = useAlertStore();
+      let res = await axios.get("/api/user/" + id + "/delete");
+      if (res.status === "error") return alertStore.error(res.message);
+      else alertStore.success(res.message);
+      authStore.logout();
+      return res.data;
     } catch (e) {
       return e;
     }

@@ -140,11 +140,29 @@ const updateUser = async (req, res, next) => {
     if (!user) return next(new AppError("no-user"));
     if (req.params.id != req.user.id && req.user.role != "admin")
       return next(new AppError("not-authorized"));
+    if (req.user.role != req.body.role && req.user.role != "admin")
+      return next(new AppError("not-authorized"));
     await user.updateOne(req.body);
     return res.json({
       status: "success",
       data: { user },
       message: "User was saved.",
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const deleteUser = async (req, res, next) => {
+  try {
+    let user = await User.findOneAndDelete({
+      _id: req.params.id,
+    });
+    if (!user) next(new AppError("no-user"));
+    res.json({
+      status: "success",
+      data: { user },
+      message: "User was deleted.",
     });
   } catch (e) {
     return next(e);
@@ -159,6 +177,7 @@ router.post("/user/register", createUser);
 router.post("/user/reset-password", sendPasswordToken);
 router.get("/user/:id", authAdmin, getUser);
 router.post("/user/:id/update", authAdmin, updateUser);
+router.get("/user/:id/delete", authAdmin, deleteUser);
 router.post("/user/:id/password/:token", createPassword);
 router.get("/logout", (req, res, next) => {
   req.logout(() => res.json({ status: "success" }));

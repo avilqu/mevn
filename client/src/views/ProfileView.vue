@@ -56,6 +56,11 @@
           </tr>
 
           <tr>
+            <td><strong>Last updated</strong></td>
+            <td><DateDisplay :value="state.user.updated" /></td>
+          </tr>
+
+          <tr>
             <td><strong>Last connected</strong></td>
             <td><DateDisplay :value="state.user.lastConnected" /></td>
           </tr>
@@ -71,19 +76,22 @@
       >
         Edit
       </button>
-      <button
-        v-else
-        class="btn btn-outline-success btn-block"
-        @click="updateUser()"
-      >
-        Save
-      </button>
+      <div v-else>
+        <button class="btn btn-outline-success btn-block" @click="updateUser()">
+          Save
+        </button>
+        &nbsp;
+        <button class="btn btn-outline-danger btn-block" @click="deleteUser()">
+          Delete
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { reactive, onMounted, watch } from "vue";
+import router from "@/router";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import apiClient from "@/lib/apiClient";
@@ -100,6 +108,12 @@ const authStore = useAuthStore();
 async function updateUser() {
   await apiClient.updateUser(state.user);
   state.displayMode = "";
+}
+
+async function deleteUser() {
+  await apiClient.deleteUser(state.user._id);
+  state.displayMode = "";
+  router.push("/user/list");
 }
 
 async function refresh() {

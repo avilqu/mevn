@@ -8,7 +8,11 @@ const auth = (req, res, next) => {
 };
 
 const authAdmin = (req, res, next) => {
-  if (req.route.path == "/user/:id/update" && req.params.id == req.user.id) {
+  if (
+    (req.route.path == "/user/:id/update" ||
+      req.route.path == "/user/:id/delete") &&
+    req.params.id == req.user.id
+  ) {
     return next();
   } else if (!req.user) {
     return next(new AppError("not-logged"));
