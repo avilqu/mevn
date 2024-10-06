@@ -9,7 +9,7 @@
       <ul class="nav">
         <li class="nav-item dropdown">
           <a
-            class="nav-link dropdown-toggle"
+            class="nav-link text-light dropdown-toggle"
             href="#"
             role="button"
             data-bs-toggle="dropdown"
@@ -22,7 +22,7 @@
             <li>
               <router-link
                 to="/user/list"
-                class="dropdown-item nav-link"
+                class="dropdown-item nav-link text-muted"
                 href="#"
               >
                 User list
@@ -31,7 +31,7 @@
             <li>
               <router-link
                 to="/user/create"
-                class="dropdown-item nav-link"
+                class="dropdown-item nav-link text-muted"
                 href="#"
               >
                 Create user
@@ -50,15 +50,15 @@
       >
         {{ authStore.user.name }}
       </button>
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-end">
         <li>
-          <router-link to="/profile" class="dropdown-item nav-link">
+          <router-link to="/profile" class="dropdown-item nav-link text-muted">
             Profile
           </router-link>
         </li>
         <li>
           <a
-            class="dropdown-item nav-link __pointer"
+            class="dropdown-item nav-link text-muted __pointer"
             @click="authStore.logout()"
           >
             Logout

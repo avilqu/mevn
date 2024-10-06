@@ -1,11 +1,10 @@
 <template>
   <div class="row">
     <div class="col-md-10">
-      <div v-if="route.path != '/profile'">
-        <router-link to="/user/list">
-          <i class="bi bi-arrow-left"></i>Back to list
-        </router-link>
-        <br /><br />
+      <div v-if="route.path != '/profile'" class="mb-4">
+        <router-link to="/user/list" class="__link text-muted"
+          >Back to list</router-link
+        >
       </div>
       <div class="col-sm-12">
         <h2>{{ state.user.name }}</h2>
