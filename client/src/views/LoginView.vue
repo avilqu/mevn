@@ -39,14 +39,39 @@
                 Login
               </button>
               <p class="mt-5 mb-3 text-muted">
-                <span class="__link" @click="state.displayMode = 'register'"
-                  >Register</span
+                <span
+                  class="fw-light __link"
+                  @click="state.displayMode = 'register'"
                 >
+                  Register
+                </span>
                 |
-                <span class="__link" @click="state.displayMode = 'reset'"
-                  >Forgotten password?</span
+                <span
+                  class="fw-light __link"
+                  @click="state.displayMode = 'reset'"
                 >
+                  Forgotten password?
+                </span>
               </p>
+
+              <div class="divider d-flex align-items-center my-4">
+                <p class="text-center mx-3 mb-0 text-secondary">OR</p>
+              </div>
+              <fa
+                :icon="['fab', 'google']"
+                size="3x"
+                class="__link text-muted p-3"
+              />
+              <fa
+                :icon="['fab', 'apple']"
+                size="3x"
+                class="__link text-muted p-3"
+              />
+              <fa
+                :icon="['fab', 'facebook']"
+                size="3x"
+                class="__link text-muted p-3"
+              />
             </div>
 
             <div v-if="state.displayMode == 'reset'">

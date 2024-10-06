@@ -26,3 +26,11 @@
 .__invalid {
   border: 1px solid #71180e !important;
 }
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #1f1f1f;
+}

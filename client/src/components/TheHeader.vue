@@ -22,7 +22,7 @@
             <li>
               <router-link
                 to="/user/list"
-                class="dropdown-item nav-link text-muted"
+                class="dropdown-item nav-link text-muted __link"
                 href="#"
               >
                 User list
@@ -31,7 +31,7 @@
             <li>
               <router-link
                 to="/user/create"
-                class="dropdown-item nav-link text-muted"
+                class="dropdown-item nav-link text-muted __link"
                 href="#"
               >
                 Create user
@@ -52,13 +52,16 @@
       </button>
       <ul class="dropdown-menu dropdown-menu-end">
         <li>
-          <router-link to="/profile" class="dropdown-item nav-link text-muted">
+          <router-link
+            to="/profile"
+            class="dropdown-item nav-link text-muted __link"
+          >
             Profile
           </router-link>
         </li>
         <li>
           <a
-            class="dropdown-item nav-link text-muted __pointer"
+            class="dropdown-item nav-link text-muted __link"
             @click="authStore.logout()"
           >
             Logout
