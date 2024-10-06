@@ -1,121 +1,130 @@
 <template>
-  <div class="col-sm-12 text-center">
-    <form class="form-signin text-center">
-      <img class="mb-4" src="@/assets/logo.png" alt="" width="72" height="72" />
+  <div class="row">
+    <div class="col-xl-4 col-md-6 col-sm-9 mx-auto">
+      <div class="card bg-black border-0 shadow">
+        <div class="card-body">
+          <form class="text-center p-4">
+            <router-link to="/">
+              <img src="@/assets/logo.png" width="72" height="72" />
+            </router-link>
+            <div v-if="state.displayMode == 'login'">
+              <h1 class="h2 mb-5 mt-3">Sign in</h1>
+              <input
+                type="email"
+                id="inputEmail"
+                class="form-control p-3 __input-top"
+                :class="{
+                  'is-invalid': v$.loginCredentials.email.$error === true,
+                }"
+                placeholder="Email address"
+                required
+                autofocus
+                v-model="state.loginCredentials.email"
+              />
+              <input
+                type="password"
+                id="inputPassword"
+                class="form-control p-3 __input-bottom"
+                :class="{
+                  'is-invalid': v$.loginCredentials.password.$error === true,
+                }"
+                placeholder="Password"
+                required
+                v-model="state.loginCredentials.password"
+              />
+              <button
+                class="btn btn-outline-success mt-4"
+                @click.prevent="login()"
+              >
+                Login
+              </button>
+              <p class="mt-5 mb-3 text-muted">
+                <span class="__link" @click="state.displayMode = 'register'"
+                  >Register</span
+                >
+                |
+                <span class="__link" @click="state.displayMode = 'reset'"
+                  >Forgotten password?</span
+                >
+              </p>
+            </div>
 
-      <div v-if="state.displayMode == 'login'">
-        <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
-        <input
-          type="email"
-          id="inputEmail"
-          class="form-control bg-dark text-light __input-top"
-          :class="{ 'is-invalid': v$.loginCredentials.email.$error === true }"
-          placeholder="Email address"
-          required
-          autofocus
-          v-model="state.loginCredentials.email"
-        />
-        <input
-          type="password"
-          id="inputPassword"
-          class="form-control bg-dark text-light __input-bottom"
-          :class="{
-            'is-invalid': v$.loginCredentials.password.$error === true,
-          }"
-          placeholder="Password"
-          required
-          v-model="state.loginCredentials.password"
-        />
-        <button
-          class="btn btn-outline-success btn-block"
-          @click.prevent="login()"
-        >
-          Login
-        </button>
-        <p class="mt-5 mb-3 text-muted">
-          <span class="__link" @click="state.displayMode = 'register'"
-            >Register</span
-          >
-          |
-          <span class="__link" @click="state.displayMode = 'reset'"
-            >Forgotten password?</span
-          >
-        </p>
-      </div>
+            <div v-if="state.displayMode == 'reset'">
+              <h1 class="h3 mb-5 mt-3">Send reset link</h1>
+              <p class="my-5 text-muted">
+                A secure link with instructions to reset your password will be
+                sent by email.
+              </p>
+              <input
+                type="email"
+                id="resetEmail"
+                class="form-control p-3"
+                :class="{ 'is-invalid': v$.passwordTokenEmail.$error === true }"
+                placeholder="Email address"
+                required
+                autofocus
+                v-model="state.passwordTokenEmail"
+              />
+              <button
+                class="btn btn-outline-success mt-4"
+                @click.prevent="sendPasswordToken()"
+              >
+                Send
+              </button>
+              <p
+                class="mt-5 mb-3 text-muted __link"
+                @click="state.displayMode = 'login'"
+              >
+                Back to login
+              </p>
+            </div>
 
-      <div v-if="state.displayMode == 'reset'">
-        <h1 class="h3 mb-3 font-weight-normal">Send reset link</h1>
-        <p class="mt-5 mb-3 text-muted text-left">
-          A secure link with instructions to reset your password will be sent by
-          email.
-        </p>
-        <input
-          type="email"
-          id="resetEmail"
-          class="form-control bg-dark text-light"
-          :class="{ 'is-invalid': v$.passwordTokenEmail.$error === true }"
-          placeholder="Email address"
-          required
-          autofocus
-          v-model="state.passwordTokenEmail"
-        />
-        <br />
-        <button
-          class="btn btn-outline-success btn-block"
-          @click.prevent="sendPasswordToken()"
-        >
-          Send
-        </button>
-        <p
-          class="mt-5 mb-3 text-muted __link"
-          @click="state.displayMode = 'login'"
-        >
-          Back to login
-        </p>
+            <div v-if="state.displayMode == 'register'">
+              <h1 class="h3 mb-5 mt-3">New user</h1>
+              <p class="my-5 text-muted">
+                A secure link with instructions to create your password will be
+                sent by email.
+              </p>
+              <input
+                type="name"
+                id="registerName"
+                class="form-control p-3 __input-top"
+                :class="{
+                  'is-invalid': v$.registerCredentials.name.$error === true,
+                }"
+                placeholder="Name"
+                required
+                autofocus
+                v-model="state.registerCredentials.name"
+              />
+              <input
+                type="email"
+                id="registerEmail"
+                class="form-control p-3 __input-bottom"
+                :class="{
+                  'is-invalid': v$.registerCredentials.email.$error === true,
+                }"
+                placeholder="Email address"
+                required
+                v-model="state.registerCredentials.email"
+              />
+              <button
+                class="btn btn-outline-success mt-4"
+                @click.prevent="createUser()"
+              >
+                Register
+              </button>
+              <p
+                class="mt-5 mb-3 text-muted __link"
+                @click="state.displayMode = 'login'"
+              >
+                Back to login
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
-
-      <div v-if="state.displayMode == 'register'">
-        <h1 class="h3 mb-3 font-weight-normal">New user</h1>
-        <p class="mt-5 mb-3 text-muted text-left">
-          A secure link with instructions to create your password will be sent
-          by email.
-        </p>
-        <input
-          type="name"
-          id="registerName"
-          class="form-control bg-dark text-light __input-top"
-          :class="{ 'is-invalid': v$.registerCredentials.name.$error === true }"
-          placeholder="Name"
-          required
-          autofocus
-          v-model="state.registerCredentials.name"
-        />
-        <input
-          type="email"
-          id="registerEmail"
-          class="form-control bg-dark text-light __input-bottom"
-          :class="{
-            'is-invalid': v$.registerCredentials.email.$error === true,
-          }"
-          placeholder="Email address"
-          required
-          autofocus
-          v-model="state.registerCredentials.email"
-        />
-        <button
-          class="btn btn-outline-success btn-block"
-          @click.prevent="createUser()"
-        >
-          Register
-        </button>
-        <p
-          class="mt-5 mb-3 text-muted __link"
-          @click="state.displayMode = 'login'"
-        >
-          Back to login
-        </p>
-      </div>
-    </form>
+    </div>
   </div>
 </template>
 

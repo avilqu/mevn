@@ -1,55 +1,60 @@
 <template>
-  <div class="col-sm-12">
-    <h1 class="h3 mb-3 font-weight-normal">New user</h1>
-    <p class="text-muted text-left">
-      A secure link will be sent to the registered email address to create a
-      password. This link will be valid 24 hours.
-    </p>
-    <form class="form-signin form-inline text-center">
-      <input
-        type="name"
-        id="registerName"
-        class="form-control bg-dark text-light __input-top"
-        :class="{ 'is-invalid': v$.name.$error === true }"
-        placeholder="Name"
-        required
-        autofocus
-        v-model="state.name"
-      />
-      <input
-        type="email"
-        id="registerEmail"
-        class="form-control bg-dark text-light __input-bottom"
-        :class="{
-          'is-invalid': v$.email.$error === true,
-        }"
-        placeholder="Email address"
-        required
-        autofocus
-        v-model="state.email"
-      />
-      <div class="form-group">
-        <label for="role-selection">Role: </label>
-        <select
-          class="form-select"
-          :class="{
-            'is-invalid': v$.role.$error === true,
-          }"
-          id="role-selection"
-          v-model="state.role"
-        >
-          <option value="user" selected>User</option>
-          <option value="admin">Admin</option>
-        </select>
-        <br />
+  <div class="row">
+    <div class="col-xl-4 col-md-6 col-sm-9 mx-auto">
+      <div class="card bg-black border-0 shadow">
+        <div class="card-body p-4">
+          <h1 class="h2 mb-5 mt-3">New user</h1>
+          <p class="text-muted">
+            A secure link will be sent to the registered email address to create
+            a password. This link will be valid 24 hours.
+          </p>
+          <form class="text-center p-4">
+            <input
+              type="name"
+              id="registerName"
+              class="form-control p-3 __input-top"
+              :class="{ 'is-invalid': v$.name.$error === true }"
+              placeholder="Name"
+              required
+              autofocus
+              v-model="state.name"
+            />
+            <input
+              type="email"
+              id="registerEmail"
+              class="form-control p-3 __input-middle"
+              :class="{
+                'is-invalid': v$.email.$error === true,
+              }"
+              placeholder="Email address"
+              required
+              v-model="state.email"
+            />
+            <div class="form-group">
+              <!-- <label for="role-selection">Role: </label> -->
+              <select
+                class="form-select p-3 __input-bottom"
+                :class="{
+                  'is-invalid': v$.role.$error === true,
+                }"
+                id="role-selection"
+                v-model="state.role"
+              >
+                <option value="">Role</option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <button
+              class="btn btn-outline-success mt-4"
+              @click.prevent="createUser()"
+            >
+              Send
+            </button>
+          </form>
+        </div>
       </div>
-      <button
-        class="btn btn-outline-success btn-block"
-        @click.prevent="createUser()"
-      >
-        Send
-      </button>
-    </form>
+    </div>
   </div>
 </template>
 

@@ -1,9 +1,8 @@
 <template>
-  <nav
-    class="navbar bg-dark border-bottom mb-4 fixed-top justify-content-start"
-  >
+  <nav class="navbar fixed-top bg-black shadow">
     <router-link to="/" class="navbar-brand">
       <img src="@/assets/logo.png" />
+      MEVN
     </router-link>
 
     <div v-if="authStore.user.role == 'admin'">
@@ -19,16 +18,22 @@
             Admin
           </a>
           <ul class="dropdown-menu">
+            <li><h5 class="dropdown-header">Users</h5></li>
             <li>
-              <strong>Users</strong>
-            </li>
-            <li>
-              <router-link to="/user/list" class="dropdown-item" href="#">
+              <router-link
+                to="/user/list"
+                class="dropdown-item nav-link"
+                href="#"
+              >
                 User list
               </router-link>
             </li>
             <li>
-              <router-link to="/user/create" class="dropdown-item" href="#">
+              <router-link
+                to="/user/create"
+                class="dropdown-item nav-link"
+                href="#"
+              >
                 Create user
               </router-link>
             </li>
@@ -37,22 +42,29 @@
       </ul>
     </div>
 
-    <div v-if="authStore.user._id" class="dropdown ms-auto">
+    <div class="dropdown nav ms-auto" v-if="authStore.user._id">
       <button
-        class="btn btn-success dropdown-toggle"
         type="button"
-        id="dropdownMenuButton"
+        class="btn btn-success dropdown-toggle"
         data-bs-toggle="dropdown"
-        v-once
       >
         {{ authStore.user.name }}
       </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <router-link to="/profile" class="dropdown-item __link">
-          Profile
-        </router-link>
-        <a class="dropdown-item __link" @click="authStore.logout()"> Logout </a>
-      </div>
+      <ul class="dropdown-menu">
+        <li>
+          <router-link to="/profile" class="dropdown-item nav-link">
+            Profile
+          </router-link>
+        </li>
+        <li>
+          <a
+            class="dropdown-item nav-link __pointer"
+            @click="authStore.logout()"
+          >
+            Logout
+          </a>
+        </li>
+      </ul>
     </div>
 
     <div v-else>
