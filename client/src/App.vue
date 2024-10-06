@@ -1,9 +1,15 @@
 <template>
   <div class="container-fluid">
-    <TheHeader v-if="route.path != '/login'" />
-    <div class="__clear-header">
+    <div v-if="route.path == '/login'">
       <AlertMessage />
       <router-view />
+    </div>
+    <div v-else>
+      <TheHeader v-if="route.path != '/login'" />
+      <div class="__clear-header">
+        <AlertMessage />
+        <router-view />
+      </div>
     </div>
   </div>
 </template>

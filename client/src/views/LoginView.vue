@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-xl-4 col-md-6 col-sm-9 mx-auto">
-      <div class="card bg-black border-0 shadow">
+      <div class="card bg-black border-0 shadow mt-5">
         <div class="card-body">
           <form class="text-center p-4">
             <router-link to="/">
