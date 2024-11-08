@@ -17,8 +17,22 @@ export const useAuthStore = defineStore("auth", {
       if (res.status == "success") {
         localStorage.setItem("user", JSON.stringify(res.data));
         this.status = { loggedIn: true };
-        this.user = res.data;
+        this.user = res.data.user;
         router.push("/");
+      } else {
+        const alert = useAlertStore();
+        alert.error(res.message);
+        this.status = {};
+        this.user = {};
+      }
+    },
+
+    async oAuthCallback() {
+      const res = await apiClient.getActiveUser();
+      if (res.status === "success") {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        this.status = { loggedIn: true };
+        this.user = res.data.user;
       } else {
         const alert = useAlertStore();
         alert.error(res.message);

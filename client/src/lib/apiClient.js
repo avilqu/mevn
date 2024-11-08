@@ -92,9 +92,7 @@ const apiClient = {
   async getActiveUser() {
     try {
       let res = await axios.get("/api/user/profile");
-      console.log(res.data.user);
-
-      return res.data.user;
+      return res;
     } catch (e) {
       return e;
     }

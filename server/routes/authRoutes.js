@@ -8,20 +8,42 @@ const User = require("./../config/db").mongoose.model("user");
 
 const { auth, authAdmin } = require("./../lib/authGuards");
 
-const login = async (req, res, next) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) return next(new AppError("no-user"));
-  if (!user.password) return next(new AppError("unverified-user"));
-  else
-    passport.authenticate("local", (err, user, info) => {
-      if (err) return next(err);
-      req.login(user, (err) => {
-        if (err) return next(err);
-        res.json({ status: "success", data: user });
-        user.updateLastConnected();
-      });
-    })(req, res, next);
+const login = (strategy) => {
+  return (req, res, next) => {
+    passport.authenticate(
+      strategy,
+      { failureRedirect: "/login" },
+      (err, user) => {
+        if (err) {
+          return next(err);
+        }
+        req.login(user, (err) => {
+          if (err) return next(err);
+          else if (strategy == "local")
+            res.json({ status: "success", data: { user } });
+          else {
+            res.redirect(302, "http://localhost:8080/?auth=true");
+          }
+        });
+      }
+    )(req, res, next);
+  };
 };
+
+// const login = async (req, res, next) => {
+//   const user = await User.findOne({ email: req.body.email });
+//   if (!user) return next(new AppError("wrong-credentials"));
+//   if (!user.password) return next(new AppError("unverified-user"));
+//   else
+//     passport.authenticate("local", (err, user, info) => {
+//       if (err) return next(err);
+//       req.login(user, (err) => {
+//         if (err) return next(err);
+//         res.json({ status: "success", data: user });
+//         user.updateLastConnected();
+//       });
+//     })(req, res, next);
+// };
 
 const getUserList = async (req, res, next) => {
   try {
@@ -169,12 +191,21 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-router.post("/login", login);
-router.get("/user/profile", auth, getActiveUser);
-router.get("/user/list", authAdmin, getUserList);
-router.post("/user/create", authAdmin, createUser);
+router.get(
+  "/login/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+
+router.post("/login", login("local"));
+router.get("/login/google/callback", login("google"));
+
 router.post("/user/register", createUser);
+router.get("/user/profile", auth, getActiveUser);
+router.post("/user/create", authAdmin, createUser);
 router.post("/user/reset-password", sendPasswordToken);
+router.get("/user/list", authAdmin, getUserList);
 router.get("/user/:id", authAdmin, getUser);
 router.post("/user/:id/update", authAdmin, updateUser);
 router.get("/user/:id/delete", authAdmin, deleteUser);

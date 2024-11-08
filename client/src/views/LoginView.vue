@@ -61,16 +61,19 @@
                 :icon="['fab', 'google']"
                 size="3x"
                 class="__link text-muted p-3"
+                @click="oAuthLogin('google')"
               />
               <fa
                 :icon="['fab', 'apple']"
                 size="3x"
                 class="__link text-muted p-3"
+                @click="oAuthLogin('apple')"
               />
               <fa
                 :icon="['fab', 'facebook']"
                 size="3x"
                 class="__link text-muted p-3"
+                @click="oAuthLogin('facebook')"
               />
             </div>
 
@@ -198,20 +201,24 @@ function login() {
     authStore.login(state.loginCredentials);
 }
 
-function createUser() {
+function oAuthLogin(strategy) {
+  window.location.href = `/api/login/${strategy}`;
+}
+
+async function createUser() {
   this.v$.registerCredentials.email.$touch();
   this.v$.registerCredentials.name.$touch();
   if (
     !this.v$.registerCredentials.email.$invalid &&
     !this.v$.registerCredentials.name.$invalid
   )
-    apiClient.createUser(state.registerCredentials);
+    await apiClient.createUser(state.registerCredentials);
 }
 
-function sendPasswordToken() {
+async function sendPasswordToken() {
   this.v$.passwordTokenEmail.$touch();
   if (!this.v$.passwordTokenEmail.$invalid)
-    apiClient.sendPasswordToken(state.passwordTokenEmail);
+    await apiClient.sendPasswordToken(state.passwordTokenEmail);
 }
 </script>
 

@@ -1,18 +1,4 @@
 {
-  "test": {
-    "NODE_ENV": "test",
-    "HTTP_PORT": 3000,
-    "HTTPS_PORT": 3443,
-    "MONGODB_URI": "mongodb://localhost:27017/db-test",
-    "MAILER_HOST": "smtp.gmail.com",
-    "MAILER_PORT": 587,
-    "MAILER_USER": "xxx",
-    "MAILER_PASS": "xxx",
-    "COOKIE_KEY_1": "xxx",
-    "COOKIE_KEY_2": "xxx",
-    "COOKIE_KEY_3": "xxx",
-    "JWT_SECRET": "xxx"
-  },
   "dev": {
     "NODE_ENV": "dev",
     "HTTP_PORT": 3000,
@@ -22,6 +8,8 @@
     "MAILER_PORT": 587,
     "MAILER_USER": "xxx",
     "MAILER_PASS": "xxx",
+    "GOOGLE_CLIENT_ID": "XXX",
+    "GOOGLE_CLIENT_SECRET": "XXX",
     "COOKIE_KEY_1": "xxx",
     "COOKIE_KEY_2": "xxx",
     "COOKIE_KEY_3": "xxx",
@@ -36,6 +24,8 @@
     "MAILER_PORT": 587,
     "MAILER_USER": "xxx",
     "MAILER_PASS": "xxx",
+    "GOOGLE_CLIENT_ID": "XXX",
+    "GOOGLE_CLIENT_SECRET": "XXX",
     "COOKIE_KEY_1": "xxx",
     "COOKIE_KEY_2": "xxx",
     "COOKIE_KEY_3": "xxx",

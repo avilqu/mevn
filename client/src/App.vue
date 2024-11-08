@@ -15,11 +15,22 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 const route = useRoute();
 
 import TheHeader from "@/components/TheHeader.vue";
 import AlertMessage from "@/components/AlertMessage.vue";
+
+function oAuthCallbackCheck() {
+  // if (route.path == "/auth") authStore.oAuthCallback();
+  authStore.oAuthCallback();
+}
+
+// watch(route, oAuthCallbackCheck);
+onMounted(oAuthCallbackCheck);
 </script>
 
 <style>
