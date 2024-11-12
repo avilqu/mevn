@@ -5,12 +5,11 @@ const https = require("https");
 const fs = require("fs");
 
 require("./lib/init");
-require("./lib/db");
 require("./models/user");
 require("./lib/passport");
 
 const { errorHandler } = require("./lib/errorHandler");
-const { cookieSession } = require("./lib/cookies");
+const { cookieSession } = require("./lib/init");
 
 const app = express();
 // app.use(express.static(__dirname + '/public'));

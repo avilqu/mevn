@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const User = require("./../lib/db").mongoose.model("user");
+const User = require("./../lib/init").mongoose.model("user");
 
 const transport = nodemailer.createTransport({
   host: process.env.MAILER_HOST,
