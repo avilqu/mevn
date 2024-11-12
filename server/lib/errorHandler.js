@@ -48,6 +48,10 @@ class AppError extends Error {
       case "no-user":
         this.message = "User not found.";
         break;
+      case "google-user":
+        this.message =
+          "This email is already registered via a Google account. Please login with Google.";
+        break;
       case "existing-equipment":
         this.message = "Equipment already exists.";
         break;

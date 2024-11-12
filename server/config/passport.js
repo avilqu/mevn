@@ -21,11 +21,14 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await User.findOne({ email: email });
-        if (!user || !user.validPassword(password)) {
-          done(new AppError("wrong-credentials"));
-        } else if (!user.password || !user.verified) {
+        if (!user) done(new AppError("wrong-credentials"));
+        else if (!user.password && user.googleId)
+          done(new AppError("google-user"));
+        else if (!user.password && !user.googleId)
           done(new AppError("unverified-user"));
-        } else return done(null, user);
+        else if (!user.validPassword(password))
+          done(new AppError("wrong-credentials"));
+        else return done(null, user);
       } catch (e) {
         return done(e);
       }
