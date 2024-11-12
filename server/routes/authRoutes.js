@@ -30,21 +30,6 @@ const login = (strategy) => {
   };
 };
 
-// const login = async (req, res, next) => {
-//   const user = await User.findOne({ email: req.body.email });
-//   if (!user) return next(new AppError("wrong-credentials"));
-//   if (!user.password) return next(new AppError("unverified-user"));
-//   else
-//     passport.authenticate("local", (err, user, info) => {
-//       if (err) return next(err);
-//       req.login(user, (err) => {
-//         if (err) return next(err);
-//         res.json({ status: "success", data: user });
-//         user.updateLastConnected();
-//       });
-//     })(req, res, next);
-// };
-
 const getUserList = async (req, res, next) => {
   try {
     const users = await User.find();
@@ -89,7 +74,6 @@ const sendPasswordToken = async (req, res, next) => {
       });
       return res.json({
         status: "success",
-        data: { token },
         message: "A reset link was sent by email.",
       });
     }
