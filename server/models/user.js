@@ -7,43 +7,14 @@ const strings = require("../config/strings");
 
 const UserSchema = new mongoose.Schema(
   {
-    googleId: {
-      type: String,
-      // index: {
-      //   unique: true,
-      //   partialFilterExpression: {
-      //     googleId: {
-      //       $type: "string",
-      //     },
-      //   },
-      // },
-    },
-    facebookId: {
-      type: String,
-      // index: {
-      //   unique: true,
-      //   partialFilterExpression: {
-      //     facebookId: {
-      //       $type: "string",
-      //     },
-      //   },
-      // },
-    },
-    appleId: {
-      type: String,
-      // index: {
-      //   unique: true,
-      //   partialFilterExpression: {
-      //     facebookId: {
-      //       $type: "string",
-      //     },
-      //   },
-      // },
-    },
+    googleId: String,
+    facebookId: String,
+    appleId: String,
+    lastConnected: Date,
     verified: {
       type: Boolean,
       required: true,
-      default: true,
+      default: false,
     },
     email: {
       type: String,
@@ -61,17 +32,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    lastConnected: {
-      type: Date,
-      default: Date.now(),
-    },
     role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
-    },
-    pic: {
-      type: String,
     },
   },
   { timestamps: { createdAt: "added", updatedAt: "updated" } }
@@ -83,17 +47,14 @@ UserSchema.methods.validPassword = function (password) {
 
 UserSchema.methods.generateToken = function (duration) {
   const expiresIn = duration ? duration : "1d";
-  let secret;
-  secret = process.env.JWT_SECRET + this._id;
+  const secret = process.env.JWT_SECRET + this._id;
   return jwt.sign({ id: this._id }, secret, { expiresIn }).toString();
 };
 
 UserSchema.methods.verifyToken = function (token) {
-  let secret;
-  secret = process.env.JWT_SECRET + this._id;
+  const secret = process.env.JWT_SECRET + this._id;
   try {
-    const decoded = jwt.verify(token, secret);
-    return decoded;
+    return jwt.verify(token, secret);
   } catch (e) {
     throw new Error(strings.ERR_INVALID_TOKEN);
   }

@@ -1,5 +1,5 @@
 module.exports = {
-  // Error messages
+  // error messages
   ERR_INVALID_TOKEN: "Invalid token.",
   ERR_NOT_LOGGED: "Not logged in.",
   ERR_UNAUTHORIZED: "Unauthorized.",
@@ -14,7 +14,7 @@ module.exports = {
   ERR_INVALID_NAME: "Name is needed.",
   ERR_DEFAULT: "Something went wrong.",
 
-  // Info messages
+  // info messages
   INFO_ACTIVATION_LINK: "An activation link will be sent by email.",
   INFO_USER_ACTIVATED: "User is activated. You can now login.",
   INFO_PASSWORD_RESET_LINK:
@@ -22,4 +22,11 @@ module.exports = {
   INFO_PASSWORD_SAVED: "Password was saved.",
   INFO_USER_SAVED: "User was saved.",
   INFO_USER_DELETED: "User was deleted.",
+
+  // mailer config
+  MAILER_NAME: "MEVN app",
+  MAILER_NAME_SHORT: "MEVN",
+  MAILER_SENDER: "avilqu@gmail.com",
+  MAILER_SUBJECT_ACTIVATION: "MEVN | Activate your account",
+  MAILER_SUBJECT_PASSWORD_RESET: "MEVN | Reset your password",
 };

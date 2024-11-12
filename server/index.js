@@ -12,13 +12,12 @@ const { errorHandler } = require("./lib/errorHandler");
 const { cookieSession } = require("./lib/init");
 
 const app = express();
-// app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(cookieSession);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Fix for passport > 0.5 & + cookie-session
+// fix for passport > 0.5 & + cookie-session
 app.use(function (req, res, next) {
   if (req.session && !req.session.regenerate) {
     req.session.regenerate = (cb) => {
@@ -38,7 +37,7 @@ const authRoutes = require("./routes/authRoutes");
 app.use("/api", [authRoutes]);
 
 app.get("*", (req, res) => {
-  res.sendFile(process.cwd() + "/client/dist/index.html");
+  res.sendFile(`${process.cwd()}/client/dist/index.html`);
 });
 
 app.use(errorHandler);

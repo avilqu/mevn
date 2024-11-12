@@ -21,13 +21,13 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await User.findOne({ email: email });
-        if (!user) done(new Error(strings.ERR_WRONG_CREDENTIALS));
+        if (!user) throw new Error(strings.ERR_WRONG_CREDENTIALS);
         else if (!user.password && user.googleId)
-          done(new Error(strings.ERR_GOOGLE_USER));
+          throw new Error(strings.ERR_GOOGLE_USER);
         else if (!user.password && !user.googleId)
-          done(new Error(strings.ERR_UNVERIFIED_USER));
+          throw new Error(strings.ERR_UNVERIFIED_USER);
         else if (!user.validPassword(password))
-          done(new Error(strings.ERR_WRONG_CREDENTIALS));
+          throw new Error(strings.ERR_WRONG_CREDENTIALS);
         else return done(null, user);
       } catch (e) {
         return done(e);
@@ -42,19 +42,13 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "https://localhost:3443/api/login/google/callback",
-      scope: ["profile"],
     },
     async (accessToken, profile, done) => {
-      console.log(profile);
       try {
         let user = await User.findOne({ googleId: profile.id });
         if (user) {
-          if (
-            user.email != profile.emails[0].value
-            // || user.pic != profile.photos[0].value
-          ) {
+          if (user.email != profile.emails[0].value) {
             user.email = profile.emails[0].value;
-            // user.pic = profile.photos[0].value;
             user.save();
           }
           return done(null, user);
@@ -64,7 +58,6 @@ passport.use(
           });
           if (user) {
             user.googleId = profile.id;
-            // user.pic = profile.photos[0].value;
             user.save();
             return done(null, user);
           }
@@ -72,7 +65,6 @@ passport.use(
             googleId: profile.id,
             email: profile.emails[0].value,
             name: profile.displayName,
-            // pic: profile.photos[0].value,
             verified: true,
           }).save();
           return done(null, newUser);

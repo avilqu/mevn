@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
-const User = require("./../lib/init").mongoose.model("user");
+const User = require("../lib/init").mongoose.model("user");
+const strings = require("../config/strings");
 
 const transport = nodemailer.createTransport({
   host: process.env.MAILER_HOST,
@@ -11,9 +12,9 @@ const transport = nodemailer.createTransport({
 });
 
 const options = {
-  name: "MEVN app",
-  short: "MEVN",
-  sender: "avilqu@gmail.com",
+  name: strings.MAILER_NAME,
+  short: strings.MAILER_NAME_SHORT,
+  sender: strings.MAILER_SENDER,
 };
 
 const header =
@@ -83,7 +84,7 @@ const mailer = {
     const response = await transport.sendMail({
       from: '"' + options.short + '" <' + options.sender + ">",
       to: args.email,
-      subject: "Activate your account",
+      subject: strings.MAILER_SUBJECT_ACTIVATION,
       html: message,
     });
   },
@@ -109,7 +110,7 @@ const mailer = {
     await transport.sendMail({
       from: '"' + options.short + '" <' + options.sender + ">",
       to: args.email,
-      subject: "Reset your password",
+      subject: strings.MAILER_SUBJECT_PASSWORD_RESET,
       html: message,
     });
   },

@@ -1,23 +1,16 @@
-const errorHandler = (err, req, res, next) => {
-  // Define error message for ValidationErrors
-  if (err.errors) {
-    if (err.errors.password)
-      err.message = "Password must be at least 6 characters.";
-    if (err.errors.email) err.message = "Email address is invalid.";
-    if (err.errors.name) err.message = "Name is needed.";
-  }
+const strings = require("../config/strings");
 
-  // Format and send JSON response
-  return (
-    res
-      // .status(statusCode)
-      .json({
-        status: "error",
-        message: err.message,
-        error: err,
-      })
-      .send()
-  );
+const errorHandler = (err, req, res, next) => {
+  // error message for mongoose validation errors
+  if (err.name == "ValidationError") err.message = strings.ERR_DEFAULT;
+
+  return res
+    .json({
+      status: "error",
+      message: err.message,
+      error: err,
+    })
+    .send();
 };
 
 module.exports = { errorHandler };

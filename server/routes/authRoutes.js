@@ -3,9 +3,9 @@ const router = express.Router();
 const passport = require("passport");
 
 const strings = require("../config/strings");
-const { mailer } = require("./../lib/mailer");
-const User = require("./../lib/init").mongoose.model("user");
-const { auth, authAdmin } = require("./../lib/authGuards");
+const { mailer } = require("../lib/mailer");
+const User = require("../lib/init").mongoose.model("user");
+const { auth, authAdmin } = require("../lib/authGuards");
 
 const login = (strategy) => {
   return (req, res, next) => {
@@ -13,16 +13,12 @@ const login = (strategy) => {
       strategy,
       { failureRedirect: "/login" },
       (err, user) => {
-        if (err) {
-          return next(err);
-        }
+        if (err) return next(err);
         req.login(user, (err) => {
           if (err) return next(err);
           else if (strategy == "local")
             res.json({ status: "success", data: { user } });
-          else {
-            res.redirect("http://localhost:8080/?auth");
-          }
+          else res.redirect("http://localhost:8080/?auth");
           user.updateLastConnected();
         });
       }
@@ -45,9 +41,9 @@ const getUserList = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new Error(strings.ERR_NO_USER));
-    let user = await User.findOne({ _id: req.params.id });
-    if (!user) return next(new Error(strings.ERR_NO_USER));
+      throw new Error(strings.ERR_NO_USER);
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) throw new Error(strings.ERR_NO_USER);
     else
       res.json({
         status: "success",
@@ -65,7 +61,7 @@ const getActiveUser = async (req, res) => {
 const sendPasswordToken = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    if (!user) return next(new Error(strings.ERR_NO_USER));
+    if (!user) throw new Error(strings.ERR_NO_USER);
     else {
       const token = user.generateToken();
       await mailer.resetPassword({
@@ -87,9 +83,9 @@ const sendPasswordToken = async (req, res, next) => {
 const createPassword = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new Error(strings.ERR_NO_USER));
-    let user = await User.findOne({ _id: req.params.id });
-    if (!user) return next(new Error(strings.ERR_NO_USER));
+      throw new Error(strings.ERR_NO_USER);
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) throw new Error(strings.ERR_NO_USER);
     else if (user.verifyToken(req.params.token)) {
       user.password = req.body.password;
       user.verified = true;
@@ -107,9 +103,8 @@ const createPassword = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    let user;
-    user = await User.findOne({ email: req.body.email });
-    if (user) return next(new Error(strings.ERR_EXISTING_USER));
+    let user = await User.findOne({ email: req.body.email });
+    if (user) throw new Error(strings.ERR_EXISTING_USER);
     if (req.url == "/user/create")
       user = new User({
         name: req.body.name,
@@ -147,13 +142,9 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new Error(strings.ERR_NO_USER));
-    let user = await User.findOne({ _id: req.params.id });
-    if (!user) return next(new Error(strings.ERR_NO_USER));
-    if (req.params.id != req.user.id && req.user.role != "admin")
-      return next(new Error(strings.ERR_UNAUTHORIZED));
-    if (req.user.role != req.body.role && req.user.role != "admin")
-      return next(new Error(strings.ERR_UNAUTHORIZED));
+      throw new Error(strings.ERR_NO_USER);
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) throw new Error(strings.ERR_NO_USER);
     await user.updateOne(req.body);
     return res.json({
       status: "success",
@@ -168,11 +159,11 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new Error(strings.ERR_NO_USER));
-    let user = await User.findOneAndDelete({
+      throw new Error(strings.ERR_NO_USER);
+    const user = await User.findOneAndDelete({
       _id: req.params.id,
     });
-    if (!user) next(new Error(strings.ERR_NO_USER));
+    if (!user) throw new Error(strings.ERR_NO_USER);
     res.json({
       status: "success",
       data: { user },
@@ -190,20 +181,20 @@ router.get(
   })
 );
 
-router.post("/login", login("local"));
-router.get("/login/google/callback", login("google"));
-
-router.post("/user/register", createUser);
-router.get("/user/profile", auth, getActiveUser);
-router.post("/user/create", authAdmin, createUser);
-router.post("/user/reset-password", sendPasswordToken);
-router.get("/user/list", authAdmin, getUserList);
-router.get("/user/:id", authAdmin, getUser);
-router.post("/user/:id/update", authAdmin, updateUser);
-router.get("/user/:id/delete", authAdmin, deleteUser);
-router.post("/user/:id/password/:token", createPassword);
 router.get("/logout", (req, res, next) => {
   req.logout(() => res.json({ status: "success" }));
 });
+
+router.post("/login", login("local"));
+router.get("/login/google/callback", login("google"));
+router.post("/user/register", createUser);
+router.get("/user/profile", auth, getActiveUser);
+router.post("/user/create", auth, authAdmin, createUser);
+router.post("/user/reset-password", sendPasswordToken);
+router.get("/user/list", auth, authAdmin, getUserList);
+router.get("/user/:id", auth, authAdmin, getUser);
+router.post("/user/:id/update", auth, authAdmin, updateUser);
+router.get("/user/:id/delete", auth, authAdmin, deleteUser);
+router.post("/user/:id/password/:token", createPassword);
 
 module.exports = router;
