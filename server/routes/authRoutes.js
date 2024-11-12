@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-const { AppError } = require("./../lib/errorHandler");
+const strings = require("../config/strings");
 const { mailer } = require("./../lib/mailer");
 const User = require("./../lib/db").mongoose.model("user");
 const { auth, authAdmin } = require("./../lib/authGuards");
@@ -44,9 +44,9 @@ const getUserList = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new AppError("no-user"));
+      return next(new Error(strings.ERR_NO_USER));
     let user = await User.findOne({ _id: req.params.id });
-    if (!user) return next(new AppError("no-user"));
+    if (!user) return next(new Error(strings.ERR_NO_USER));
     else
       res.json({
         status: "success",
@@ -64,7 +64,7 @@ const getActiveUser = async (req, res) => {
 const sendPasswordToken = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    if (!user) return next(new AppError("no-user"));
+    if (!user) return next(new Error(strings.ERR_NO_USER));
     else {
       const token = user.generateToken();
       await mailer.resetPassword({
@@ -75,7 +75,7 @@ const sendPasswordToken = async (req, res, next) => {
       });
       return res.json({
         status: "success",
-        message: "A reset link was sent by email.",
+        message: strings.INFO_PASSWORD_RESET_LINK,
       });
     }
   } catch (e) {
@@ -86,9 +86,9 @@ const sendPasswordToken = async (req, res, next) => {
 const createPassword = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new AppError("no-user"));
+      return next(new Error(strings.ERR_NO_USER));
     let user = await User.findOne({ _id: req.params.id });
-    if (!user) return next(new AppError("no-user"));
+    if (!user) return next(new Error(strings.ERR_NO_USER));
     else if (user.verifyToken(req.params.token)) {
       user.password = req.body.password;
       user.verified = true;
@@ -96,7 +96,7 @@ const createPassword = async (req, res, next) => {
       return res.json({
         status: "success",
         data: { user },
-        message: "Password was saved.",
+        message: strings.INFO_PASSWORD_SAVED,
       });
     }
   } catch (e) {
@@ -108,7 +108,7 @@ const createUser = async (req, res, next) => {
   try {
     let user;
     user = await User.findOne({ email: req.body.email });
-    if (user) return next(new AppError("existing-user"));
+    if (user) return next(new Error(strings.ERR_EXISTING_USER));
     if (req.url == "/user/create")
       user = new User({
         name: req.body.name,
@@ -136,7 +136,7 @@ const createUser = async (req, res, next) => {
     return res.json({
       status: "success",
       data: { user },
-      message: "A confirmation link was sent by email.",
+      message: strings.INFO_ACTIVATION_LINK,
     });
   } catch (e) {
     return next(e);
@@ -146,18 +146,18 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new AppError("no-user"));
+      return next(new Error(strings.ERR_NO_USER));
     let user = await User.findOne({ _id: req.params.id });
-    if (!user) return next(new AppError("no-user"));
+    if (!user) return next(new Error(strings.ERR_NO_USER));
     if (req.params.id != req.user.id && req.user.role != "admin")
-      return next(new AppError("not-authorized"));
+      return next(new Error(strings.ERR_UNAUTHORIZED));
     if (req.user.role != req.body.role && req.user.role != "admin")
-      return next(new AppError("not-authorized"));
+      return next(new Error(strings.ERR_UNAUTHORIZED));
     await user.updateOne(req.body);
     return res.json({
       status: "success",
       data: { user },
-      message: "User was saved.",
+      message: strings.INFO_USER_SAVED,
     });
   } catch (e) {
     return next(e);
@@ -167,15 +167,15 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new AppError("no-user"));
+      return next(new Error(strings.ERR_NO_USER));
     let user = await User.findOneAndDelete({
       _id: req.params.id,
     });
-    if (!user) next(new AppError("no-user"));
+    if (!user) next(new Error(strings.ERR_NO_USER));
     res.json({
       status: "success",
       data: { user },
-      message: "User was deleted.",
+      message: strings.INFO_USER_DELETED,
     });
   } catch (e) {
     return next(e);

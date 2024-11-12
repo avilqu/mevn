@@ -4,7 +4,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oidc");
 
 const User = mongoose.model("user");
-const { AppError } = require("./../lib/errorHandler");
+const strings = require("../config/strings");
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -21,13 +21,13 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await User.findOne({ email: email });
-        if (!user) done(new AppError("wrong-credentials"));
+        if (!user) done(new Error(strings.ERR_WRONG_CREDENTIALS));
         else if (!user.password && user.googleId)
-          done(new AppError("google-user"));
+          done(new Error(strings.ERR_GOOGLE_USER));
         else if (!user.password && !user.googleId)
-          done(new AppError("unverified-user"));
+          done(new Error(strings.ERR_UNVERIFIED_USER));
         else if (!user.validPassword(password))
-          done(new AppError("wrong-credentials"));
+          done(new Error(strings.ERR_WRONG_CREDENTIALS));
         else return done(null, user);
       } catch (e) {
         return done(e);

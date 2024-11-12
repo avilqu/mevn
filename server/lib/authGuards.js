@@ -1,8 +1,8 @@
-const { AppError } = require("./../lib/errorHandler");
+const strings = require("../config/strings");
 
 const auth = (req, res, next) => {
   if (!req.user) {
-    return next(new AppError("not-logged"));
+    return next(new Error(strings.ERR_NOT_LOGGED));
   }
   return next();
 };
@@ -15,9 +15,9 @@ const authAdmin = (req, res, next) => {
   ) {
     return next();
   } else if (!req.user) {
-    return next(new AppError("not-logged"));
+    return next(new Error(strings.ERR_NOT_LOGGED));
   } else if (req.user.role != "admin") {
-    return next(new AppError("not-authorized"));
+    return next(new Error(strings.ERR_UNAUTHORIZED));
   }
 
   next();
