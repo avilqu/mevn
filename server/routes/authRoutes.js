@@ -23,6 +23,7 @@ const login = (strategy) => {
           else {
             res.redirect("http://localhost:8080/?auth");
           }
+          user.updateLastConnected();
         });
       }
     )(req, res, next);
