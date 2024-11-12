@@ -44,7 +44,7 @@ const getUserList = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new AppError("something-wrong"));
+      return next(new AppError("no-user"));
     let user = await User.findOne({ _id: req.params.id });
     if (!user) return next(new AppError("no-user"));
     else
@@ -86,7 +86,7 @@ const sendPasswordToken = async (req, res, next) => {
 const createPassword = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new AppError("something-wrong"));
+      return next(new AppError("no-user"));
     let user = await User.findOne({ _id: req.params.id });
     if (!user) return next(new AppError("no-user"));
     else if (user.verifyToken(req.params.token)) {
@@ -146,7 +146,7 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new AppError("something-wrong"));
+      return next(new AppError("no-user"));
     let user = await User.findOne({ _id: req.params.id });
     if (!user) return next(new AppError("no-user"));
     if (req.params.id != req.user.id && req.user.role != "admin")
@@ -167,7 +167,7 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-      return next(new AppError("something-wrong"));
+      return next(new AppError("no-user"));
     let user = await User.findOneAndDelete({
       _id: req.params.id,
     });
