@@ -64,6 +64,9 @@ class AppError extends Error {
       case "no-item":
         this.message = "Item not found.";
         break;
+      case "something-wrong":
+        this.message = "Something went wrong. Please try again.";
+        break;
       default:
         this.message = "Unknown error code.";
     }

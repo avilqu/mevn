@@ -5,7 +5,6 @@ const passport = require("passport");
 const { AppError } = require("./../lib/errorHandler");
 const { mailer } = require("./../lib/mailer");
 const User = require("./../config/db").mongoose.model("user");
-
 const { auth, authAdmin } = require("./../lib/authGuards");
 
 const login = (strategy) => {
@@ -44,6 +43,8 @@ const getUserList = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
   try {
+    if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
+      return next(new AppError("something-wrong"));
     let user = await User.findOne({ _id: req.params.id });
     if (!user) return next(new AppError("no-user"));
     else
@@ -84,6 +85,8 @@ const sendPasswordToken = async (req, res, next) => {
 
 const createPassword = async (req, res, next) => {
   try {
+    if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
+      return next(new AppError("something-wrong"));
     let user = await User.findOne({ _id: req.params.id });
     if (!user) return next(new AppError("no-user"));
     else if (user.verifyToken(req.params.token)) {
@@ -142,6 +145,8 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
+    if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
+      return next(new AppError("something-wrong"));
     let user = await User.findOne({ _id: req.params.id });
     if (!user) return next(new AppError("no-user"));
     if (req.params.id != req.user.id && req.user.role != "admin")
@@ -161,6 +166,8 @@ const updateUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   try {
+    if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
+      return next(new AppError("something-wrong"));
     let user = await User.findOneAndDelete({
       _id: req.params.id,
     });
