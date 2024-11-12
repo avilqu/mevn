@@ -22,7 +22,7 @@ const login = (strategy) => {
           else if (strategy == "local")
             res.json({ status: "success", data: { user } });
           else {
-            res.redirect(302, "http://localhost:8080/?auth=true");
+            res.redirect("http://localhost:8080/?auth");
           }
         });
       }

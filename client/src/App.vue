@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onUpdated } from "vue";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
@@ -25,12 +25,10 @@ import TheHeader from "@/components/TheHeader.vue";
 import AlertMessage from "@/components/AlertMessage.vue";
 
 function oAuthCallbackCheck() {
-  // if (route.path == "/auth") authStore.oAuthCallback();
-  authStore.oAuthCallback();
+  if (route.fullPath == "/?auth") authStore.oAuthCallback();
 }
 
-// watch(route, oAuthCallbackCheck);
-onMounted(oAuthCallbackCheck);
+onUpdated(oAuthCallbackCheck);
 </script>
 
 <style>

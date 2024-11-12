@@ -7,6 +7,39 @@ const { AppError } = require("./../lib/errorHandler");
 
 const UserSchema = new mongoose.Schema(
   {
+    googleId: {
+      type: String,
+      // index: {
+      //   unique: true,
+      //   partialFilterExpression: {
+      //     googleId: {
+      //       $type: "string",
+      //     },
+      //   },
+      // },
+    },
+    facebookId: {
+      type: String,
+      // index: {
+      //   unique: true,
+      //   partialFilterExpression: {
+      //     facebookId: {
+      //       $type: "string",
+      //     },
+      //   },
+      // },
+    },
+    appleId: {
+      type: String,
+      // index: {
+      //   unique: true,
+      //   partialFilterExpression: {
+      //     facebookId: {
+      //       $type: "string",
+      //     },
+      //   },
+      // },
+    },
     verified: {
       type: Boolean,
       required: true,
@@ -36,6 +69,9 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: ["user", "admin"],
       default: "user",
+    },
+    pic: {
+      type: String,
     },
   },
   { timestamps: { createdAt: "added", updatedAt: "updated" } }
