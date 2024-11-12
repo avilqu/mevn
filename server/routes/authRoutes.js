@@ -4,7 +4,7 @@ const passport = require("passport");
 
 const { AppError } = require("./../lib/errorHandler");
 const { mailer } = require("./../lib/mailer");
-const User = require("./../config/db").mongoose.model("user");
+const User = require("./../lib/db").mongoose.model("user");
 const { auth, authAdmin } = require("./../lib/authGuards");
 
 const login = (strategy) => {

@@ -4,13 +4,13 @@ const http = require("http");
 const https = require("https");
 const fs = require("fs");
 
-require("./config/init");
-require("./config/db");
+require("./lib/init");
+require("./lib/db");
 require("./models/user");
-require("./config/passport");
+require("./lib/passport");
 
 const { errorHandler } = require("./lib/errorHandler");
-const { cookieSession } = require("./config/cookies");
+const { cookieSession } = require("./lib/cookies");
 
 const app = express();
 // app.use(express.static(__dirname + '/public'));

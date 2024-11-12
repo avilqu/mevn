@@ -1,5 +1,5 @@
 const env = process.env.NODE_ENV;
-const config = require("./config.json");
+const config = require("./../config/config.json");
 
 if (env === "dev" || env === "test" || env === "prod") {
   Object.keys(config[env]).forEach(
