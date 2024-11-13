@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useAlertStore } from "@/stores/alert";
-import { useAuthStore } from "@/stores/auth";
 
 axios.interceptors.response.use(function (res) {
   return res.data;
@@ -10,7 +9,7 @@ const apiClient = {
   async login(credentials) {
     const alertStore = useAlertStore();
     try {
-      let res = await axios.post("/api/login", credentials);
+      const res = await axios.post("/api/login", credentials);
       if (res.status === "error") alertStore.error(res.message);
       return res;
     } catch (e) {
@@ -20,7 +19,7 @@ const apiClient = {
 
   async logout() {
     try {
-      let res = await axios.get("/api/logout");
+      const res = await axios.get("/api/logout");
       return res;
     } catch (e) {
       return e;
@@ -30,7 +29,7 @@ const apiClient = {
   async sendPasswordToken(email) {
     const alertStore = useAlertStore();
     try {
-      let res = await axios.post("/api/user/reset-password", { email });
+      const res = await axios.post("/api/user/reset-password", { email });
       if (res.status === "success") alertStore.success(res.message);
       else alertStore.error(res.message);
       return res.data;
@@ -42,7 +41,7 @@ const apiClient = {
   async createPassword(id, token, password) {
     const alertStore = useAlertStore();
     try {
-      let res = await axios.post("/api/user/" + id + "/password/" + token, {
+      const res = await axios.post(`/api/user/${id}/password/${token}`, {
         password,
       });
       if (res.status === "success") alertStore.success(res.message);
@@ -70,7 +69,7 @@ const apiClient = {
   async getUserList() {
     const alertStore = useAlertStore();
     try {
-      let res = await axios.get("/api/user/list");
+      const res = await axios.get("/api/user/list");
       if (res.status === "error") alertStore.error(res.message);
       return res.data.users;
     } catch (e) {
@@ -81,7 +80,7 @@ const apiClient = {
   async getUser(id) {
     const alertStore = useAlertStore();
     try {
-      let res = await axios.get("/api/user/" + id);
+      const res = await axios.get(`/api/user/${id}`);
       if (res.status === "error") alertStore.error(res.message);
       return res.data.user;
     } catch (e) {
@@ -91,7 +90,7 @@ const apiClient = {
 
   async getActiveUser() {
     try {
-      let res = await axios.get("/api/user/profile");
+      const res = await axios.get("/api/user/profile");
       return res;
     } catch (e) {
       return e;
@@ -100,13 +99,10 @@ const apiClient = {
 
   async updateUser(user) {
     const alertStore = useAlertStore();
-    const authStore = useAuthStore();
     try {
-      let res = await axios.post("/api/user/" + user._id + "/update", user);
+      const res = await axios.post(`/api/user/${user._id}/update`, user);
       if (res.status === "error") return alertStore.error(res.message);
       else alertStore.success(res.message);
-      res = await axios.get("/api/user/profile");
-      authStore.update(res.data.user);
       return res.data.user;
     } catch (e) {
       return e;
@@ -114,14 +110,12 @@ const apiClient = {
   },
 
   async deleteUser(id) {
-    const authStore = useAuthStore();
+    const alertStore = useAlertStore();
     try {
-      const alertStore = useAlertStore();
-      let res = await axios.get("/api/user/" + id + "/delete");
+      const res = await axios.get(`/api/user/${id}/delete`);
       if (res.status === "error") return alertStore.error(res.message);
       else alertStore.success(res.message);
-      authStore.logout();
-      return res.data;
+      return res.data.user;
     } catch (e) {
       return e;
     }

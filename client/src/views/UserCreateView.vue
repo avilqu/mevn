@@ -31,7 +31,6 @@
               v-model="state.email"
             />
             <div class="form-group">
-              <!-- <label for="role-selection">Role: </label> -->
               <select
                 class="form-select p-3 __input-bottom"
                 :class="{
