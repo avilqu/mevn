@@ -41,13 +41,6 @@ const UserSchema = new mongoose.Schema(
   { timestamps: { createdAt: "added", updatedAt: "updated" } }
 );
 
-UserSchema.methods.toJSON = function () {
-  const user = this;
-  const userObject = user.toObject();
-  delete userObject.password;
-  return userObject;
-};
-
 UserSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
