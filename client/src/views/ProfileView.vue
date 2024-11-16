@@ -92,15 +92,25 @@
           <button
             class="btn btn-outline-success btn-block"
             @click="updateUser()"
+            :disabled="state.isLoading"
           >
-            Save
+            <span
+              class="spinner-border spinner-border-sm"
+              :hidden="!state.isLoading"
+            ></span>
+            <span :hidden="state.isLoading">Save</span>
           </button>
           &nbsp;
           <button
             class="btn btn-outline-danger btn-block"
             @click="deleteUser()"
+            :disabled="state.isLoading"
           >
-            Delete
+            <span
+              class="spinner-border spinner-border-sm"
+              :hidden="!state.isLoading"
+            ></span>
+            <span :hidden="state.isLoading">Delete</span>
           </button>
         </div>
       </div>
@@ -119,19 +129,24 @@ import DateDisplay from "@/components/DateDisplay";
 const state = reactive({
   user: {},
   displayMode: "",
+  isLoading: false,
 });
 
 const route = useRoute();
 const authStore = useAuthStore();
 
 async function updateUser() {
+  state.isLoading = true;
   await apiClient.updateUser(state.user);
   state.displayMode = "";
+  state.isLoading = false;
 }
 
 async function deleteUser() {
+  state.isLoading = true;
   await apiClient.deleteUser(state.user._id);
   state.displayMode = "";
+  state.isLoading = false;
   router.push("/user/list");
 }
 

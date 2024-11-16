@@ -27,8 +27,13 @@
             <button
               class="btn btn-outline-success mt-4"
               @click.prevent="createPassword()"
+              :disabled="state.isLoading"
             >
-              Save
+              <span
+                class="spinner-border spinner-border-sm"
+                :hidden="!state.isLoading"
+              ></span>
+              <span :hidden="state.isLoading">Save</span>
             </button>
           </form>
         </div>
@@ -47,6 +52,7 @@ import apiClient from "@/lib/apiClient";
 const state = reactive({
   password: "",
   confirmation: "",
+  isLoading: false,
 });
 
 const rules = {
@@ -60,14 +66,16 @@ const rules = {
 const v$ = useVuelidate(rules, state);
 const route = useRoute();
 
-function createPassword() {
+async function createPassword() {
+  state.isLoading = true;
   this.v$.$validate();
   if (!this.v$.$invalid)
-    apiClient.createPassword(
+    await apiClient.createPassword(
       route.params.id,
       route.params.token,
       state.password
     );
+  state.isLoading = false;
 }
 </script>
 

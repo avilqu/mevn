@@ -47,8 +47,13 @@
             <button
               class="btn btn-outline-success mt-4"
               @click.prevent="createUser()"
+              :disabled="state.isLoading"
             >
-              Send
+              <span
+                class="spinner-border spinner-border-sm"
+                :hidden="!state.isLoading"
+              ></span>
+              <span :hidden="state.isLoading">Send</span>
             </button>
           </form>
         </div>
@@ -67,6 +72,7 @@ const state = reactive({
   name: "",
   email: "",
   role: "",
+  isLoading: false,
 });
 
 const rules = {
@@ -77,14 +83,16 @@ const rules = {
 
 const v$ = useVuelidate(rules, state);
 
-function createUser() {
+async function createUser() {
+  state.isLoading = true;
   this.v$.$validate();
   if (
     !this.v$.email.$invalid &&
     !this.v$.name.$invalid &&
     !this.v$.role.$invalid
   )
-    apiClient.createUser(state, "admin");
+    await apiClient.createUser(state, "admin");
+  state.isLoading = false;
 }
 </script>
 

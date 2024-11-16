@@ -35,8 +35,13 @@
               <button
                 class="btn btn-outline-success mt-4"
                 @click.prevent="login()"
+                :disabled="state.isLoading"
               >
-                Login
+                <span
+                  class="spinner-border spinner-border-sm"
+                  :hidden="!state.isLoading"
+                ></span>
+                <span :hidden="state.isLoading">Login</span>
               </button>
               <p class="mt-5 mb-3 text-muted">
                 <span
@@ -96,8 +101,13 @@
               <button
                 class="btn btn-outline-success mt-4"
                 @click.prevent="sendPasswordToken()"
+                :disabled="state.isLoading"
               >
-                Send
+                <span
+                  class="spinner-border spinner-border-sm"
+                  :hidden="!state.isLoading"
+                ></span>
+                <span :hidden="state.isLoading">Send</span>
               </button>
               <p
                 class="mt-5 mb-3 text-muted __link"
@@ -139,8 +149,13 @@
               <button
                 class="btn btn-outline-success mt-4"
                 @click.prevent="createUser()"
+                :disabled="state.isLoading"
               >
-                Register
+                <span
+                  class="spinner-border spinner-border-sm"
+                  :hidden="!state.isLoading"
+                ></span>
+                <span :hidden="state.isLoading">Register</span>
               </button>
               <p
                 class="mt-5 mb-3 text-muted __link"
@@ -165,6 +180,7 @@ import apiClient from "@/lib/apiClient";
 
 const state = reactive({
   displayMode: "login",
+  isLoading: false,
   loginCredentials: {
     email: "",
     password: "",
@@ -191,14 +207,16 @@ const rules = {
 const v$ = useVuelidate(rules, state);
 const authStore = useAuthStore();
 
-function login() {
+async function login() {
+  state.isLoading = true;
   this.v$.loginCredentials.email.$touch();
   this.v$.loginCredentials.password.$touch();
   if (
     !this.v$.loginCredentials.email.$invalid &&
     !this.v$.loginCredentials.password.$invalid
   )
-    authStore.login(state.loginCredentials);
+    await authStore.login(state.loginCredentials);
+  state.isLoading = false;
 }
 
 function oAuthLogin(strategy) {
@@ -206,6 +224,7 @@ function oAuthLogin(strategy) {
 }
 
 async function createUser() {
+  state.isLoading = true;
   this.v$.registerCredentials.email.$touch();
   this.v$.registerCredentials.name.$touch();
   if (
@@ -213,12 +232,15 @@ async function createUser() {
     !this.v$.registerCredentials.name.$invalid
   )
     await apiClient.createUser(state.registerCredentials);
+  state.isLoading = false;
 }
 
 async function sendPasswordToken() {
+  state.isLoading = true;
   this.v$.passwordTokenEmail.$touch();
   if (!this.v$.passwordTokenEmail.$invalid)
     await apiClient.sendPasswordToken(state.passwordTokenEmail);
+  state.isLoading = false;
 }
 </script>
 
