@@ -17,7 +17,7 @@ const login = (strategy) => {
           if (err) return next(err);
           else if (strategy == "local")
             res.json({ status: "success", data: { user } });
-          else res.redirect("http://localhost:8080/?auth");
+          else res.redirect(`${process.env.CLIENT_URL}/?auth`);
           user.updateLastConnected();
         });
       }
