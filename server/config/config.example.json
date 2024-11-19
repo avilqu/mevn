@@ -46,11 +46,11 @@
   },
 
   "common": {
-    "CONF_MAILER_NAME": "MEVN",
-    "CONF_MAILER_NAME_SHORT": "MEVN",
-    "CONF_MAILER_NAME_SENDER": "avilqu@gmail.com",
-    "CONF_MAILER_NAME_SUBJECT_ACTIVATION": "MEVN | Activate your account",
-    "CONF_MAILER_NAME_SUBJECT_PASSWORD_RESET": "MEVN | Reset your password",
+    "MAILER_NAME": "MEVN",
+    "MAILER_NAME_SHORT": "MEVN",
+    "MAILER_SENDER": "avilqu@gmail.com",
+    "MAILER_SUBJECT_ACTIVATION": "MEVN | Activate your account",
+    "MAILER_SUBJECT_PASSWORD_RESET": "MEVN | Reset your password",
     "ERR_DEFAULT": "Something went wrong.",
     "ERR_INVALID_TOKEN": "Invalid token.",
     "ERR_NOT_LOGGED": "Not logged in.",
