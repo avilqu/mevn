@@ -48,7 +48,7 @@
   "common": {
     "MAILER_NAME": "MEVN",
     "MAILER_NAME_SHORT": "MEVN",
-    "MAILER_SENDER": "avilqu@gmail.com",
+    "MAILER_SENDER": "XXX",
     "MAILER_SUBJECT_ACTIVATION": "MEVN | Activate your account",
     "MAILER_SUBJECT_PASSWORD_RESET": "MEVN | Reset your password",
     "ERR_DEFAULT": "Something went wrong.",
