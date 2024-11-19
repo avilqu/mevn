@@ -214,6 +214,7 @@ async function login() {
 }
 
 function oAuthLogin(strategy) {
+  state.isLoading = true;
   window.location.href = `/api/login/${strategy}`;
 }
 
