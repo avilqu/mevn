@@ -1,6 +1,5 @@
 const nodemailer = require("nodemailer");
 const User = require("../lib/init").mongoose.model("user");
-const strings = require("../config/strings");
 
 const transport = nodemailer.createTransport({
   host: process.env.MAILER_HOST,
@@ -12,9 +11,9 @@ const transport = nodemailer.createTransport({
 });
 
 const options = {
-  name: strings.MAILER_NAME,
-  short: strings.MAILER_NAME_SHORT,
-  sender: strings.MAILER_SENDER,
+  name: process.env.MAILER_NAME,
+  short: process.env.MAILER_NAME_SHORT,
+  sender: process.env.MAILER_SENDER,
 };
 
 const header =
@@ -84,7 +83,7 @@ const mailer = {
     const response = await transport.sendMail({
       from: '"' + options.short + '" <' + options.sender + ">",
       to: args.email,
-      subject: strings.MAILER_SUBJECT_ACTIVATION,
+      subject: process.env.MAILER_SUBJECT_ACTIVATION,
       html: message,
     });
   },
@@ -110,7 +109,7 @@ const mailer = {
     await transport.sendMail({
       from: '"' + options.short + '" <' + options.sender + ">",
       to: args.email,
-      subject: strings.MAILER_SUBJECT_PASSWORD_RESET,
+      subject: process.env.MAILER_SUBJECT_PASSWORD_RESET,
       html: message,
     });
   },

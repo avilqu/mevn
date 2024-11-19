@@ -3,8 +3,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
 
-const strings = require("../config/strings");
-
 const UserSchema = new mongoose.Schema(
   {
     googleId: String,
@@ -62,7 +60,7 @@ UserSchema.methods.verifyToken = function (token) {
   try {
     return jwt.verify(token, secret);
   } catch (e) {
-    throw new Error(strings.ERR_INVALID_TOKEN);
+    throw new Error(process.env.ERR_INVALID_TOKEN);
   }
 };
 

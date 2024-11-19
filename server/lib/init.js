@@ -5,6 +5,9 @@ if (env === "dev" || env === "test" || env === "prod") {
   Object.keys(config[env]).forEach(
     (key) => (process.env[key] = config[env][key])
   );
+  Object.keys(config["common"]).forEach(
+    (key) => (process.env[key] = config["common"][key])
+  );
 }
 
 // mongodb init

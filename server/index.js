@@ -8,7 +8,7 @@ require("./lib/init");
 require("./models/user");
 require("./lib/passport");
 
-const { errorHandler } = require("./lib/errorHandler");
+const { errorHandler } = require("./lib/middleware");
 const { cookieSession } = require("./lib/init");
 
 const app = express();

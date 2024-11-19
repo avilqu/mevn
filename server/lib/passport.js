@@ -5,7 +5,6 @@ const GoogleStrategy = require("passport-google-oidc");
 const FacebookStrategy = require("passport-facebook");
 
 const User = mongoose.model("user");
-const strings = require("../config/strings");
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -22,13 +21,13 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await User.findOne({ email: email });
-        if (!user) throw new Error(strings.ERR_WRONG_CREDENTIALS);
+        if (!user) throw new Error(process.env.ERR_WRONG_CREDENTIALS);
         else if (!user.password && user.googleId)
-          throw new Error(strings.ERR_GOOGLE_USER);
+          throw new Error(process.env.ERR_GOOGLE_USER);
         else if (!user.password && !user.googleId)
-          throw new Error(strings.ERR_UNVERIFIED_USER);
+          throw new Error(process.env.ERR_UNVERIFIED_USER);
         else if (!user.validPassword(password))
-          throw new Error(strings.ERR_WRONG_CREDENTIALS);
+          throw new Error(process.env.ERR_WRONG_CREDENTIALS);
         else return done(null, user);
       } catch (e) {
         return done(e);

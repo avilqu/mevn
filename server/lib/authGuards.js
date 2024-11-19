@@ -1,8 +1,6 @@
-const strings = require("../config/strings");
-
 const auth = (req, res, next) => {
   if (!req.user) {
-    throw new Error(strings.ERR_NOT_LOGGED);
+    throw new Error(process.env.ERR_NOT_LOGGED);
   }
   return next();
 };
@@ -20,7 +18,7 @@ const authAdmin = (req, res, next) => {
   )
     return next();
   else if (req.user.role != "admin") {
-    throw new Error(strings.ERR_UNAUTHORIZED);
+    throw new Error(process.env.ERR_UNAUTHORIZED);
   }
 
   next();
