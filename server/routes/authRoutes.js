@@ -181,12 +181,22 @@ router.get(
   })
 );
 
+router.get(
+  "/login/facebook",
+  passport.authenticate("facebook", {
+    authType: "reauthenticate",
+    scope: ["public_profile", "email"],
+  })
+);
+
 router.get("/logout", (req, res, next) => {
   req.logout(() => res.json({ status: "success" }));
 });
 
 router.post("/login", login("local"));
 router.get("/login/google/callback", login("google"));
+router.get("/login/facebook/callback", login("facebook"));
+
 router.post("/user/register", createUser);
 router.get("/user/profile", auth, getActiveUser);
 router.post("/user/create", auth, authAdmin, createUser);

@@ -9,7 +9,6 @@ const UserSchema = new mongoose.Schema(
   {
     googleId: String,
     facebookId: String,
-    appleId: String,
     lastConnected: Date,
     verified: {
       type: Boolean,

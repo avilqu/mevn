@@ -69,12 +69,6 @@
                 @click="oAuthLogin('google')"
               />
               <fa
-                :icon="['fab', 'apple']"
-                size="3x"
-                class="__link text-muted p-3"
-                @click="oAuthLogin('apple')"
-              />
-              <fa
                 :icon="['fab', 'facebook']"
                 size="3x"
                 class="__link text-muted p-3"
