@@ -4,7 +4,12 @@ const passport = require("passport");
 
 const { mailer } = require("../lib/mailer");
 const User = require("../lib/init").mongoose.model("user");
-const { auth, authAdmin, checkMongoId } = require("../lib/middleware");
+const {
+  auth,
+  authAdmin,
+  checkMongoId,
+  maintenanceMode,
+} = require("../lib/middleware");
 
 const login = (strategy) => {
   return (req, res, next) => {
@@ -25,32 +30,6 @@ const login = (strategy) => {
   };
 };
 
-const getUserList = async (req, res, next) => {
-  try {
-    const users = await User.find();
-    res.json({
-      status: "success",
-      data: { users },
-    });
-  } catch (e) {
-    return next(e);
-  }
-};
-
-const getUser = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ _id: req.params.id });
-    if (!user) throw new Error(process.env.ERR_NO_USER);
-    else
-      res.json({
-        status: "success",
-        data: { user },
-      });
-  } catch (e) {
-    return next(e);
-  }
-};
-
 const getActiveUser = async (req, res) => {
   res.json({ status: "success", data: { user: req.user } });
 };
@@ -59,19 +38,17 @@ const sendPasswordToken = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) throw new Error(process.env.ERR_NO_USER);
-    else {
-      const token = user.generateToken();
-      await mailer.resetPassword({
-        email: user.email,
-        baseUrl: req.headers.host,
-        id: user.id,
-        token: token,
-      });
-      return res.json({
-        status: "success",
-        message: process.env.INFO_PASSWORD_RESET_LINK,
-      });
-    }
+    const token = user.generateToken();
+    await mailer.resetPassword({
+      email: user.email,
+      baseUrl: req.headers.host,
+      id: user.id,
+      token: token,
+    });
+    return res.json({
+      status: "success",
+      message: process.env.INFO_PASSWORD_RESET_LINK,
+    });
   } catch (e) {
     return next(e);
   }
@@ -116,7 +93,7 @@ const createUser = async (req, res, next) => {
       });
 
     await user.save();
-    const token = user.generateToken();
+    const token = user.generateToken("10d");
     await mailer.newUser({
       name: user.name,
       email: user.email,
@@ -167,6 +144,7 @@ const deleteUser = async (req, res, next) => {
 
 router.get(
   "/login/google",
+  maintenanceMode,
   passport.authenticate("google", {
     scope: ["profile", "email"],
   })
@@ -174,8 +152,8 @@ router.get(
 
 router.get(
   "/login/facebook",
+  maintenanceMode,
   passport.authenticate("facebook", {
-    authType: "reauthenticate",
     scope: ["public_profile", "email"],
   })
 );
@@ -185,15 +163,21 @@ router.get("/logout", (req, res, next) => {
 });
 
 router.post("/login", login("local"));
-router.get("/login/google/callback", login("google"));
-router.get("/login/facebook/callback", login("facebook"));
+router.get(
+  process.env.GOOGLE_CLIENT_CALLBACK,
+  maintenanceMode,
+  login("google")
+);
+router.get(
+  process.env.FACEBOOK_CLIENT_CALLBACK,
+  maintenanceMode,
+  login("facebook")
+);
 
-router.post("/user/register", createUser);
+router.post("/user/register", maintenanceMode, createUser);
 router.get("/user/profile", auth, getActiveUser);
 router.post("/user/create", authAdmin, createUser);
-router.post("/user/reset-password", sendPasswordToken);
-router.get("/user/list", authAdmin, getUserList);
-router.get("/user/:id", authAdmin, checkMongoId, getUser);
+router.post("/user/reset-password", maintenanceMode, sendPasswordToken);
 router.post("/user/:id/update", authAdmin, checkMongoId, updateUser);
 router.get("/user/:id/delete", authAdmin, checkMongoId, deleteUser);
 router.post("/user/:id/password/:token", checkMongoId, createPassword);

@@ -1,13 +1,13 @@
 <template>
   <div class="row">
-    <div class="col-md-10">
+    <div class="col-lg-6">
       <div v-if="route.path != '/profile'" class="mb-4">
         <router-link to="/user/list" class="__link text-muted"
           >Back to list</router-link
         >
       </div>
       <div class="col-sm-12">
-        <h2>{{ state.user.name }}</h2>
+        <h1>{{ state.user.name }}</h1>
         <p class="text-secondary">ID: {{ state.user._id }}</p>
 
         <br />
@@ -18,10 +18,8 @@
               <td class="p-3"><strong>User name</strong></td>
               <td v-if="state.displayMode == 'edit'">
                 <input
-                  type="name"
-                  id="userName"
+                  type="text"
                   class="form-control"
-                  required
                   v-model="state.user.name"
                 />
               </td>
@@ -137,14 +135,14 @@ const authStore = useAuthStore();
 
 async function updateUser() {
   state.isLoading = true;
-  await apiClient.updateUser(state.user);
+  await apiClient.updateItem("user", state.user);
   state.displayMode = "";
   state.isLoading = false;
 }
 
 async function deleteUser() {
   state.isLoading = true;
-  await apiClient.deleteUser(state.user._id);
+  await apiClient.deleteItem("user", state.user._id);
   state.displayMode = "";
   state.isLoading = false;
   router.push("/user/list");
@@ -152,7 +150,7 @@ async function deleteUser() {
 
 async function refresh() {
   if (route.path == "/profile") state.user = authStore.user;
-  else state.user = await apiClient.getUser(route.params.id);
+  else state.user = await apiClient.getItem("user", route.params.id);
 }
 
 watch(route, refresh);

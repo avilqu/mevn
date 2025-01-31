@@ -66,28 +66,6 @@ const apiClient = {
     }
   },
 
-  async getUserList() {
-    const alertStore = useAlertStore();
-    try {
-      const res = await axios.get("/api/user/list");
-      if (res.status === "error") alertStore.error(res.message);
-      return res.data.users;
-    } catch (e) {
-      return e;
-    }
-  },
-
-  async getUser(id) {
-    const alertStore = useAlertStore();
-    try {
-      const res = await axios.get(`/api/user/${id}`);
-      if (res.status === "error") alertStore.error(res.message);
-      return res.data.user;
-    } catch (e) {
-      return e;
-    }
-  },
-
   async getActiveUser() {
     try {
       const res = await axios.get("/api/user/profile");
@@ -97,25 +75,59 @@ const apiClient = {
     }
   },
 
-  async updateUser(user) {
+  async getItem(model, id) {
     const alertStore = useAlertStore();
     try {
-      const res = await axios.post(`/api/user/${user._id}/update`, user);
-      if (res.status === "error") return alertStore.error(res.message);
-      else alertStore.success(res.message);
-      return res.data.user;
+      const res = await axios.get(`/api/${model}/${id}`);
+      if (res.status === "error") alertStore.error(res.message);
+      return res.data.item;
     } catch (e) {
       return e;
     }
   },
 
-  async deleteUser(id) {
+  async getItemList(model) {
     const alertStore = useAlertStore();
     try {
-      const res = await axios.get(`/api/user/${id}/delete`);
+      const res = await axios.get(`/api/${model}/list`);
+      if (res.status === "error") alertStore.error(res.message);
+      return res.data.items;
+    } catch (e) {
+      return e;
+    }
+  },
+
+  async createItem(model, item) {
+    const alertStore = useAlertStore();
+    try {
+      const res = await axios.post(`/api/${model}/create`, item);
+      if (res.status === "success") alertStore.success(res.message);
+      else alertStore.error(res.message);
+      return res.data.item;
+    } catch (e) {
+      return e;
+    }
+  },
+
+  async updateItem(model, item) {
+    const alertStore = useAlertStore();
+    try {
+      const res = await axios.post(`/api/${model}/${item._id}/update`, item);
       if (res.status === "error") return alertStore.error(res.message);
       else alertStore.success(res.message);
-      return res.data.user;
+      return res.data.item;
+    } catch (e) {
+      return e;
+    }
+  },
+
+  async deleteItem(model, id) {
+    const alertStore = useAlertStore();
+    try {
+      const res = await axios.get(`/api/${model}/${id}/delete`);
+      if (res.status === "error") return alertStore.error(res.message);
+      else alertStore.success(res.message);
+      return res.data.item;
     } catch (e) {
       return e;
     }

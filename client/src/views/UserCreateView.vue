@@ -10,12 +10,10 @@
           </p>
           <form class="text-center p-4">
             <input
-              type="name"
-              id="registerName"
+              type="text"
               class="form-control p-3 __input-top"
               :class="{ 'is-invalid': v$.name.$error === true }"
               placeholder="Name"
-              required
               autofocus
               v-model="state.name"
             />
@@ -27,7 +25,6 @@
                 'is-invalid': v$.email.$error === true,
               }"
               placeholder="Email address"
-              required
               v-model="state.email"
             />
             <div class="form-group">
@@ -85,13 +82,13 @@ const v$ = useVuelidate(rules, state);
 
 async function createUser() {
   state.isLoading = true;
-  this.v$.$validate();
+  v$.value.$validate();
   if (
-    !this.v$.email.$invalid &&
-    !this.v$.name.$invalid &&
-    !this.v$.role.$invalid
+    !v$.value.email.$invalid &&
+    !v$.value.name.$invalid &&
+    !v$.value.role.$invalid
   )
-    await apiClient.createUser(state, "admin");
+    await apiClient.createUser(state, true);
   state.isLoading = false;
 }
 </script>

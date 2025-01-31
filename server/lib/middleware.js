@@ -13,7 +13,7 @@ const errorHandler = (err, req, res, next) => {
 
 const checkMongoId = (req, res, next) => {
   if (!/^[0-9a-fA-F]{24}$/.test(req.params.id))
-    throw new Error(process.env.ERR_NO_USER);
+    throw new Error(process.env.ERR_NO_ITEM);
   else return next();
 };
 
@@ -43,4 +43,16 @@ const authAdmin = (req, res, next) => {
   next();
 };
 
-module.exports = { auth, authAdmin, errorHandler, checkMongoId };
+const maintenanceMode = (req, res, next) => {
+  if (process.env.MAINTENANCE_MODE === "true")
+    throw new Error(process.env.ERR_MAINTENANCE_MODE);
+  return next();
+};
+
+module.exports = {
+  auth,
+  authAdmin,
+  errorHandler,
+  checkMongoId,
+  maintenanceMode,
+};

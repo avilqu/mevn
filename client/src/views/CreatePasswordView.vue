@@ -7,21 +7,17 @@
           <form class="text-center p-4">
             <input
               type="password"
-              id="inputPassword"
               class="form-control p-3 __input-top"
               :class="{ 'is-invalid': v$.password.$error === true }"
               placeHolder="New password"
-              required
               autofocus
               v-model="state.password"
             />
             <input
               type="password"
-              id="inputPasswordConfirmation"
               class="form-control p-3 __input-bottom"
               :class="{ 'is-invalid': v$.confirmation.$error === true }"
               placeHolder="Password confirmation"
-              required
               v-model="state.confirmation"
             />
             <button
@@ -68,8 +64,8 @@ const route = useRoute();
 
 async function createPassword() {
   state.isLoading = true;
-  this.v$.$validate();
-  if (!this.v$.$invalid)
+  v$.value.$validate();
+  if (!v$.value.$invalid)
     await apiClient.createPassword(
       route.params.id,
       route.params.token,

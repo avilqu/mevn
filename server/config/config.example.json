@@ -2,20 +2,24 @@
   "dev": {
     "NODE_ENV": "dev",
     "CLIENT_URL": "http://localhost:8080",
-    "API_URL": "https://localhost:3443/api",
+    "API_URL": "http://localhost:3000/api",
+    "MONGODB_URI": "mongodb://localhost:27017/mevn-dev",
     "HTTP_PORT": 3000,
-    "HTTPS_PORT": 3443,
-    "MONGODB_URI": "mongodb://localhost:27017/db-dev",
-    "MAILER_HOST": "smtp.gmail.com",
-    "MAILER_PORT": 587,
+    "MAINTENANCE_MODE": false,
+
+    "MAILER_HOST": "xxx",
+    "MAILER_PORT": 465,
     "MAILER_USER": "xxx",
     "MAILER_PASS": "xxx",
-    "GOOGLE_CLIENT_ID": "XXX",
-    "GOOGLE_CLIENT_SECRET": "XXX",
-    "GOOGLE_CLIENT_CALLBACK": "XXX",
-    "FACEBOOK_CLIENT_ID": "XXX",
-    "FACEBOOK_CLIENT_SECRET": "XXX",
-    "FACEBOOK_CLIENT_CALLBACK": "XXX",
+
+    "GOOGLE_CLIENT_ID": "xxx",
+    "GOOGLE_CLIENT_SECRET": "xxx",
+    "GOOGLE_CLIENT_CALLBACK": "/login/google/callback",
+
+    "FACEBOOK_CLIENT_ID": "xxx",
+    "FACEBOOK_CLIENT_SECRET": "xxx",
+    "FACEBOOK_CLIENT_CALLBACK": "/login/facebook/callback",
+
     "COOKIE_KEY_1": "xxx",
     "COOKIE_KEY_2": "xxx",
     "COOKIE_KEY_3": "xxx",
@@ -24,21 +28,25 @@
 
   "prod": {
     "NODE_ENV": "prod",
-    "CLIENT_URL": "http://localhost:8080",
-    "API_URL": "https://localhost:3443/api",
-    "HTTP_PORT": 80,
-    "HTTPS_PORT": 443,
-    "MONGODB_URI": "mongodb://localhost:27017/db",
-    "MAILER_HOST": "smtp.gmail.com",
-    "MAILER_PORT": 587,
+    "CLIENT_URL": "https://test.avilba.com",
+    "API_URL": "https://test.avilba.com/api",
+    "MONGODB_URI": "mongodb://localhost:27017/mevn",
+    "HTTP_PORT": 3080,
+    "MAINTENANCE_MODE": false,
+
+    "MAILER_HOST": "xxx",
+    "MAILER_PORT": 465,
     "MAILER_USER": "xxx",
     "MAILER_PASS": "xxx",
-    "GOOGLE_CLIENT_ID": "XXX",
-    "GOOGLE_CLIENT_SECRET": "XXX",
-    "GOOGLE_CLIENT_CALLBACK": "XXX",
-    "FACEBOOK_CLIENT_ID": "XXX",
-    "FACEBOOK_CLIENT_SECRET": "XXX",
-    "FACEBOOK_CLIENT_CALLBACK": "XXX",
+
+    "GOOGLE_CLIENT_ID": "xxx",
+    "GOOGLE_CLIENT_SECRET": "xxx",
+    "GOOGLE_CLIENT_CALLBACK": "/login/google/callback",
+
+    "FACEBOOK_CLIENT_ID": "xxx",
+    "FACEBOOK_CLIENT_SECRET": "xxx",
+    "FACEBOOK_CLIENT_CALLBACK": "/login/facebook/callback",
+
     "COOKIE_KEY_1": "xxx",
     "COOKIE_KEY_2": "xxx",
     "COOKIE_KEY_3": "xxx",
@@ -48,10 +56,12 @@
   "common": {
     "MAILER_NAME": "MEVN",
     "MAILER_NAME_SHORT": "MEVN",
-    "MAILER_SENDER": "XXX",
+    "MAILER_SENDER": "avilqu@gmail.com",
     "MAILER_SUBJECT_ACTIVATION": "MEVN | Activate your account",
     "MAILER_SUBJECT_PASSWORD_RESET": "MEVN | Reset your password",
+
     "ERR_DEFAULT": "Something went wrong.",
+    "ERR_MAINTENANCE_MODE": "This function is currently disabled.",
     "ERR_INVALID_TOKEN": "Invalid token.",
     "ERR_NOT_LOGGED": "Not logged in.",
     "ERR_UNAUTHORIZED": "Unauthorized.",
@@ -64,11 +74,16 @@
     "ERR_INVALID_PASSWORD": "Password must be at least 6 characters.",
     "ERR_INVALID_EMAIL": "Email address is invalid.",
     "ERR_INVALID_NAME": "Name is needed.",
+    "ERR_NO_ITEM": "Item not found.",
+
     "INFO_ACTIVATION_LINK": "An activation link was sent by email.",
     "INFO_USER_ACTIVATED": "User is activated. You can now login.",
     "INFO_PASSWORD_RESET_LINK": "A reset link was sent by email.",
     "INFO_PASSWORD_SAVED": "Password was saved.",
     "INFO_USER_SAVED": "User was saved.",
-    "INFO_USER_DELETED": "User was deleted."
+    "INFO_USER_DELETED": "User was deleted.",
+    "INFO_ITEM_CREATED": "Item was created.",
+    "INFO_ITEM_DELETED": "Item was deleted.",
+    "INFO_ITEM_SAVED": "Item was saved."
   }
 }

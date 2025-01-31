@@ -11,25 +11,21 @@
               <h1 class="h2 mb-5 mt-3">Sign in</h1>
               <input
                 type="email"
-                id="inputEmail"
                 class="form-control p-3 __input-top"
                 :class="{
                   'is-invalid': v$.loginCredentials.email.$error === true,
                 }"
                 placeholder="Email address"
-                required
                 autofocus
                 v-model="state.loginCredentials.email"
               />
               <input
                 type="password"
-                id="inputPassword"
                 class="form-control p-3 __input-bottom"
                 :class="{
                   'is-invalid': v$.loginCredentials.password.$error === true,
                 }"
                 placeholder="Password"
-                required
                 v-model="state.loginCredentials.password"
               />
               <button
@@ -84,11 +80,9 @@
               </p>
               <input
                 type="email"
-                id="resetEmail"
                 class="form-control p-3"
                 :class="{ 'is-invalid': v$.passwordTokenEmail.$error === true }"
                 placeholder="Email address"
-                required
                 autofocus
                 v-model="state.passwordTokenEmail"
               />
@@ -118,26 +112,22 @@
                 sent by email.
               </p>
               <input
-                type="name"
-                id="registerName"
+                type="text"
                 class="form-control p-3 __input-top"
                 :class="{
                   'is-invalid': v$.registerCredentials.name.$error === true,
                 }"
                 placeholder="Name"
-                required
                 autofocus
                 v-model="state.registerCredentials.name"
               />
               <input
                 type="email"
-                id="registerEmail"
                 class="form-control p-3 __input-bottom"
                 :class="{
                   'is-invalid': v$.registerCredentials.email.$error === true,
                 }"
                 placeholder="Email address"
-                required
                 v-model="state.registerCredentials.email"
               />
               <button
@@ -203,28 +193,27 @@ const authStore = useAuthStore();
 
 async function login() {
   state.isLoading = true;
-  this.v$.loginCredentials.email.$touch();
-  this.v$.loginCredentials.password.$touch();
+  v$.value.loginCredentials.email.$touch();
+  v$.value.loginCredentials.password.$touch();
   if (
-    !this.v$.loginCredentials.email.$invalid &&
-    !this.v$.loginCredentials.password.$invalid
+    !v$.value.loginCredentials.email.$invalid &&
+    !v$.value.loginCredentials.password.$invalid
   )
     await authStore.login(state.loginCredentials);
   state.isLoading = false;
 }
 
 function oAuthLogin(strategy) {
-  state.isLoading = true;
   window.location.href = `/api/login/${strategy}`;
 }
 
 async function createUser() {
   state.isLoading = true;
-  this.v$.registerCredentials.email.$touch();
-  this.v$.registerCredentials.name.$touch();
+  v$.value.registerCredentials.email.$touch();
+  v$.value.registerCredentials.name.$touch();
   if (
-    !this.v$.registerCredentials.email.$invalid &&
-    !this.v$.registerCredentials.name.$invalid
+    !v$.value.registerCredentials.email.$invalid &&
+    !v$.value.registerCredentials.name.$invalid
   )
     await apiClient.createUser(state.registerCredentials);
   state.isLoading = false;
@@ -232,8 +221,8 @@ async function createUser() {
 
 async function sendPasswordToken() {
   state.isLoading = true;
-  this.v$.passwordTokenEmail.$touch();
-  if (!this.v$.passwordTokenEmail.$invalid)
+  v$.value.passwordTokenEmail.$touch();
+  if (!v$.value.passwordTokenEmail.$invalid)
     await apiClient.sendPasswordToken(state.passwordTokenEmail);
   state.isLoading = false;
 }

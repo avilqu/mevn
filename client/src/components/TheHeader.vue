@@ -5,42 +5,49 @@
       MEVN
     </router-link>
 
-    <div v-if="authStore.user.role == 'admin'">
-      <ul class="nav">
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link text-light dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Admin
-          </a>
-          <ul class="dropdown-menu">
-            <li><h5 class="dropdown-header">Users</h5></li>
-            <li>
-              <router-link
-                to="/user/list"
-                class="dropdown-item nav-link text-muted __link"
-                href="#"
-              >
-                User list
-              </router-link>
-            </li>
-            <li>
-              <router-link
-                to="/user/create"
-                class="dropdown-item nav-link text-muted __link"
-                href="#"
-              >
-                Create user
-              </router-link>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+    <ul class="nav" v-if="authStore.user._id">
+      <li class="nav-item dropdown" v-if="authStore.user.role == 'admin'">
+        <a
+          class="nav-link text-muted dropdown-toggle"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Admin
+        </a>
+        <ul class="dropdown-menu">
+          <li><h5 class="dropdown-header">Users</h5></li>
+          <li>
+            <router-link
+              to="/user/list"
+              class="dropdown-item nav-link text-muted __link"
+              href="#"
+            >
+              User list
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              to="/user/create"
+              class="dropdown-item nav-link text-muted __link"
+              href="#"
+            >
+              Create user
+            </router-link>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <router-link
+          to="/items/list"
+          class="nav-link text-muted __link"
+          href="#"
+        >
+          Items
+        </router-link>
+      </li>
+    </ul>
 
     <div class="dropdown nav ms-auto" v-if="authStore.user._id">
       <button

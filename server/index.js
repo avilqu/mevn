@@ -1,11 +1,10 @@
 const express = require("express");
 const passport = require("passport");
 const http = require("http");
-const https = require("https");
-const fs = require("fs");
 
 require("./lib/init");
 require("./models/user");
+require("./models/item");
 require("./lib/passport");
 
 const { errorHandler } = require("./lib/middleware");
@@ -33,33 +32,15 @@ app.use(function (req, res, next) {
 });
 
 const authRoutes = require("./routes/authRoutes");
+const itemRoutes = require("./routes/itemRoutes");
 
-app.use("/api", [authRoutes]);
-
-app.get("*", (req, res) => {
-  res.sendFile(`${process.cwd()}/client/dist/index.html`);
-});
-
+app.use("/api", [authRoutes, itemRoutes]);
 app.use(errorHandler);
 
 let httpServer = http.createServer(app);
-let httpsServer = https.createServer(
-  {
-    key: fs.readFileSync("./server/ssl/key.pem", "utf-8"),
-    cert: fs.readFileSync("./server/ssl/cert.pem", "utf-8"),
-    ca: fs.readFileSync("./server/ssl/chain.pem", "utf-8"),
-  },
-  app
-);
 
 httpServer.listen(process.env.HTTP_PORT, () => {
   console.log(
     `Server started on port ${process.env.HTTP_PORT} (${process.env.NODE_ENV}).`
-  );
-});
-
-httpsServer.listen(process.env.HTTPS_PORT, () => {
-  console.log(
-    `Secure server started on port ${process.env.HTTPS_PORT} (${process.env.NODE_ENV}).`
   );
 });

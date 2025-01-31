@@ -1,8 +1,7 @@
 <template>
   <div class="row">
-    <div class="col">
-      <h2 class="mb-5">User list</h2>
-
+    <div class="col-lg-10">
+      <h1 class="mb-5">User list</h1>
       <table class="table table-hover table-dark">
         <thead class="table-secondary">
           <tr>
@@ -15,7 +14,7 @@
         </thead>
         <tbody>
           <tr
-            @click="getUser(user._id)"
+            @click="router.push(`/user/${user._id}`)"
             v-for="user in state.userList"
             :key="user._id"
             class="__pointer"
@@ -42,11 +41,7 @@ const state = reactive({
   userList: [],
 });
 
-function getUser(id) {
-  router.push("/user/" + id);
-}
-
 onMounted(async () => {
-  state.userList = await apiClient.getUserList();
+  state.userList = await apiClient.getItemList("user");
 });
 </script>

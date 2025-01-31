@@ -10,3 +10,14 @@
 .__clear-header {
   margin-top: 80px;
 }
+
+td.__button-cell {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+tr.text-muted td,
+tr.text-muted th {
+  color: inherit;
+}
