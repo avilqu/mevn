@@ -136,6 +136,7 @@ const authStore = useAuthStore();
 async function updateUser() {
   state.isLoading = true;
   await apiClient.updateItem("user", state.user);
+  authStore.update(authStore.user);
   state.displayMode = "";
   state.isLoading = false;
 }

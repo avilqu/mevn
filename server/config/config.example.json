@@ -28,8 +28,8 @@
 
   "prod": {
     "NODE_ENV": "prod",
-    "CLIENT_URL": "https://test.avilba.com",
-    "API_URL": "https://test.avilba.com/api",
+    "CLIENT_URL": "xxx",
+    "API_URL": "xxx/api",
     "MONGODB_URI": "mongodb://localhost:27017/mevn",
     "HTTP_PORT": 3080,
     "MAINTENANCE_MODE": false,
