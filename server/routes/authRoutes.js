@@ -163,13 +163,9 @@ router.get("/logout", (req, res, next) => {
 });
 
 router.post("/login", login("local"));
+router.get(process.env.GOOGLE_OAUTH_CALLBACK, maintenanceMode, login("google"));
 router.get(
-  process.env.GOOGLE_CLIENT_CALLBACK,
-  maintenanceMode,
-  login("google")
-);
-router.get(
-  process.env.FACEBOOK_CLIENT_CALLBACK,
+  process.env.FACEBOOK_OAUTH_CALLBACK,
   maintenanceMode,
   login("facebook")
 );

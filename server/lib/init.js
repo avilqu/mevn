@@ -1,18 +1,6 @@
-// environment variables
-const env = process.env.NODE_ENV;
-const config = require("../config/config.json");
-if (env === "dev" || env === "test" || env === "prod") {
-  Object.keys(config[env]).forEach(
-    (key) => (process.env[key] = config[env][key])
-  );
-  Object.keys(config["common"]).forEach(
-    (key) => (process.env[key] = config["common"][key])
-  );
-}
-
 // mongodb init
 const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URL);
 
 // cookies config
 const keys = [

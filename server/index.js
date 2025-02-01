@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const http = require("http");
+require("dotenv").config();
 
 require("./lib/init");
 require("./models/user");

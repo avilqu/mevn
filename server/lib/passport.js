@@ -39,9 +39,9 @@ passport.use(
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.API_URL + process.env.GOOGLE_CLIENT_CALLBACK,
+      clientID: process.env.GOOGLE_OAUTH_ID,
+      clientSecret: process.env.GOOGLE_OAUTH_SECRET,
+      callbackURL: process.env.API_URL + process.env.GOOGLE_OAUTH_CALLBACK,
     },
     async (accessToken, profile, done) => {
       try {
@@ -79,9 +79,9 @@ passport.use(
 passport.use(
   new FacebookStrategy(
     {
-      clientID: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: process.env.API_URL + process.env.FACEBOOK_CLIENT_CALLBACK,
+      clientID: process.env.FACEBOOK_OAUTH_ID,
+      clientSecret: process.env.FACEBOOK_OAUTH_SECRET,
+      callbackURL: process.env.API_URL + process.env.FACEBOOK_OAUTH_CALLBACK,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
