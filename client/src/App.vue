@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div
-      v-if="$env.VUE_APP_MAINTENANCE_MODE"
+      v-if="$env.VUE_APP_MAINTENANCE_MODE === 'true'"
       class="alert-warning alert fade show text-center mt-3"
     >
       {{ $env.VUE_APP_TXT_MAINTENANCE_MODE }}
