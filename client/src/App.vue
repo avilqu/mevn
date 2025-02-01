@@ -16,6 +16,8 @@
 
 <script setup>
 import { onUpdated } from "vue";
+import { onMounted } from "vue";
+
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
@@ -29,6 +31,10 @@ function oAuthCallbackCheck() {
 }
 
 onUpdated(oAuthCallbackCheck);
+
+onMounted(() => {
+  console.log(process.env);
+});
 </script>
 
 <style>

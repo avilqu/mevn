@@ -2,7 +2,7 @@
   <nav class="navbar fixed-top bg-black shadow">
     <router-link to="/" class="navbar-brand">
       <img src="@/assets/logo.png" />
-      MEVN
+      {{ env.VUE_APP_NAME }}
     </router-link>
 
     <ul class="nav" v-if="authStore.user._id">
@@ -14,17 +14,19 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          Admin
+          {{ env.VUE_APP_TXT_ADMIN }}
         </a>
         <ul class="dropdown-menu">
-          <li><h5 class="dropdown-header">Users</h5></li>
+          <li>
+            <h5 class="dropdown-header">{{ env.VUE_APP_TXT_USERS }}</h5>
+          </li>
           <li>
             <router-link
               to="/user/list"
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              User list
+              {{ env.VUE_APP_TXT_USER_LIST }}
             </router-link>
           </li>
           <li>
@@ -33,7 +35,7 @@
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              Create user
+              {{ env.VUE_APP_TXT_CREATE_USER }}
             </router-link>
           </li>
         </ul>
@@ -44,7 +46,7 @@
           class="nav-link text-muted __link"
           href="#"
         >
-          Items
+          {{ env.VUE_APP_TXT_ITEMS }}
         </router-link>
       </li>
     </ul>
@@ -63,7 +65,7 @@
             to="/profile"
             class="dropdown-item nav-link text-muted __link"
           >
-            Profile
+            {{ env.VUE_APP_TXT_PROFILE }}
           </router-link>
         </li>
         <li>
@@ -71,7 +73,7 @@
             class="dropdown-item nav-link text-muted __link"
             @click="authStore.logout()"
           >
-            Logout
+            {{ env.VUE_APP_TXT_LOGOUT }}
           </a>
         </li>
       </ul>
@@ -83,7 +85,7 @@
         to="/login"
         class="btn btn-outline-success"
       >
-        Login
+        {{ env.VUE_APP_TXT_LOGIN }}
       </router-link>
     </div>
   </nav>
@@ -95,6 +97,7 @@ import { useAuthStore } from "@/stores/auth";
 
 const authStore = useAuthStore();
 const route = useRoute();
+const env = process.env;
 </script>
 
 <style>

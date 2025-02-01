@@ -2,20 +2,22 @@
   <div class="row">
     <div class="col-lg-6">
       <div v-if="route.path != '/profile'" class="mb-4">
-        <router-link to="/user/list" class="__link text-muted"
-          >Back to list</router-link
-        >
+        <router-link to="/user/list" class="__link text-muted">
+          {{ env.VUE_APP_TXT_BACK_TO_LIST }}
+        </router-link>
       </div>
       <div class="col-sm-12">
         <h1>{{ state.user.name }}</h1>
-        <p class="text-secondary">ID: {{ state.user._id }}</p>
+        <p class="text-secondary">{{ state.user._id }}</p>
 
         <br />
 
         <table class="table table-striped table-borderless">
           <tbody>
             <tr>
-              <td class="p-3"><strong>User name</strong></td>
+              <td class="p-3">
+                <strong>{{ env.VUE_APP_TXT_NAME }}</strong>
+              </td>
               <td v-if="state.displayMode == 'edit'">
                 <input
                   type="text"
@@ -29,12 +31,16 @@
             </tr>
 
             <tr>
-              <td class="p-3"><strong>Email address</strong></td>
+              <td class="p-3">
+                <strong>{{ env.VUE_APP_TXT_EMAIL_ADDRESS }}</strong>
+              </td>
               <td class="align-middle text-muted">{{ state.user.email }}</td>
             </tr>
 
             <tr>
-              <td class="p-3"><strong>Role</strong></td>
+              <td class="p-3">
+                <strong>{{ env.VUE_APP_TXT_ROLE }}</strong>
+              </td>
               <td
                 v-if="
                   state.displayMode == 'edit' && authStore.user.role == 'admin'
@@ -45,8 +51,10 @@
                   id="role-selection"
                   v-model="state.user.role"
                 >
-                  <option value="user" selected>User</option>
-                  <option value="admin">Admin</option>
+                  <option value="user" selected>
+                    {{ env.VUE_APP_TXT_ROLE_USER }}
+                  </option>
+                  <option value="admin">{{ env.VUE_APP_TXT_ADMIN }}</option>
                 </select>
               </td>
               <td v-else class="align-middle text-muted">
@@ -55,21 +63,27 @@
             </tr>
 
             <tr>
-              <td class="p-3"><strong>Added on</strong></td>
+              <td class="p-3">
+                <strong>{{ env.VUE_APP_TXT_ADDED_ON }}</strong>
+              </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.added" />
               </td>
             </tr>
 
             <tr>
-              <td class="p-3"><strong>Last updated</strong></td>
+              <td class="p-3">
+                <strong>{{ env.VUE_APP_TXT_UPDATED_ON }}</strong>
+              </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.updated" />
               </td>
             </tr>
 
             <tr>
-              <td class="p-3"><strong>Last connected</strong></td>
+              <td class="p-3">
+                <strong>{{ env.VUE_APP_TXT_CONNECTED_ON }}</strong>
+              </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.lastConnected" />
               </td>
@@ -84,7 +98,7 @@
           class="btn btn-outline-secondary btn-block"
           @click="state.displayMode = 'edit'"
         >
-          Edit
+          {{ env.VUE_APP_TXT_EDIT }}
         </button>
         <div v-else>
           <button
@@ -96,7 +110,7 @@
               class="spinner-border spinner-border-sm"
               :hidden="!state.isLoading"
             ></span>
-            <span :hidden="state.isLoading">Save</span>
+            <span :hidden="state.isLoading">{{ env.VUE_APP_TXT_SAVE }}</span>
           </button>
           &nbsp;
           <button
@@ -108,7 +122,7 @@
               class="spinner-border spinner-border-sm"
               :hidden="!state.isLoading"
             ></span>
-            <span :hidden="state.isLoading">Delete</span>
+            <span :hidden="state.isLoading">{{ env.VUE_APP_TXT_DELETE }}</span>
           </button>
         </div>
       </div>
@@ -132,6 +146,7 @@ const state = reactive({
 
 const route = useRoute();
 const authStore = useAuthStore();
+const env = process.env;
 
 async function updateUser() {
   state.isLoading = true;

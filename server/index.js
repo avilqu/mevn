@@ -41,7 +41,5 @@ app.use(errorHandler);
 let httpServer = http.createServer(app);
 
 httpServer.listen(process.env.HTTP_PORT, () => {
-  console.log(
-    `Server started on port ${process.env.HTTP_PORT} (${process.env.NODE_ENV}).`
-  );
+  console.log(`Server started on port ${process.env.HTTP_PORT}.`);
 });
