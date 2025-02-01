@@ -2,7 +2,7 @@
   <nav class="navbar fixed-top bg-black shadow">
     <router-link to="/" class="navbar-brand">
       <img src="@/assets/logo.png" />
-      {{ env.VUE_APP_NAME }}
+      {{ $env.VUE_APP_NAME }}
     </router-link>
 
     <ul class="nav" v-if="authStore.user._id">
@@ -14,11 +14,11 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          {{ env.VUE_APP_TXT_ADMIN }}
+          {{ $env.VUE_APP_TXT_ADMIN }}
         </a>
         <ul class="dropdown-menu">
           <li>
-            <h5 class="dropdown-header">{{ env.VUE_APP_TXT_USERS }}</h5>
+            <h5 class="dropdown-header">{{ $env.VUE_APP_TXT_USERS }}</h5>
           </li>
           <li>
             <router-link
@@ -26,7 +26,7 @@
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              {{ env.VUE_APP_TXT_USER_LIST }}
+              {{ $env.VUE_APP_TXT_USER_LIST }}
             </router-link>
           </li>
           <li>
@@ -35,7 +35,7 @@
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              {{ env.VUE_APP_TXT_CREATE_USER }}
+              {{ $env.VUE_APP_TXT_CREATE_USER }}
             </router-link>
           </li>
         </ul>
@@ -46,7 +46,7 @@
           class="nav-link text-muted __link"
           href="#"
         >
-          {{ env.VUE_APP_TXT_ITEMS }}
+          {{ $env.VUE_APP_TXT_ITEMS }}
         </router-link>
       </li>
     </ul>
@@ -65,7 +65,7 @@
             to="/profile"
             class="dropdown-item nav-link text-muted __link"
           >
-            {{ env.VUE_APP_TXT_PROFILE }}
+            {{ $env.VUE_APP_TXT_PROFILE }}
           </router-link>
         </li>
         <li>
@@ -73,7 +73,7 @@
             class="dropdown-item nav-link text-muted __link"
             @click="authStore.logout()"
           >
-            {{ env.VUE_APP_TXT_LOGOUT }}
+            {{ $env.VUE_APP_TXT_LOGOUT }}
           </a>
         </li>
       </ul>
@@ -85,7 +85,7 @@
         to="/login"
         class="btn btn-outline-success"
       >
-        {{ env.VUE_APP_TXT_LOGIN }}
+        {{ $env.VUE_APP_TXT_LOGIN }}
       </router-link>
     </div>
   </nav>
@@ -97,7 +97,6 @@ import { useAuthStore } from "@/stores/auth";
 
 const authStore = useAuthStore();
 const route = useRoute();
-const env = process.env;
 </script>
 
 <style>

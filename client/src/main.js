@@ -18,4 +18,5 @@ app.use(router);
 app.use(createPinia());
 // eslint-disable-next-line
 app.component("fa", FontAwesomeIcon);
+app.config.globalProperties.$env = process.env;
 app.mount("#app");

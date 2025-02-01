@@ -8,14 +8,14 @@
               <img src="@/assets/logo.png" width="72" height="72" />
             </router-link>
             <div v-if="state.displayMode == 'login'">
-              <h1 class="h2 mb-5 mt-3">{{ env.VUE_APP_TXT_SIGN_IN }}</h1>
+              <h1 class="h2 mb-5 mt-3">{{ $env.VUE_APP_TXT_SIGN_IN }}</h1>
               <input
                 type="email"
                 class="form-control p-3 __input-top"
                 :class="{
                   'is-invalid': v$.loginCredentials.email.$error === true,
                 }"
-                :placeholder="env.VUE_APP_TXT_EMAIL_ADDRESS"
+                :placeholder="$env.VUE_APP_TXT_EMAIL_ADDRESS"
                 autofocus
                 v-model="state.loginCredentials.email"
               />
@@ -25,7 +25,7 @@
                 :class="{
                   'is-invalid': v$.loginCredentials.password.$error === true,
                 }"
-                :placeholder="env.VUE_APP_TXT_PASSWORD"
+                :placeholder="$env.VUE_APP_TXT_PASSWORD"
                 v-model="state.loginCredentials.password"
               />
               <button
@@ -38,7 +38,7 @@
                   :hidden="!state.isLoading"
                 ></span>
                 <span :hidden="state.isLoading">{{
-                  env.VUE_APP_TXT_LOGIN
+                  $env.VUE_APP_TXT_LOGIN
                 }}</span>
               </button>
               <p class="mt-5 mb-3 text-muted">
@@ -46,20 +46,20 @@
                   class="fw-light __link"
                   @click="state.displayMode = 'register'"
                 >
-                  {{ env.VUE_APP_TXT_REGISTER }}
+                  {{ $env.VUE_APP_TXT_REGISTER }}
                 </span>
                 |
                 <span
                   class="fw-light __link"
                   @click="state.displayMode = 'reset'"
                 >
-                  {{ env.VUE_APP_TXT_FORGOTTEN_PASSWORD }}
+                  {{ $env.VUE_APP_TXT_FORGOTTEN_PASSWORD }}
                 </span>
               </p>
 
               <div class="divider d-flex align-items-center my-4">
                 <p class="text-center mx-3 mb-0 text-secondary">
-                  {{ env.VUE_APP_TXT_OR }}
+                  {{ $env.VUE_APP_TXT_OR }}
                 </p>
               </div>
               <fa
@@ -78,16 +78,16 @@
 
             <div v-if="state.displayMode == 'reset'">
               <h1 class="h3 mb-5 mt-3">
-                {{ env.VUE_APP_TXT_SEND_PASSWORD_LINK }}
+                {{ $env.VUE_APP_TXT_SEND_PASSWORD_LINK }}
               </h1>
               <p class="my-5 text-muted">
-                {{ env.VUE_APP_TXT_PASSWORD_LINK_DETAILS }}
+                {{ $env.VUE_APP_TXT_PASSWORD_LINK_DETAILS }}
               </p>
               <input
                 type="email"
                 class="form-control p-3"
                 :class="{ 'is-invalid': v$.passwordTokenEmail.$error === true }"
-                :placeholder="env.VUE_APP_TXT_EMAIL_ADDRESS"
+                :placeholder="$env.VUE_APP_TXT_EMAIL_ADDRESS"
                 autofocus
                 v-model="state.passwordTokenEmail"
               />
@@ -101,21 +101,21 @@
                   :hidden="!state.isLoading"
                 ></span>
                 <span :hidden="state.isLoading">
-                  {{ env.VUE_APP_TXT_SEND }}
+                  {{ $env.VUE_APP_TXT_SEND }}
                 </span>
               </button>
               <p
                 class="mt-5 mb-3 text-muted __link"
                 @click="state.displayMode = 'login'"
               >
-                {{ env.VUE_APP_TXT_BACK_TO_LOGIN }}
+                {{ $env.VUE_APP_TXT_BACK_TO_LOGIN }}
               </p>
             </div>
 
             <div v-if="state.displayMode == 'register'">
               <h1 class="h3 mb-5 mt-3">New user</h1>
               <p class="my-5 text-muted">
-                {{ env.VUE_APP_TXT_PASSWORD_LINK_DETAILS }}
+                {{ $env.VUE_APP_TXT_PASSWORD_LINK_DETAILS }}
               </p>
               <input
                 type="text"
@@ -123,7 +123,7 @@
                 :class="{
                   'is-invalid': v$.registerCredentials.name.$error === true,
                 }"
-                :placeholder="env.VUE_APP_TXT_NAME"
+                :placeholder="$env.VUE_APP_TXT_NAME"
                 autofocus
                 v-model="state.registerCredentials.name"
               />
@@ -133,7 +133,7 @@
                 :class="{
                   'is-invalid': v$.registerCredentials.email.$error === true,
                 }"
-                :placeholder="env.VUE_APP_TXT_EMAIL_ADDRESS"
+                :placeholder="$env.VUE_APP_TXT_EMAIL_ADDRESS"
                 v-model="state.registerCredentials.email"
               />
               <button
@@ -146,14 +146,14 @@
                   :hidden="!state.isLoading"
                 ></span>
                 <span :hidden="state.isLoading">
-                  {{ env.VUE_APP_TXT_REGISTER }}
+                  {{ $env.VUE_APP_TXT_REGISTER }}
                 </span>
               </button>
               <p
                 class="mt-5 mb-3 text-muted __link"
                 @click="state.displayMode = 'login'"
               >
-                {{ env.VUE_APP_TXT_BACK_TO_LOGIN }}
+                {{ $env.VUE_APP_TXT_BACK_TO_LOGIN }}
               </p>
             </div>
           </form>
@@ -169,8 +169,6 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
 import { useAuthStore } from "@/stores/auth";
 import apiClient from "@/lib/apiClient";
-
-const env = process.env;
 
 const state = reactive({
   displayMode: "login",

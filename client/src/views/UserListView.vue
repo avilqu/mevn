@@ -5,11 +5,11 @@
       <table class="table table-hover table-dark">
         <thead class="table-secondary">
           <tr>
-            <th>{{ env.VUE_APP_TXT_NAME }}</th>
-            <th>{{ env.VUE_APP_TXT_EMAIL_ADDRESS }}</th>
-            <th>{{ env.VUE_APP_TXT_ROLE }}</th>
-            <th>{{ env.VUE_APP_TXT_ADDED_ON }}</th>
-            <th>{{ env.VUE_APP_TXT_CONNECTED_ON }}</th>
+            <th>{{ $env.VUE_APP_TXT_NAME }}</th>
+            <th>{{ $env.VUE_APP_TXT_EMAIL_ADDRESS }}</th>
+            <th>{{ $env.VUE_APP_TXT_ROLE }}</th>
+            <th>{{ $env.VUE_APP_TXT_ADDED_ON }}</th>
+            <th>{{ $env.VUE_APP_TXT_CONNECTED_ON }}</th>
           </tr>
         </thead>
         <tbody>
@@ -36,8 +36,6 @@ import { onMounted, reactive } from "vue";
 import router from "@/router";
 import apiClient from "@/lib/apiClient";
 import DateDisplay from "@/components/DateDisplay";
-
-const env = process.env;
 
 const state = reactive({
   userList: [],
