@@ -1,6 +1,12 @@
 <template>
   <div class="container-fluid">
-    <div v-if="route.path == '/login'">
+    <div
+      v-if="$env.VUE_APP_MAINTENANCE_MODE"
+      class="alert-warning alert fade show text-center mt-3"
+    >
+      {{ $env.VUE_APP_TXT_MAINTENANCE_MODE }}
+    </div>
+    <div v-else-if="route.path == '/login'">
       <AlertMessage />
       <router-view />
     </div>
