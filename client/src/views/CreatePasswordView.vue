@@ -1,3 +1,40 @@
+<script setup>
+import { reactive, computed } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { required, minLength, sameAs } from "@vuelidate/validators";
+import { useRoute } from "vue-router";
+import apiClient from "@/lib/apiClient";
+
+const state = reactive({
+  password: "",
+  confirmation: "",
+  isLoading: false,
+});
+
+const rules = {
+  password: { required, minLength: minLength(6) },
+  confirmation: {
+    required,
+    sameAs: sameAs(computed(() => state.password)),
+  },
+};
+
+const v$ = useVuelidate(rules, state);
+const route = useRoute();
+
+async function createPassword() {
+  state.isLoading = true;
+  v$.value.$validate();
+  if (!v$.value.$invalid)
+    await apiClient.createPassword(
+      route.params.id,
+      route.params.token,
+      state.password
+    );
+  state.isLoading = false;
+}
+</script>
+
 <template>
   <div class="row">
     <div class="col-xl-4 col-md-6 col-sm-9 mx-auto">
@@ -37,43 +74,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { reactive, computed } from "vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, minLength, sameAs } from "@vuelidate/validators";
-import { useRoute } from "vue-router";
-import apiClient from "@/lib/apiClient";
-
-const state = reactive({
-  password: "",
-  confirmation: "",
-  isLoading: false,
-});
-
-const rules = {
-  password: { required, minLength: minLength(6) },
-  confirmation: {
-    required,
-    sameAs: sameAs(computed(() => state.password)),
-  },
-};
-
-const v$ = useVuelidate(rules, state);
-const route = useRoute();
-
-async function createPassword() {
-  state.isLoading = true;
-  v$.value.$validate();
-  if (!v$.value.$invalid)
-    await apiClient.createPassword(
-      route.params.id,
-      route.params.token,
-      state.password
-    );
-  state.isLoading = false;
-}
-</script>
 
 <style>
 @import "@/assets/css/login.css";

@@ -1,3 +1,8 @@
+<script setup>
+import { useAlertStore } from "@/stores/alert";
+const alertStore = useAlertStore();
+</script>
+
 <template>
   <div
     v-if="alertStore.message"
@@ -15,10 +20,3 @@
     ></button>
   </div>
 </template>
-
-<script setup>
-import { useAlertStore } from "@/stores/alert";
-const alertStore = useAlertStore();
-</script>
-
-<style></style>

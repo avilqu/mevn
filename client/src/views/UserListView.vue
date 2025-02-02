@@ -1,3 +1,18 @@
+<script setup>
+import { onMounted, reactive } from "vue";
+import router from "@/router";
+import apiClient from "@/lib/apiClient";
+import DateDisplay from "@/components/DateDisplay";
+
+const state = reactive({
+  userList: [],
+});
+
+onMounted(async () => {
+  state.userList = await apiClient.getItemList("user");
+});
+</script>
+
 <template>
   <div class="row">
     <div class="col-lg-10">
@@ -30,18 +45,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { onMounted, reactive } from "vue";
-import router from "@/router";
-import apiClient from "@/lib/apiClient";
-import DateDisplay from "@/components/DateDisplay";
-
-const state = reactive({
-  userList: [],
-});
-
-onMounted(async () => {
-  state.userList = await apiClient.getItemList("user");
-});
-</script>

@@ -1,3 +1,37 @@
+<script setup>
+import { reactive } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
+import apiClient from "@/lib/apiClient";
+
+const state = reactive({
+  name: "",
+  email: "",
+  role: "",
+  isLoading: false,
+});
+
+const rules = {
+  name: { required },
+  email: { required, email },
+  role: { required },
+};
+
+const v$ = useVuelidate(rules, state);
+
+async function createUser() {
+  state.isLoading = true;
+  v$.value.$validate();
+  if (
+    !v$.value.email.$invalid &&
+    !v$.value.name.$invalid &&
+    !v$.value.role.$invalid
+  )
+    await apiClient.createUser(state, true);
+  state.isLoading = false;
+}
+</script>
+
 <template>
   <div class="row">
     <div class="col-xl-4 col-md-6 col-sm-9 mx-auto">
@@ -57,40 +91,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { reactive } from "vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, email } from "@vuelidate/validators";
-import apiClient from "@/lib/apiClient";
-
-const state = reactive({
-  name: "",
-  email: "",
-  role: "",
-  isLoading: false,
-});
-
-const rules = {
-  name: { required },
-  email: { required, email },
-  role: { required },
-};
-
-const v$ = useVuelidate(rules, state);
-
-async function createUser() {
-  state.isLoading = true;
-  v$.value.$validate();
-  if (
-    !v$.value.email.$invalid &&
-    !v$.value.name.$invalid &&
-    !v$.value.role.$invalid
-  )
-    await apiClient.createUser(state, true);
-  state.isLoading = false;
-}
-</script>
 
 <style>
 @import "@/assets/css/login.css";

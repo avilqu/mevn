@@ -1,3 +1,11 @@
+<script setup>
+import { useRoute } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
+const route = useRoute();
+</script>
+
 <template>
   <nav class="navbar fixed-top bg-black shadow">
     <router-link to="/" class="navbar-brand">
@@ -90,14 +98,6 @@
     </div>
   </nav>
 </template>
-
-<script setup>
-import { useRoute } from "vue-router";
-import { useAuthStore } from "@/stores/auth";
-
-const authStore = useAuthStore();
-const route = useRoute();
-</script>
 
 <style>
 @import "@/assets/css/header.css";

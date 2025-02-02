@@ -1,3 +1,76 @@
+<script setup>
+import { reactive } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
+import { useAuthStore } from "@/stores/auth";
+import apiClient from "@/lib/apiClient";
+
+const state = reactive({
+  displayMode: "login",
+  isLoading: false,
+  loginCredentials: {
+    email: "",
+    password: "",
+  },
+  registerCredentials: {
+    name: "",
+    email: "",
+  },
+  passwordTokenEmail: "",
+});
+
+const rules = {
+  loginCredentials: {
+    email: { required, email },
+    password: { required },
+  },
+  registerCredentials: {
+    name: { required },
+    email: { required, email },
+  },
+  passwordTokenEmail: { required, email },
+};
+
+const v$ = useVuelidate(rules, state);
+const authStore = useAuthStore();
+
+async function login() {
+  state.isLoading = true;
+  v$.value.loginCredentials.email.$touch();
+  v$.value.loginCredentials.password.$touch();
+  if (
+    !v$.value.loginCredentials.email.$invalid &&
+    !v$.value.loginCredentials.password.$invalid
+  )
+    await authStore.login(state.loginCredentials);
+  state.isLoading = false;
+}
+
+function oAuthLogin(strategy) {
+  window.location.href = `/api/login/${strategy}`;
+}
+
+async function createUser() {
+  state.isLoading = true;
+  v$.value.registerCredentials.email.$touch();
+  v$.value.registerCredentials.name.$touch();
+  if (
+    !v$.value.registerCredentials.email.$invalid &&
+    !v$.value.registerCredentials.name.$invalid
+  )
+    await apiClient.createUser(state.registerCredentials);
+  state.isLoading = false;
+}
+
+async function sendPasswordToken() {
+  state.isLoading = true;
+  v$.value.passwordTokenEmail.$touch();
+  if (!v$.value.passwordTokenEmail.$invalid)
+    await apiClient.sendPasswordToken(state.passwordTokenEmail);
+  state.isLoading = false;
+}
+</script>
+
 <template>
   <div class="row">
     <div class="col-xl-4 col-md-6 col-sm-9 mx-auto">
@@ -162,79 +235,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { reactive } from "vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, email } from "@vuelidate/validators";
-import { useAuthStore } from "@/stores/auth";
-import apiClient from "@/lib/apiClient";
-
-const state = reactive({
-  displayMode: "login",
-  isLoading: false,
-  loginCredentials: {
-    email: "",
-    password: "",
-  },
-  registerCredentials: {
-    name: "",
-    email: "",
-  },
-  passwordTokenEmail: "",
-});
-
-const rules = {
-  loginCredentials: {
-    email: { required, email },
-    password: { required },
-  },
-  registerCredentials: {
-    name: { required },
-    email: { required, email },
-  },
-  passwordTokenEmail: { required, email },
-};
-
-const v$ = useVuelidate(rules, state);
-const authStore = useAuthStore();
-
-async function login() {
-  state.isLoading = true;
-  v$.value.loginCredentials.email.$touch();
-  v$.value.loginCredentials.password.$touch();
-  if (
-    !v$.value.loginCredentials.email.$invalid &&
-    !v$.value.loginCredentials.password.$invalid
-  )
-    await authStore.login(state.loginCredentials);
-  state.isLoading = false;
-}
-
-function oAuthLogin(strategy) {
-  window.location.href = `/api/login/${strategy}`;
-}
-
-async function createUser() {
-  state.isLoading = true;
-  v$.value.registerCredentials.email.$touch();
-  v$.value.registerCredentials.name.$touch();
-  if (
-    !v$.value.registerCredentials.email.$invalid &&
-    !v$.value.registerCredentials.name.$invalid
-  )
-    await apiClient.createUser(state.registerCredentials);
-  state.isLoading = false;
-}
-
-async function sendPasswordToken() {
-  state.isLoading = true;
-  v$.value.passwordTokenEmail.$touch();
-  if (!v$.value.passwordTokenEmail.$invalid)
-    await apiClient.sendPasswordToken(state.passwordTokenEmail);
-  state.isLoading = false;
-}
-</script>
 
 <style>
 @import "@/assets/css/login.css";

@@ -8,5 +8,3 @@
     <code class="text-bg-secondary">oh you can format code too</code>
   </div>
 </template>
-
-<script setup></script>

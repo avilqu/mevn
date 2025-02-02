@@ -1,3 +1,8 @@
+<script setup>
+import { defineProps } from "vue";
+defineProps({ value: String });
+</script>
+
 <template>
   <p style="display: inline">
     {{
@@ -11,8 +16,3 @@
     }}
   </p>
 </template>
-
-<script setup>
-import { defineProps } from "vue";
-defineProps({ value: String });
-</script>

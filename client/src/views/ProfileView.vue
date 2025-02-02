@@ -1,3 +1,45 @@
+<script setup>
+import { reactive, onMounted, watch } from "vue";
+import router from "@/router";
+import { useRoute } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+import apiClient from "@/lib/apiClient";
+import DateDisplay from "@/components/DateDisplay";
+
+const state = reactive({
+  user: {},
+  displayMode: "",
+  isLoading: false,
+});
+
+const route = useRoute();
+const authStore = useAuthStore();
+
+async function updateUser() {
+  state.isLoading = true;
+  await apiClient.updateItem("user", state.user);
+  authStore.update(authStore.user);
+  state.displayMode = "";
+  state.isLoading = false;
+}
+
+async function deleteUser() {
+  state.isLoading = true;
+  await apiClient.deleteItem("user", state.user._id);
+  state.displayMode = "";
+  state.isLoading = false;
+  router.push("/user/list");
+}
+
+async function refresh() {
+  if (route.path == "/profile") state.user = authStore.user;
+  else state.user = await apiClient.getItem("user", route.params.id);
+}
+
+watch(route, refresh);
+onMounted(refresh);
+</script>
+
 <template>
   <div class="row">
     <div class="col-lg-6">
@@ -129,45 +171,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { reactive, onMounted, watch } from "vue";
-import router from "@/router";
-import { useRoute } from "vue-router";
-import { useAuthStore } from "@/stores/auth";
-import apiClient from "@/lib/apiClient";
-import DateDisplay from "@/components/DateDisplay";
-
-const state = reactive({
-  user: {},
-  displayMode: "",
-  isLoading: false,
-});
-
-const route = useRoute();
-const authStore = useAuthStore();
-
-async function updateUser() {
-  state.isLoading = true;
-  await apiClient.updateItem("user", state.user);
-  authStore.update(authStore.user);
-  state.displayMode = "";
-  state.isLoading = false;
-}
-
-async function deleteUser() {
-  state.isLoading = true;
-  await apiClient.deleteItem("user", state.user._id);
-  state.displayMode = "";
-  state.isLoading = false;
-  router.push("/user/list");
-}
-
-async function refresh() {
-  if (route.path == "/profile") state.user = authStore.user;
-  else state.user = await apiClient.getItem("user", route.params.id);
-}
-
-watch(route, refresh);
-onMounted(refresh);
-</script>
