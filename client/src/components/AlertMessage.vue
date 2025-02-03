@@ -7,7 +7,7 @@ const alertStore = useAlertStore();
   <div
     v-if="alertStore.message"
     :class="`alert-${alertStore.type}`"
-    class="alert alert-dismissible fade show text-center mt-3"
+    class="fixed-top alert alert-dismissible text-center __alert"
     role="alert"
   >
     {{ alertStore.message }}

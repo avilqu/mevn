@@ -1,20 +1,20 @@
 <script setup>
 import { onUpdated } from "vue";
-import { onMounted } from "vue";
-
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
+import { useAlertStore } from "@/stores/alert";
+
 const authStore = useAuthStore();
+const alertStore = useAlertStore();
 const route = useRoute();
 
 import TheHeader from "@/components/TheHeader.vue";
 import AlertMessage from "@/components/AlertMessage.vue";
 
-function oAuthCallbackCheck() {
+onUpdated(() => {
+  alertStore.reset();
   if (route.fullPath == "/?auth") authStore.oAuthCallback();
-}
-
-onUpdated(oAuthCallbackCheck);
+});
 </script>
 
 <template>

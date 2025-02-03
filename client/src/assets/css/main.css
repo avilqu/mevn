@@ -11,6 +11,11 @@
   margin-top: 80px;
 }
 
+.__alert {
+  margin: 6vh auto;
+  width: 75%;
+}
+
 td.__button-cell {
   display: flex;
   justify-content: flex-end;
