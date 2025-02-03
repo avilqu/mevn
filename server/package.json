@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "export NODE_ENV=dev && nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "Adrien Vilquin Barrajon",
