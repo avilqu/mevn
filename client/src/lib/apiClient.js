@@ -52,11 +52,11 @@ const apiClient = {
     }
   },
 
-  async createUser(user, mode) {
+  async createUser(user, admin = false) {
     const alertStore = useAlertStore();
     let res;
     try {
-      if (mode == "admin") res = await axios.post("/api/user/create", user);
+      if (admin) res = await axios.post("/api/user/create", user);
       else res = await axios.post("/api/user/register", user);
       if (res.status === "success") alertStore.success(res.message);
       else alertStore.error(res.message);
