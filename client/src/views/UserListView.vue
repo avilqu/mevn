@@ -16,7 +16,7 @@ onMounted(async () => {
 <template>
   <div class="row">
     <div class="col-lg-10">
-      <h1 class="mb-5">User list</h1>
+      <h1 class="mb-5">{{ $env.VUE_APP_TXT_USER_LIST }}</h1>
       <table class="table table-hover table-dark">
         <thead class="table-secondary">
           <tr>
