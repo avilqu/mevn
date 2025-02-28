@@ -1,22 +1,22 @@
 <script setup>
-import { reactive } from "vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, email } from "@vuelidate/validators";
-import { useAuthStore } from "@/stores/auth";
-import apiClient from "@/lib/apiClient";
+import { reactive } from 'vue';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email } from '@vuelidate/validators';
+import { useAuthStore } from '@/stores/auth';
+import apiClient from '@/lib/apiClient';
 
 const state = reactive({
-  displayMode: "login",
+  displayMode: 'login',
   isLoading: false,
   loginCredentials: {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   },
   registerCredentials: {
-    name: "",
-    email: "",
+    name: '',
+    email: '',
   },
-  passwordTokenEmail: "",
+  passwordTokenEmail: '',
 });
 
 const rules = {
@@ -237,5 +237,5 @@ async function sendPasswordToken() {
 </template>
 
 <style>
-@import "@/assets/css/login.css";
+@import '@/assets/css/login.css';
 </style>

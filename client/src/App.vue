@@ -1,19 +1,19 @@
 <script setup>
-import { onUpdated } from "vue";
-import { useRoute } from "vue-router";
-import { useAuthStore } from "@/stores/auth";
-import { useAlertStore } from "@/stores/alert";
+import { onUpdated } from 'vue';
+import { useRoute } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
+import { useAlertStore } from '@/stores/alert';
 
 const authStore = useAuthStore();
 const alertStore = useAlertStore();
 const route = useRoute();
 
-import TheHeader from "@/components/TheHeader.vue";
-import AlertMessage from "@/components/AlertMessage.vue";
+import TheHeader from '@/components/TheHeader.vue';
+import AlertMessage from '@/components/AlertMessage.vue';
 
 onUpdated(() => {
   alertStore.reset();
-  if (route.fullPath == "/?auth") authStore.oAuthCallback();
+  if (route.fullPath == '/?auth') authStore.oAuthCallback();
 });
 </script>
 
@@ -40,5 +40,5 @@ onUpdated(() => {
 </template>
 
 <style>
-@import "@/assets/css/main.css";
+@import '@/assets/css/main.css';
 </style>
