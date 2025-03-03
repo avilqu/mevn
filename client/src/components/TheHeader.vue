@@ -22,11 +22,11 @@ const route = useRoute();
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          {{ $env.VUE_APP_TXT_ADMIN }}
+          {{ $t("sections.admin") }}
         </a>
         <ul class="dropdown-menu">
           <li>
-            <h5 class="dropdown-header">{{ $env.VUE_APP_TXT_USERS }}</h5>
+            <h5 class="dropdown-header">{{ $t("sections.users.title") }}</h5>
           </li>
           <li>
             <router-link
@@ -34,7 +34,7 @@ const route = useRoute();
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              {{ $env.VUE_APP_TXT_USER_LIST }}
+              {{ $t("sections.users.list") }}
             </router-link>
           </li>
           <li>
@@ -43,7 +43,7 @@ const route = useRoute();
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              {{ $env.VUE_APP_TXT_CREATE_USER }}
+              {{ $t("sections.users.create") }}
             </router-link>
           </li>
         </ul>
@@ -54,7 +54,7 @@ const route = useRoute();
           class="nav-link text-muted __link"
           href="#"
         >
-          {{ $env.VUE_APP_TXT_ITEMS }}
+          {{ $t("sections.items") }}
         </router-link>
       </li>
     </ul>
@@ -73,7 +73,7 @@ const route = useRoute();
             to="/profile"
             class="dropdown-item nav-link text-muted __link"
           >
-            {{ $env.VUE_APP_TXT_PROFILE }}
+            {{ $t("sections.profile") }}
           </router-link>
         </li>
         <li>
@@ -81,7 +81,7 @@ const route = useRoute();
             class="dropdown-item nav-link text-muted __link"
             @click="authStore.logout()"
           >
-            {{ $env.VUE_APP_TXT_LOGOUT }}
+            {{ $t("actions.logout") }}
           </a>
         </li>
       </ul>
@@ -93,7 +93,7 @@ const route = useRoute();
         to="/login"
         class="btn btn-outline-success"
       >
-        {{ $env.VUE_APP_TXT_LOGIN }}
+        {{ $t("actions.login") }}
       </router-link>
     </div>
   </nav>

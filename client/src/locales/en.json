@@ -1,0 +1,53 @@
+{
+  "actions": {
+    "save": "Save",
+    "send": "Send",
+    "login": "Login",
+    "logout": "Logout",
+    "edit": "Edit",
+    "delete": "Delete",
+    "register": "Register",
+    "backToList": "Back to list",
+    "backToLogin": "Back to login",
+    "sendPasswordLink": "Send reset link"
+  },
+  "fields": {
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "role": "Role"
+  },
+  "roles": {
+    "user": "User",
+    "admin": "Admin"
+  },
+  "sections": {
+    "signIn": "Sign in",
+    "admin": "Admin",
+    "users": {
+      "new": "New user",
+      "create": "Create user",
+      "title": "Users",
+      "list": "User list"
+    },
+    "items": "Items",
+    "profile": "Profile"
+  },
+  "timestamps": {
+    "addedOn": "Added",
+    "updatedOn": "Updated",
+    "connectedOn": "Connected"
+  },
+  "auth": {
+    "createPassword": "Create password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "forgottenPassword": "Forgotten password?"
+  },
+  "misc": {
+    "or": "OR",
+    "passwordLinkDetails": "A secure link with instructions to create a new password will be sent by email.",
+    "newUserDetails": "A secure link will be sent to the registered email address to create a password. This link will be valid 24 hours.",
+    "maintenanceMode": "This website is currently under maintenance."
+  }
+}

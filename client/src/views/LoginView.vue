@@ -1,22 +1,22 @@
 <script setup>
-import { reactive } from 'vue';
-import { useVuelidate } from '@vuelidate/core';
-import { required, email } from '@vuelidate/validators';
-import { useAuthStore } from '@/stores/auth';
-import apiClient from '@/lib/apiClient';
+import { reactive } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
+import { useAuthStore } from "@/stores/auth";
+import apiClient from "@/lib/apiClient";
 
 const state = reactive({
-  displayMode: 'login',
+  displayMode: "login",
   isLoading: false,
   loginCredentials: {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   },
   registerCredentials: {
-    name: '',
-    email: '',
+    name: "",
+    email: "",
   },
-  passwordTokenEmail: '',
+  passwordTokenEmail: "",
 });
 
 const rules = {
@@ -81,14 +81,14 @@ async function sendPasswordToken() {
               <img src="@/assets/logo.png" width="72" height="72" />
             </router-link>
             <div v-if="state.displayMode == 'login'">
-              <h1 class="h2 mb-5 mt-3">{{ $env.VUE_APP_TXT_SIGN_IN }}</h1>
+              <h1 class="h2 mb-5 mt-3">{{ $t("sections.signIn") }}</h1>
               <input
                 type="email"
                 class="form-control p-3 __input-top"
                 :class="{
                   'is-invalid': v$.loginCredentials.email.$error === true,
                 }"
-                :placeholder="$env.VUE_APP_TXT_EMAIL_ADDRESS"
+                :placeholder="$t('fields.email')"
                 autofocus
                 v-model="state.loginCredentials.email"
               />
@@ -98,7 +98,7 @@ async function sendPasswordToken() {
                 :class="{
                   'is-invalid': v$.loginCredentials.password.$error === true,
                 }"
-                :placeholder="$env.VUE_APP_TXT_PASSWORD"
+                :placeholder="$t('fields.password')"
                 v-model="state.loginCredentials.password"
               />
               <button
@@ -110,29 +110,27 @@ async function sendPasswordToken() {
                   class="spinner-border spinner-border-sm"
                   :hidden="!state.isLoading"
                 ></span>
-                <span :hidden="state.isLoading">{{
-                  $env.VUE_APP_TXT_LOGIN
-                }}</span>
+                <span :hidden="state.isLoading">{{ $t("actions.login") }}</span>
               </button>
               <p class="mt-5 mb-3 text-muted">
                 <span
                   class="fw-light __link"
                   @click="state.displayMode = 'register'"
                 >
-                  {{ $env.VUE_APP_TXT_REGISTER }}
+                  {{ $t("actions.register") }}
                 </span>
                 |
                 <span
                   class="fw-light __link"
                   @click="state.displayMode = 'reset'"
                 >
-                  {{ $env.VUE_APP_TXT_FORGOTTEN_PASSWORD }}
+                  {{ $t("auth.forgottenPassword") }}
                 </span>
               </p>
 
               <div class="divider d-flex align-items-center my-4">
                 <p class="text-center mx-3 mb-0 text-secondary">
-                  {{ $env.VUE_APP_TXT_OR }}
+                  {{ $t("misc.or") }}
                 </p>
               </div>
               <fa
@@ -151,16 +149,16 @@ async function sendPasswordToken() {
 
             <div v-if="state.displayMode == 'reset'">
               <h1 class="h3 mb-5 mt-3">
-                {{ $env.VUE_APP_TXT_SEND_PASSWORD_LINK }}
+                {{ $t("actions.sendPasswordLink") }}
               </h1>
               <p class="my-5 text-muted">
-                {{ $env.VUE_APP_TXT_PASSWORD_LINK_DETAILS }}
+                {{ $t("misc.passwordLinkDetails") }}
               </p>
               <input
                 type="email"
                 class="form-control p-3"
                 :class="{ 'is-invalid': v$.passwordTokenEmail.$error === true }"
-                :placeholder="$env.VUE_APP_TXT_EMAIL_ADDRESS"
+                :placeholder="$t('fields.email')"
                 autofocus
                 v-model="state.passwordTokenEmail"
               />
@@ -174,21 +172,21 @@ async function sendPasswordToken() {
                   :hidden="!state.isLoading"
                 ></span>
                 <span :hidden="state.isLoading">
-                  {{ $env.VUE_APP_TXT_SEND }}
+                  {{ $t("actions.send") }}
                 </span>
               </button>
               <p
                 class="mt-5 mb-3 text-muted __link"
                 @click="state.displayMode = 'login'"
               >
-                {{ $env.VUE_APP_TXT_BACK_TO_LOGIN }}
+                {{ $t("actions.backToLogin") }}
               </p>
             </div>
 
             <div v-if="state.displayMode == 'register'">
-              <h1 class="h3 mb-5 mt-3">New user</h1>
+              <h1 class="h3 mb-5 mt-3">{{ $t("sections.users.new") }}</h1>
               <p class="my-5 text-muted">
-                {{ $env.VUE_APP_TXT_PASSWORD_LINK_DETAILS }}
+                {{ $t("misc.newUserDetails") }}
               </p>
               <input
                 type="text"
@@ -196,7 +194,7 @@ async function sendPasswordToken() {
                 :class="{
                   'is-invalid': v$.registerCredentials.name.$error === true,
                 }"
-                :placeholder="$env.VUE_APP_TXT_NAME"
+                :placeholder="$t('fields.name')"
                 autofocus
                 v-model="state.registerCredentials.name"
               />
@@ -206,7 +204,7 @@ async function sendPasswordToken() {
                 :class="{
                   'is-invalid': v$.registerCredentials.email.$error === true,
                 }"
-                :placeholder="$env.VUE_APP_TXT_EMAIL_ADDRESS"
+                :placeholder="$t('fields.email')"
                 v-model="state.registerCredentials.email"
               />
               <button
@@ -219,14 +217,14 @@ async function sendPasswordToken() {
                   :hidden="!state.isLoading"
                 ></span>
                 <span :hidden="state.isLoading">
-                  {{ $env.VUE_APP_TXT_REGISTER }}
+                  {{ $t("actions.register") }}
                 </span>
               </button>
               <p
                 class="mt-5 mb-3 text-muted __link"
                 @click="state.displayMode = 'login'"
               >
-                {{ $env.VUE_APP_TXT_BACK_TO_LOGIN }}
+                {{ $t("actions.backToLogin") }}
               </p>
             </div>
           </form>
@@ -237,5 +235,5 @@ async function sendPasswordToken() {
 </template>
 
 <style>
-@import '@/assets/css/login.css';
+@import "@/assets/css/login.css";
 </style>

@@ -45,7 +45,7 @@ onMounted(refresh);
     <div class="col-lg-6">
       <div v-if="route.path != '/profile'" class="mb-4">
         <router-link to="/user/list" class="__link text-muted">
-          {{ $env.VUE_APP_TXT_BACK_TO_LIST }}
+          {{ $t("actions.backToList") }}
         </router-link>
       </div>
       <div class="col-sm-12">
@@ -58,7 +58,7 @@ onMounted(refresh);
           <tbody>
             <tr>
               <td class="p-3">
-                <strong>{{ $env.VUE_APP_TXT_NAME }}</strong>
+                <strong>{{ $t("fields.name") }}</strong>
               </td>
               <td v-if="state.displayMode == 'edit'">
                 <input
@@ -74,14 +74,14 @@ onMounted(refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $env.VUE_APP_TXT_EMAIL_ADDRESS }}</strong>
+                <strong>{{ $t("fields.email") }}</strong>
               </td>
               <td class="align-middle text-muted">{{ state.user.email }}</td>
             </tr>
 
             <tr>
               <td class="p-3">
-                <strong>{{ $env.VUE_APP_TXT_ROLE }}</strong>
+                <strong>{{ $t("fields.role") }}</strong>
               </td>
               <td
                 v-if="
@@ -94,9 +94,9 @@ onMounted(refresh);
                   v-model="state.user.role"
                 >
                   <option value="user" selected>
-                    {{ $env.VUE_APP_TXT_ROLE_USER }}
+                    {{ $t("roles.user") }}
                   </option>
-                  <option value="admin">{{ $env.VUE_APP_TXT_ADMIN }}</option>
+                  <option value="admin">{{ $t("roles.admin") }}</option>
                 </select>
               </td>
               <td v-else class="align-middle text-muted">
@@ -106,7 +106,7 @@ onMounted(refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $env.VUE_APP_TXT_ADDED_ON }}</strong>
+                <strong>{{ $t("timestamps.addedOn") }}</strong>
               </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.added" />
@@ -115,7 +115,7 @@ onMounted(refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $env.VUE_APP_TXT_UPDATED_ON }}</strong>
+                <strong>{{ $t("timestamps.updatedOn") }}</strong>
               </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.updated" />
@@ -124,7 +124,7 @@ onMounted(refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $env.VUE_APP_TXT_CONNECTED_ON }}</strong>
+                <strong>{{ $t("timestamps.connectedOn") }}</strong>
               </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.lastConnected" />
@@ -140,7 +140,7 @@ onMounted(refresh);
           class="btn btn-outline-secondary btn-block"
           @click="state.displayMode = 'edit'"
         >
-          {{ $env.VUE_APP_TXT_EDIT }}
+          {{ $t("actions.edit") }}
         </button>
         <div v-else>
           <button
@@ -152,7 +152,7 @@ onMounted(refresh);
               class="spinner-border spinner-border-sm"
               :hidden="!state.isLoading"
             ></span>
-            <span :hidden="state.isLoading">{{ $env.VUE_APP_TXT_SAVE }}</span>
+            <span :hidden="state.isLoading">{{ $t("actions.save") }}</span>
           </button>
           &nbsp;
           <button
@@ -164,7 +164,7 @@ onMounted(refresh);
               class="spinner-border spinner-border-sm"
               :hidden="!state.isLoading"
             ></span>
-            <span :hidden="state.isLoading">{{ $env.VUE_APP_TXT_DELETE }}</span>
+            <span :hidden="state.isLoading">{{ $t("actions.delete") }}</span>
           </button>
         </div>
       </div>
