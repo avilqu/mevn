@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+const messages = require("../lib/messages");
 const { auth, checkMongoId } = require("../lib/middleware");
 
 const modelLoader = (req, res, next) => {
@@ -16,7 +17,7 @@ const createItem = async (req, res, next) => {
     return res.json({
       status: "success",
       data: { item },
-      message: process.env.INFO_ITEM_CREATED,
+      message: messages.info.itemCreated,
     });
   } catch (e) {
     return next(e);
@@ -28,11 +29,11 @@ const deleteItem = async (req, res, next) => {
     const item = await req.Item.findOneAndDelete({
       _id: req.params.id,
     });
-    if (!item) throw new Error(process.env.ERR_NO_ITEM);
+    if (!item) throw new Error(messages.errors.noItem);
     res.json({
       status: "success",
       data: { item },
-      message: process.env.INFO_ITEM_DELETED,
+      message: messages.info.itemDeleted,
     });
   } catch (e) {
     return next(e);
@@ -42,12 +43,12 @@ const deleteItem = async (req, res, next) => {
 const updateItem = async (req, res, next) => {
   try {
     const item = await req.Item.findOne({ _id: req.params.id });
-    if (!item) throw new Error(process.env.ERR_NO_ITEM);
+    if (!item) throw new Error(messages.errors.noItem);
     await item.updateOne(req.body);
     return res.json({
       status: "success",
       data: { item },
-      message: process.env.INFO_ITEM_SAVED,
+      message: messages.info.itemSaved,
     });
   } catch (e) {
     return next(e);
@@ -57,7 +58,7 @@ const updateItem = async (req, res, next) => {
 const getItem = async (req, res, next) => {
   try {
     const item = await req.Item.findOne({ _id: req.params.id });
-    if (!item) throw new Error(process.env.ERR_NO_ITEM);
+    if (!item) throw new Error(messages.errors.noItem);
     res.json({
       status: "success",
       data: { item },

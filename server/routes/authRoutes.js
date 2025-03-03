@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-
 const { mailer } = require("../lib/mailer");
 const User = require("../lib/init").mongoose.model("user");
+const messages = require("../lib/messages");
 const {
   auth,
   authAdmin,
@@ -37,7 +37,7 @@ const getActiveUser = async (req, res) => {
 const sendPasswordToken = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    if (!user) throw new Error(process.env.ERR_NO_USER);
+    if (!user) throw new Error(messages.errors.noUser);
     const token = user.generateToken();
     await mailer.resetPassword({
       email: user.email,
@@ -47,7 +47,7 @@ const sendPasswordToken = async (req, res, next) => {
     });
     return res.json({
       status: "success",
-      message: process.env.INFO_PASSWORD_RESET_LINK,
+      message: messages.info.passwordResetLink,
     });
   } catch (e) {
     return next(e);
@@ -57,7 +57,7 @@ const sendPasswordToken = async (req, res, next) => {
 const createPassword = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.params.id });
-    if (!user) throw new Error(process.env.ERR_NO_USER);
+    if (!user) throw new Error(messages.errors.noUser);
     else if (user.verifyToken(req.params.token)) {
       user.password = req.body.password;
       user.verified = true;
@@ -65,7 +65,7 @@ const createPassword = async (req, res, next) => {
       return res.json({
         status: "success",
         data: { user },
-        message: process.env.INFO_PASSWORD_SAVED,
+        message: messages.info.passwordSaved,
       });
     }
   } catch (e) {
@@ -76,7 +76,7 @@ const createPassword = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   try {
     let user = await User.findOne({ email: req.body.email });
-    if (user) throw new Error(process.env.ERR_EXISTING_USER);
+    if (user) throw new Error(messages.errors.existingUser);
     if (req.url == "/user/create")
       user = new User({
         name: req.body.name,
@@ -104,7 +104,7 @@ const createUser = async (req, res, next) => {
     return res.json({
       status: "success",
       data: { user },
-      message: process.env.INFO_ACTIVATION_LINK,
+      message: messages.info.activationLink,
     });
   } catch (e) {
     return next(e);
@@ -114,12 +114,12 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.params.id });
-    if (!user) throw new Error(process.env.ERR_NO_USER);
+    if (!user) throw new Error(messages.errors.noUser);
     await user.updateOne(req.body);
     return res.json({
       status: "success",
       data: { user },
-      message: process.env.INFO_USER_SAVED,
+      message: messages.info.userSaved,
     });
   } catch (e) {
     return next(e);
@@ -131,11 +131,11 @@ const deleteUser = async (req, res, next) => {
     const user = await User.findOneAndDelete({
       _id: req.params.id,
     });
-    if (!user) throw new Error(process.env.ERR_NO_USER);
+    if (!user) throw new Error(messages.errors.noUser);
     res.json({
       status: "success",
       data: { user },
-      message: process.env.INFO_USER_DELETED,
+      message: messages.info.userDeleted,
     });
   } catch (e) {
     return next(e);
