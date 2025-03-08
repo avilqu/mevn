@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, reactive } from "vue";
 import router from "@/router";
-import apiClient from "@/lib/apiClient";
+
 import DateDisplay from "@/components/DateDisplay";
+
+import apiClient from "@/lib/apiClient";
 
 const state = reactive({
   userList: [],

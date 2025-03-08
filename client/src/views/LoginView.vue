@@ -1,9 +1,13 @@
 <script setup>
 import { reactive } from "vue";
+
 import { useVuelidate } from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
-import { useAuthStore } from "@/stores/auth";
+
 import apiClient from "@/lib/apiClient";
+
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 
 const state = reactive({
   displayMode: "login",
@@ -32,7 +36,6 @@ const rules = {
 };
 
 const v$ = useVuelidate(rules, state);
-const authStore = useAuthStore();
 
 async function login() {
   state.isLoading = true;

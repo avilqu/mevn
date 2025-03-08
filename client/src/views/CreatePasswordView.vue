@@ -1,9 +1,12 @@
 <script setup>
 import { reactive, computed } from "vue";
 import { useVuelidate } from "@vuelidate/core";
-import { required, minLength, sameAs } from "@vuelidate/validators";
-import { useRoute } from "vue-router";
+
 import apiClient from "@/lib/apiClient";
+import { required, minLength, sameAs } from "@vuelidate/validators";
+
+import { useRoute } from "vue-router";
+const route = useRoute();
 
 const state = reactive({
   password: "",
@@ -20,7 +23,6 @@ const rules = {
 };
 
 const v$ = useVuelidate(rules, state);
-const route = useRoute();
 
 async function createPassword() {
   state.isLoading = true;

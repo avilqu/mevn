@@ -1,19 +1,21 @@
 <script setup>
 import { reactive, onMounted, watch } from "vue";
+
 import router from "@/router";
 import { useRoute } from "vue-router";
-import { useAuthStore } from "@/stores/auth";
-import apiClient from "@/lib/apiClient";
+const route = useRoute();
+
 import DateDisplay from "@/components/DateDisplay";
+
+import apiClient from "@/lib/apiClient";
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 
 const state = reactive({
   user: {},
   displayMode: "",
   isLoading: false,
 });
-
-const route = useRoute();
-const authStore = useAuthStore();
 
 async function updateUser() {
   state.isLoading = true;

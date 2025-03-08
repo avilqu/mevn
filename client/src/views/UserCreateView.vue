@@ -1,7 +1,9 @@
 <script setup>
 import { reactive } from "vue";
+
 import { useVuelidate } from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
+
 import apiClient from "@/lib/apiClient";
 
 const state = reactive({
