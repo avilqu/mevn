@@ -5,6 +5,7 @@ require("dotenv").config();
 
 require("./lib/init");
 require("./models/user");
+require("./models/history");
 require("./models/item");
 require("./lib/passport");
 

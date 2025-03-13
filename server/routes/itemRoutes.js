@@ -44,7 +44,36 @@ const updateItem = async (req, res, next) => {
   try {
     const item = await req.Item.findOne({ _id: req.params.id });
     if (!item) throw new Error(messages.errors.noItem);
+    const oldValues = { ...item.toObject() };
+    const modelSchema = req.Item.schema.paths;
     await item.updateOne(req.body);
+    const History = require("../lib/init").mongoose.model("History");
+    const changes = [];
+    for (const key in req.body) {
+      if (modelSchema[key]) {
+        const oldValue =
+          oldValues[key] instanceof Date
+            ? oldValues[key].toISOString()
+            : String(oldValues[key]);
+        const newValue = String(req.body[key]);
+        if (oldValue !== newValue) {
+          changes.push({
+            field: key,
+            oldValue: oldValues[key],
+            newValue: req.body[key],
+          });
+        }
+      }
+    }
+    if (changes.length > 1) {
+      const historyEntry = new History({
+        itemId: item._id,
+        itemType: req.params.model,
+        userId: req.user._id,
+        changes: changes,
+      });
+      await historyEntry.save();
+    }
     return res.json({
       status: "success",
       data: { item },

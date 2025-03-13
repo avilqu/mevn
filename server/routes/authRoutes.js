@@ -115,7 +115,38 @@ const updateUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.params.id });
     if (!user) throw new Error(messages.errors.noUser);
+    const oldValues = { ...user.toObject() };
+    const modelSchema = User.schema.paths;
     await user.updateOne(req.body);
+    const History = require("../lib/init").mongoose.model("History");
+    const changes = [];
+    for (const key in req.body) {
+      if (modelSchema[key]) {
+        const oldValue =
+          oldValues[key] instanceof Date
+            ? oldValues[key].toISOString()
+            : String(oldValues[key]);
+        const newValue = String(req.body[key]);
+        if (oldValue !== newValue) {
+          changes.push({
+            field: key,
+            oldValue: oldValues[key],
+            newValue: req.body[key],
+          });
+        }
+      }
+    }
+    console.log(changes);
+
+    if (changes.length > 1) {
+      const historyEntry = new History({
+        itemId: user._id,
+        itemType: "user",
+        userId: req.user._id,
+        changes: changes,
+      });
+      await historyEntry.save();
+    }
     return res.json({
       status: "success",
       data: { user },
