@@ -136,8 +136,6 @@ const updateUser = async (req, res, next) => {
         }
       }
     }
-    console.log(changes);
-
     if (changes.length > 1) {
       const historyEntry = new History({
         itemId: user._id,
