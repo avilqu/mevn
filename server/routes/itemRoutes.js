@@ -50,7 +50,7 @@ const updateItem = async (req, res, next) => {
     const History = require("../lib/init").mongoose.model("History");
     const changes = [];
     for (const key in req.body) {
-      if (modelSchema[key]) {
+      if (modelSchema[key] && key !== "updated") {
         const oldValue =
           oldValues[key] instanceof Date
             ? oldValues[key].toISOString()
@@ -65,15 +65,13 @@ const updateItem = async (req, res, next) => {
         }
       }
     }
-    if (changes.length > 1) {
-      const historyEntry = new History({
-        itemId: item._id,
-        itemType: req.params.model,
-        userId: req.user._id,
-        changes: changes,
-      });
-      await historyEntry.save();
-    }
+    const historyEntry = new History({
+      itemId: item._id,
+      itemType: req.params.model,
+      userId: req.user._id,
+      changes: changes,
+    });
+    await historyEntry.save();
     return res.json({
       status: "success",
       data: { item },
