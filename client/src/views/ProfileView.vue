@@ -134,26 +134,34 @@ onMounted(refresh);
             </tr>
 
             <tr>
-              <td class="p-3"><strong>Subscription</strong></td>
+              <td class="p-3">
+                <strong>{{ $t("subscription.title") }}</strong>
+              </td>
               <td class="align-middle">
                 <div v-if="state.user.subscription">
-                  <span class="text-muted">Plan: </span>
+                  <span class="text-muted"
+                    >{{ $t("subscription.plan") }}:
+                  </span>
                   <span class="text-capitalize">{{
                     state.user.subscription.type
                   }}</span>
                   <br />
-                  <span class="text-muted">Status: </span>
+                  <span class="text-muted"
+                    >{{ $t("subscription.status") }}:
+                  </span>
                   <span class="text-capitalize">{{
                     state.user.subscription.status
                   }}</span>
                   <br />
-                  <span class="text-muted">Start Date: </span>
+                  <span class="text-muted"
+                    >{{ $t("subscription.startDate") }}:
+                  </span>
                   <DateDisplay :value="state.user.subscription.startDate" />
                   <br />
                   <span
                     v-if="state.user.subscription.endDate"
                     class="text-muted"
-                    >End Date:
+                    >{{ $t("subscription.endDate") }}:
                   </span>
                   <DateDisplay
                     v-if="state.user.subscription.endDate"
@@ -163,7 +171,7 @@ onMounted(refresh);
                   <span
                     v-if="state.user.subscription.nextPaymentDate"
                     class="text-muted"
-                    >Next Payment:
+                    >{{ $t("subscription.nextPayment") }}:
                   </span>
                   <DateDisplay
                     v-if="state.user.subscription.nextPaymentDate"

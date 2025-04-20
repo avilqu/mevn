@@ -42,7 +42,7 @@ const deleteItem = async (req, res, next) => {
 
 const updateItem = async (req, res, next) => {
   try {
-    const item = await req.Item.findOne({ _id: req.params.id });
+    const item = await req.Item.findById(req.params.id);
     if (!item) throw new Error(messages.errors.noItem);
     const oldValues = { ...item.toObject() };
     const modelSchema = req.Item.schema.paths;
@@ -84,7 +84,7 @@ const updateItem = async (req, res, next) => {
 
 const getItem = async (req, res, next) => {
   try {
-    const item = await req.Item.findOne({ _id: req.params.id });
+    const item = await req.Item.findById(req.params.id);
     if (!item) throw new Error(messages.errors.noItem);
     res.json({
       status: "success",

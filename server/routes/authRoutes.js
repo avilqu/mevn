@@ -57,7 +57,7 @@ const sendPasswordToken = async (req, res, next) => {
 
 const createPassword = async (req, res, next) => {
   try {
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await User.findById(req.user._id);
     if (!user) throw new Error(messages.errors.noUser);
     else if (user.verifyToken(req.params.token)) {
       user.password = req.body.password;
@@ -75,34 +75,28 @@ const createPassword = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
+  const freeSubscription = {
+    type: "free",
+    status: "active",
+    startDate: new Date(),
+    autoRenew: true,
+  };
+
   try {
     let user = await User.findOne({ email: req.body.email });
     if (user) throw new Error(messages.errors.existingUser);
     if (req.url == "/user/create")
       user = new User({
-        name: req.body.name,
-        email: req.body.email,
-        role: req.body.role,
+        ...req.body,
         verified: false,
-        subscription: {
-          type: "free",
-          status: "active",
-          startDate: new Date(),
-          autoRenew: true,
-        },
+        subscription: freeSubscription,
       });
     else
       user = new User({
-        name: req.body.name,
-        email: req.body.email,
+        ...req.body,
         role: "user",
         verified: false,
-        subscription: {
-          type: "free",
-          status: "active",
-          startDate: new Date(),
-          autoRenew: true,
-        },
+        subscription: freeSubscription,
       });
 
     await user.save();
@@ -126,7 +120,7 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await User.findById(req.user._id);
     if (!user) throw new Error(messages.errors.noUser);
     const oldValues = { ...user.toObject() };
     const modelSchema = User.schema.paths;

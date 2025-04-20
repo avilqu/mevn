@@ -30,18 +30,19 @@ onMounted(async () => {
 <template>
   <div class="row">
     <div class="col-lg-8">
-      <div class="mb-4">
-        <router-link to="/profile" class="__link text-muted">
-          <fa :icon="['fas', 'arrow-left-long']" size="2x" />
-        </router-link>
-      </div>
-
-      <h1>Choose Your Plan</h1>
-      <p class="text-muted">Select the plan that best fits your needs</p>
+      <h1>{{ $t("subscription.pageTitle") }}</h1>
+      <p class="text-muted">{{ $t("subscription.pageDescription") }}</p>
 
       <div class="row mt-4">
         <div class="col-md-6" v-for="plan in state.plans" :key="plan.name">
-          <div class="card h-100">
+          <div
+            class="card h-100"
+            :class="{
+              'border-success':
+                authStore.user.subscription?.type === plan.name &&
+                authStore.user.subscription?.status === 'active',
+            }"
+          >
             <div class="card-body">
               <h5 class="card-title">{{ plan.name }}</h5>
               <h2 class="card-subtitle mb-2 text-muted">
