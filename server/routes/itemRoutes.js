@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const messages = require("../lib/messages");
+const messages = require("../config/messages");
 const { auth, checkMongoId } = require("../lib/middleware");
 
 const modelLoader = (req, res, next) => {

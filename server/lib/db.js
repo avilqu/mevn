@@ -1,4 +1,4 @@
-const messages = require("../lib/messages");
+const messages = require("../config/messages");
 
 const createItem = async (req, res, next) => {
   try {

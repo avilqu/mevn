@@ -1,4 +1,4 @@
-const messages = require("../lib/messages");
+const messages = require("../config/messages");
 
 const errorHandler = (err, req, res, next) => {
   // error message for mongoose validation errors

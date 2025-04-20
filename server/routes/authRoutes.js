@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const { mailer } = require("../lib/mailer");
 const User = require("../lib/init").mongoose.model("user");
-const messages = require("../lib/messages");
+const messages = require("../config/messages");
 const {
   auth,
   authAdmin,

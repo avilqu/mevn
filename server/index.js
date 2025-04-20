@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieSession);
 app.use(passport.initialize());
 app.use(passport.session());
-// app.locals.messages = require("./lib/messages");
+// app.locals.messages = require("./config/messages");
 
 // fix for passport > 0.5 & + cookie-session
 app.use(function (req, res, next) {

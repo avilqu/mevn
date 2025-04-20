@@ -5,7 +5,7 @@ const GoogleStrategy = require("passport-google-oidc");
 const FacebookStrategy = require("passport-facebook");
 
 const User = mongoose.model("user");
-const messages = require("../lib/messages");
+const messages = require("../config/messages");
 
 passport.serializeUser((user, done) => {
   done(null, user);
