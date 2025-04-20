@@ -11,10 +11,12 @@ const state = reactive({
 
 async function selectPlan(planType) {
   if (planType === "free") {
-    await apiClient.cancelSubscription();
+    const res = await apiClient.cancelSubscription();
+    authStore.update(res.user);
     router.push("/profile");
   } else if (planType === "paid") {
-    const response = await apiClient.upgradeSubscription();
+    const res = await apiClient.upgradeSubscription();
+    authStore.update(res.user);
     router.push("/profile");
     // window.location.href = response.data.url;
   }

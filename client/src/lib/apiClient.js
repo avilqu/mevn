@@ -140,12 +140,12 @@ const apiClient = {
 
   async upgradeSubscription() {
     const res = await axios.get("/api/subscription/upgrade");
-    return res.data;
+    return res;
   },
 
   async cancelSubscription() {
     const res = await axios.get("/api/subscription/cancel");
-    return res.data;
+    return res;
   },
 };
 
