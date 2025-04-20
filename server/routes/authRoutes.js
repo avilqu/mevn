@@ -10,6 +10,7 @@ const {
   checkMongoId,
   maintenanceMode,
 } = require("../lib/middleware");
+const plans = require("../config/plans");
 
 const login = (strategy) => {
   return (req, res, next) => {
@@ -83,6 +84,12 @@ const createUser = async (req, res, next) => {
         email: req.body.email,
         role: req.body.role,
         verified: false,
+        subscription: {
+          type: "free",
+          status: "active",
+          startDate: new Date(),
+          autoRenew: true,
+        },
       });
     else
       user = new User({
@@ -90,6 +97,12 @@ const createUser = async (req, res, next) => {
         email: req.body.email,
         role: "user",
         verified: false,
+        subscription: {
+          type: "free",
+          status: "active",
+          startDate: new Date(),
+          autoRenew: true,
+        },
       });
 
     await user.save();
@@ -169,6 +182,79 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+const getPlanDetails = async (req, res, next) => {
+  try {
+    const formattedPlans = Object.values(plans)
+      .filter((plan) => plan.isActive)
+      .map((plan) => ({
+        name: plan.name,
+        price: plan.price,
+        interval: plan.interval,
+        features: plan.features,
+      }));
+    res.json({
+      status: "success",
+      data: formattedPlans,
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const cancelSubscription = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) throw new Error(process.env.ERR_NO_USER);
+    user.subscription = {
+      type: "free",
+      status: "active",
+      startDate: new Date(),
+      stripeCustomerId: user.subscription?.stripeCustomerId,
+      autoRenew: false,
+    };
+    await user.save();
+    const updatedUser = await User.findById(req.user._id);
+    res.json({
+      status: "success",
+      user: updatedUser.toJSON(),
+      message: messages.info.subscriptionCanceled,
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const upgradeSubscription = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) throw new Error(process.env.ERR_NO_USER);
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setMonth(endDate.getMonth() + 1);
+    user.subscription = {
+      type: "paid",
+      status: "active",
+      startDate: startDate,
+      endDate: endDate,
+      stripeSubscriptionId:
+        "sim_sub_" + Math.random().toString(36).substring(2, 10),
+      stripeCustomerId:
+        "sim_cus_" + Math.random().toString(36).substring(2, 10),
+      nextPaymentDate: endDate,
+      autoRenew: true,
+    };
+    await user.save();
+    const updatedUser = await User.findById(req.user._id);
+    res.json({
+      status: "success",
+      user: updatedUser.toJSON(),
+      message: messages.info.subscriptionUpgraded,
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
 router.get(
   "/login/google",
   maintenanceMode,
@@ -196,6 +282,10 @@ router.get(
   maintenanceMode,
   login("facebook")
 );
+
+router.get("/subscription/plans", getPlanDetails);
+router.get("/subscription/upgrade", auth, upgradeSubscription);
+router.get("/subscription/cancel", auth, cancelSubscription);
 
 router.post("/user/register", maintenanceMode, createUser);
 router.get("/user/profile", auth, getActiveUser);

@@ -132,6 +132,21 @@ const apiClient = {
       return e;
     }
   },
+
+  async getSubscriptionPlans() {
+    const res = await axios.get("/api/subscription/plans");
+    return res.data;
+  },
+
+  async upgradeSubscription() {
+    const res = await axios.get("/api/subscription/upgrade");
+    return res.data;
+  },
+
+  async cancelSubscription() {
+    const res = await axios.get("/api/subscription/cancel");
+    return res.data;
+  },
 };
 
 export default apiClient;

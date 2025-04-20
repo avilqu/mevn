@@ -132,6 +132,46 @@ onMounted(refresh);
                 <DateDisplay :value="state.user.lastConnected" />
               </td>
             </tr>
+
+            <tr>
+              <td class="p-3"><strong>Subscription</strong></td>
+              <td class="align-middle">
+                <div v-if="state.user.subscription">
+                  <span class="text-muted">Plan: </span>
+                  <span class="text-capitalize">{{
+                    state.user.subscription.type
+                  }}</span>
+                  <br />
+                  <span class="text-muted">Status: </span>
+                  <span class="text-capitalize">{{
+                    state.user.subscription.status
+                  }}</span>
+                  <br />
+                  <span class="text-muted">Start Date: </span>
+                  <DateDisplay :value="state.user.subscription.startDate" />
+                  <br />
+                  <span
+                    v-if="state.user.subscription.endDate"
+                    class="text-muted"
+                    >End Date:
+                  </span>
+                  <DateDisplay
+                    v-if="state.user.subscription.endDate"
+                    :value="state.user.subscription.endDate"
+                  />
+                  <br />
+                  <span
+                    v-if="state.user.subscription.nextPaymentDate"
+                    class="text-muted"
+                    >Next Payment:
+                  </span>
+                  <DateDisplay
+                    v-if="state.user.subscription.nextPaymentDate"
+                    :value="state.user.subscription.nextPaymentDate"
+                  />
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

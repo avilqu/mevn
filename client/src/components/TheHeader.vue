@@ -76,6 +76,50 @@ const authStore = useAuthStore();
             {{ $t("sections.profile") }}
           </router-link>
         </li>
+        <li class="dropdown-divider"></li>
+
+        <li v-if="authStore.user.role === 'user'" class="dropdown-divider"></li>
+        <li class="dropdown-header">Subscription</li>
+        <li class="px-3 py-1">
+          <small class="text-muted">Plan: </small>
+          <small class="text-capitalize">
+            {{ authStore.user.subscription?.type || "free" }}
+          </small>
+        </li>
+        <li
+          v-if="
+            authStore.user.subscription?.type === 'paid' &&
+            authStore.user.subscription?.endDate
+          "
+          class="px-3 py-1"
+        >
+          <small class="text-muted">Until: </small>
+          <small
+            >{{
+              new Date(
+                authStore.user.subscription?.endDate
+              ).toLocaleDateString()
+            }}
+          </small>
+        </li>
+        <li class="px-3 py-2">
+          <router-link
+            to="/plans"
+            class="btn btn-sm w-100"
+            :class="
+              authStore.user.subscription?.type === 'free'
+                ? 'btn-success'
+                : 'btn-danger'
+            "
+          >
+            {{
+              authStore.user.subscription?.type === "free"
+                ? "Upgrade"
+                : "Cancel"
+            }}
+          </router-link>
+        </li>
+        <li class="dropdown-divider"></li>
         <li>
           <a
             class="dropdown-item nav-link text-muted __link"

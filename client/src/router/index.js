@@ -6,7 +6,7 @@ import ProfileView from "@/views/ProfileView.vue";
 import UserListView from "@/views/UserListView.vue";
 import CreatePasswordView from "@/views/CreatePasswordView.vue";
 import UserCreateView from "@/views/UserCreateView.vue";
-
+import SubscriptionPlansView from "@/views/SubscriptionPlansView.vue";
 const routes = [
   {
     path: "/",
@@ -41,6 +41,11 @@ const routes = [
   {
     path: "/user/:id/password/:token",
     component: CreatePasswordView,
+  },
+  {
+    path: "/plans",
+    name: "subscription-plans",
+    component: SubscriptionPlansView,
   },
 ];
 

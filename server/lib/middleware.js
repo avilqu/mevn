@@ -45,6 +45,29 @@ const authAdmin = (req, res, next) => {
   next();
 };
 
+const checkSubscription = async (req, res, next) => {
+  try {
+    if (req.user.role === "admin") return next();
+
+    const plans = require("../config/plans");
+    const plan = plans[req.user.subscription.type];
+
+    if (!plan) throw new Error(messages.errors.invalidPlan);
+
+    if (
+      req.user.subscription.endDate &&
+      req.user.subscription.endDate < new Date()
+    ) {
+      throw new Error(messages.errors.expiredPlan);
+    }
+
+    req.subscriptionPlan = plan;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 const maintenanceMode = (req, res, next) => {
   if (process.env.MAINTENANCE_MODE === "true")
     throw new Error(messages.errors.maintenanceMode);
@@ -57,4 +80,5 @@ module.exports = {
   errorHandler,
   checkMongoId,
   maintenanceMode,
+  checkSubscription,
 };

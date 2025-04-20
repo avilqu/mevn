@@ -16,6 +16,8 @@ const messages = {
     invalidPassword: "Password must be at least 6 characters.",
     invalidEmail: "Email address is invalid.",
     invalidName: "Name is needed.",
+    invalidPlan: "Invalid plan.",
+    expiredPlan: "Subscription expired.",
     noItem: "Item not found.",
   },
   info: {
@@ -28,6 +30,8 @@ const messages = {
     itemCreated: "Item was created.",
     itemDeleted: "Item was deleted.",
     itemSaved: "Item was saved.",
+    subscriptionCanceled: "Subscription was canceled.",
+    subscriptionUpgraded: "Subscription was upgraded.",
   },
 };
 
