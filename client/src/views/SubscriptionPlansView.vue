@@ -61,9 +61,13 @@ onMounted(async () => {
             <div class="card-footer bg-transparent">
               <button
                 class="btn w-100"
-                :class="
-                  plan.name === 'paid' ? 'btn-success' : 'btn-outline-primary'
-                "
+                :class="[
+                  plan.name === 'paid' ? 'btn-success' : 'btn-outline-primary',
+                  authStore.user.subscription?.type === plan.name &&
+                  authStore.user.subscription?.status === 'active'
+                    ? 'btn-outline-secondary'
+                    : '',
+                ]"
                 @click="selectPlan(plan.name)"
                 :disabled="
                   authStore.user.subscription?.type === plan.name &&
