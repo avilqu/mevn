@@ -57,7 +57,7 @@ const sendPasswordToken = async (req, res, next) => {
 
 const createPassword = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.params.id);
     if (!user) throw new Error(messages.errors.noUser);
     else if (user.verifyToken(req.params.token)) {
       user.password = req.body.password;
@@ -120,7 +120,7 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.params.id);
     if (!user) throw new Error(messages.errors.noUser);
     const oldValues = { ...user.toObject() };
     const modelSchema = User.schema.paths;
