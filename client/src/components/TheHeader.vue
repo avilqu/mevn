@@ -22,11 +22,11 @@ const authStore = useAuthStore();
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          {{ $t("sections.admin") }}
+          {{ $t("user.admin") }}
         </a>
         <ul class="dropdown-menu">
           <li>
-            <h5 class="dropdown-header">{{ $t("sections.users.title") }}</h5>
+            <h5 class="dropdown-header">{{ $t("user.user") }}</h5>
           </li>
           <li>
             <router-link
@@ -34,7 +34,7 @@ const authStore = useAuthStore();
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              {{ $t("sections.users.list") }}
+              {{ $t("user.list") }}
             </router-link>
           </li>
           <li>
@@ -43,7 +43,7 @@ const authStore = useAuthStore();
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              {{ $t("sections.users.create") }}
+              {{ $t("user.create") }}
             </router-link>
           </li>
         </ul>
@@ -54,7 +54,7 @@ const authStore = useAuthStore();
           class="nav-link text-muted __link"
           href="#"
         >
-          {{ $t("sections.items") }}
+          {{ $t("common.items") }}
         </router-link>
       </li>
     </ul>
@@ -73,7 +73,7 @@ const authStore = useAuthStore();
             to="/profile"
             class="dropdown-item nav-link text-muted __link"
           >
-            {{ $t("sections.profile") }}
+            {{ $t("user.profile") }}
           </router-link>
         </li>
         <li class="dropdown-divider"></li>
@@ -93,7 +93,7 @@ const authStore = useAuthStore();
           "
           class="px-3 py-1"
         >
-          <small class="text-muted">{{ $t("subscription.endDate") }}: </small>
+          <small class="text-muted">{{ $t("dates.until") }}: </small>
           <small
             >{{
               new Date(
@@ -116,7 +116,7 @@ const authStore = useAuthStore();
             class="dropdown-item nav-link text-muted __link"
             @click="authStore.logout()"
           >
-            {{ $t("actions.logout") }}
+            {{ $t("common.logout") }}
           </a>
         </li>
       </ul>
@@ -128,7 +128,7 @@ const authStore = useAuthStore();
         to="/login"
         class="btn btn-outline-success"
       >
-        {{ $t("actions.login") }}
+        {{ $t("common.login") }}
       </router-link>
     </div>
   </nav>

@@ -84,7 +84,7 @@ async function sendPasswordToken() {
               <img src="@/assets/logo.png" width="72" height="72" />
             </router-link>
             <div v-if="state.displayMode == 'login'">
-              <h1 class="h2 mb-5 mt-3">{{ $t("sections.signIn") }}</h1>
+              <h1 class="h2 mb-5 mt-3">{{ $t("auth.signIn") }}</h1>
               <input
                 type="email"
                 class="form-control p-3 __input-top"
@@ -113,14 +113,14 @@ async function sendPasswordToken() {
                   class="spinner-border spinner-border-sm"
                   :hidden="!state.isLoading"
                 ></span>
-                <span :hidden="state.isLoading">{{ $t("actions.login") }}</span>
+                <span :hidden="state.isLoading">{{ $t("common.login") }}</span>
               </button>
               <p class="mt-5 mb-3 text-muted">
                 <span
                   class="fw-light __link"
                   @click="state.displayMode = 'register'"
                 >
-                  {{ $t("actions.register") }}
+                  {{ $t("common.register") }}
                 </span>
                 |
                 <span
@@ -133,7 +133,7 @@ async function sendPasswordToken() {
 
               <div class="divider d-flex align-items-center my-4">
                 <p class="text-center mx-3 mb-0 text-secondary">
-                  {{ $t("misc.or") }}
+                  {{ $t("common.or") }}
                 </p>
               </div>
               <fa
@@ -152,10 +152,10 @@ async function sendPasswordToken() {
 
             <div v-if="state.displayMode == 'reset'">
               <h1 class="h3 mb-5 mt-3">
-                {{ $t("actions.sendPasswordLink") }}
+                {{ $t("auth.sendPasswordLink") }}
               </h1>
               <p class="my-5 text-muted">
-                {{ $t("misc.passwordLinkDetails") }}
+                {{ $t("auth.passwordLinkDetails") }}
               </p>
               <input
                 type="email"
@@ -175,21 +175,21 @@ async function sendPasswordToken() {
                   :hidden="!state.isLoading"
                 ></span>
                 <span :hidden="state.isLoading">
-                  {{ $t("actions.send") }}
+                  {{ $t("common.send") }}
                 </span>
               </button>
               <p
                 class="mt-5 mb-3 text-muted __link"
                 @click="state.displayMode = 'login'"
               >
-                {{ $t("actions.backToLogin") }}
+                {{ $t("common.back") }}
               </p>
             </div>
 
             <div v-if="state.displayMode == 'register'">
-              <h1 class="h3 mb-5 mt-3">{{ $t("sections.users.new") }}</h1>
+              <h1 class="h3 mb-5 mt-3">{{ $t("user.new") }}</h1>
               <p class="my-5 text-muted">
-                {{ $t("misc.newUserDetails") }}
+                {{ $t("auth.newUserDetails") }}
               </p>
               <input
                 type="text"
@@ -220,14 +220,14 @@ async function sendPasswordToken() {
                   :hidden="!state.isLoading"
                 ></span>
                 <span :hidden="state.isLoading">
-                  {{ $t("actions.register") }}
+                  {{ $t("common.register") }}
                 </span>
               </button>
               <p
                 class="mt-5 mb-3 text-muted __link"
                 @click="state.displayMode = 'login'"
               >
-                {{ $t("actions.backToLogin") }}
+                {{ $t("common.back") }}
               </p>
             </div>
           </form>

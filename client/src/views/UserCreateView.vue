@@ -39,9 +39,9 @@ async function createUser() {
     <div class="col-xl-4 col-md-6 col-sm-9 mx-auto">
       <div class="card bg-black border-0 shadow">
         <div class="card-body p-4">
-          <h1 class="h2 mb-5 mt-3">{{ $t("sections.newUser") }}</h1>
+          <h1 class="h2 mb-5 mt-3">{{ $t("user.new") }}</h1>
           <p class="text-muted">
-            {{ $t("misc.newUserDetails") }}
+            {{ $t("auth.newUserDetails") }}
           </p>
           <form class="text-center p-4">
             <input
@@ -71,9 +71,9 @@ async function createUser() {
                 id="role-selection"
                 v-model="state.role"
               >
-                <option value="">{{ $t("roles.role") }}</option>
-                <option value="user">{{ $t("roles.user") }}</option>
-                <option value="admin">{{ $t("roles.admin") }}</option>
+                <option value="">{{ $t("fields.role") }}</option>
+                <option value="user">{{ $t("user.user") }}</option>
+                <option value="admin">{{ $t("user.admin") }}</option>
               </select>
             </div>
             <button
@@ -85,7 +85,7 @@ async function createUser() {
                 class="spinner-border spinner-border-sm"
                 :hidden="!state.isLoading"
               ></span>
-              <span :hidden="state.isLoading">{{ $t("actions.send") }}</span>
+              <span :hidden="state.isLoading">{{ $t("common.send") }}</span>
             </button>
           </form>
         </div>

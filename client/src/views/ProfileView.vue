@@ -96,9 +96,9 @@ onMounted(refresh);
                   v-model="state.user.role"
                 >
                   <option value="user" selected>
-                    {{ $t("roles.user") }}
+                    {{ $t("user.user") }}
                   </option>
-                  <option value="admin">{{ $t("roles.admin") }}</option>
+                  <option value="admin">{{ $t("user.admin") }}</option>
                 </select>
               </td>
               <td v-else class="align-middle text-muted">
@@ -108,7 +108,7 @@ onMounted(refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("timestamps.addedOn") }}</strong>
+                <strong>{{ $t("dates.addedOn") }}</strong>
               </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.added" />
@@ -117,7 +117,7 @@ onMounted(refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("timestamps.updatedOn") }}</strong>
+                <strong>{{ $t("dates.updatedOn") }}</strong>
               </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.updated" />
@@ -126,7 +126,7 @@ onMounted(refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("timestamps.connectedOn") }}</strong>
+                <strong>{{ $t("dates.connectedOn") }}</strong>
               </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.lastConnected" />
@@ -153,15 +153,13 @@ onMounted(refresh);
                     state.user.subscription.status
                   }}</span>
                   <br />
-                  <span class="text-muted"
-                    >{{ $t("subscription.startDate") }}:
-                  </span>
+                  <span class="text-muted">{{ $t("dates.from") }}: </span>
                   <DateDisplay :value="state.user.subscription.startDate" />
                   <br />
                   <span
                     v-if="state.user.subscription.endDate"
                     class="text-muted"
-                    >{{ $t("subscription.endDate") }}:
+                    >{{ $t("dates.until") }}:
                   </span>
                   <DateDisplay
                     v-if="state.user.subscription.endDate"
@@ -190,7 +188,7 @@ onMounted(refresh);
           class="btn btn-outline-secondary btn-block"
           @click="state.displayMode = 'edit'"
         >
-          {{ $t("actions.edit") }}
+          {{ $t("common.edit") }}
         </button>
         <div v-else>
           <button
@@ -202,7 +200,7 @@ onMounted(refresh);
               class="spinner-border spinner-border-sm"
               :hidden="!state.isLoading"
             ></span>
-            <span :hidden="state.isLoading">{{ $t("actions.save") }}</span>
+            <span :hidden="state.isLoading">{{ $t("common.save") }}</span>
           </button>
           &nbsp;
           <button
@@ -214,7 +212,7 @@ onMounted(refresh);
               class="spinner-border spinner-border-sm"
               :hidden="!state.isLoading"
             ></span>
-            <span :hidden="state.isLoading">{{ $t("actions.delete") }}</span>
+            <span :hidden="state.isLoading">{{ $t("common.delete") }}</span>
           </button>
         </div>
       </div>

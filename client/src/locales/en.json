@@ -1,62 +1,61 @@
 {
-  "actions": {
+  "common": {
     "save": "Save",
     "send": "Send",
     "login": "Login",
     "logout": "Logout",
     "edit": "Edit",
     "delete": "Delete",
+    "cancel": "Cancel",
     "register": "Register",
-    "backToList": "Back to list",
-    "backToLogin": "Back to login",
-    "sendPasswordLink": "Send reset link"
+    "status": "Status",
+    "back": "Back",
+    "items": "Items",
+    "or": "OR",
+    "maintenanceMode": "This website is currently under maintenance."
   },
+
   "fields": {
     "email": "Email",
     "password": "Password",
     "name": "Name",
     "role": "Role"
   },
-  "roles": {
+
+  "user": {
     "user": "User",
-    "admin": "Admin"
-  },
-  "sections": {
-    "signIn": "Sign in",
+    "users": "Users",
     "admin": "Admin",
-    "users": {
-      "new": "New user",
-      "create": "Create user",
-      "title": "Users",
-      "list": "User list"
-    },
-    "items": "Items",
+    "new": "New user",
+    "create": "Create user",
+    "list": "User list",
     "profile": "Profile"
   },
-  "timestamps": {
-    "addedOn": "Added",
-    "updatedOn": "Updated",
-    "connectedOn": "Connected"
-  },
+
   "auth": {
+    "signIn": "Sign in",
+    "password": "Password",
+    "sendPasswordLink": "Send reset link",
     "createPassword": "Create password",
     "newPassword": "New password",
     "confirmPassword": "Confirm password",
-    "forgottenPassword": "Forgotten password?"
-  },
-  "misc": {
-    "or": "OR",
+    "forgottenPassword": "Forgotten password?",
     "passwordLinkDetails": "A secure link with instructions to create a new password will be sent by email.",
-    "newUserDetails": "A secure link will be sent to the registered email address to create a password. This link will be valid 24 hours.",
-    "maintenanceMode": "This website is currently under maintenance."
+    "newUserDetails": "A secure link will be sent to the registered email address to create a password. This link will be valid 24 hours."
   },
+
+  "dates": {
+    "addedOn": "Added",
+    "updatedOn": "Updated",
+    "connectedOn": "Connected",
+    "from": "From",
+    "until": "Until"
+  },
+
   "subscription": {
     "title": "Subscription",
     "plan": "Plan",
     "view": "View plans",
-    "status": "Status",
-    "startDate": "From",
-    "endDate": "Until",
     "nextPayment": "Next payment",
     "pageTitle": "Choose Your Plan",
     "pageDescription": "Select the plan that best fits your needs"
