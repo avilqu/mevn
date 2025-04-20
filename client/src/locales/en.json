@@ -53,6 +53,7 @@
   "subscription": {
     "title": "Subscription",
     "plan": "Plan",
+    "view": "View plans",
     "status": "Status",
     "startDate": "From",
     "endDate": "Until",

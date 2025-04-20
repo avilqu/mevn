@@ -63,7 +63,9 @@ onMounted(async () => {
               <button
                 class="btn w-100"
                 :class="[
-                  plan.name === 'paid' ? 'btn-success' : 'btn-outline-primary',
+                  plan.name === 'paid'
+                    ? 'btn-success'
+                    : 'btn-outline-secondary',
                   authStore.user.subscription?.type === plan.name &&
                   authStore.user.subscription?.status === 'active'
                     ? 'btn-outline-secondary'
