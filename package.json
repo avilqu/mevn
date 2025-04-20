@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon server/index.js",
+    "server": "GIT_BRANCH=$(git branch --show-current) nodemon server/index.js",
     "dev": "(cd client && vue serve) & npm run server"
   },
   "author": "Adrien Vilquin Barrajon",

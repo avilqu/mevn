@@ -44,4 +44,5 @@ let httpServer = http.createServer(app);
 
 httpServer.listen(process.env.HTTP_PORT, () => {
   console.log(`Server started on port ${process.env.HTTP_PORT}.`);
+  console.log(`Running on branch: ${process.env.GIT_BRANCH || "unknown"}`);
 });
