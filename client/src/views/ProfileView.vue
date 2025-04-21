@@ -160,11 +160,6 @@ watch(route, refresh);
                     state.user.subscription.type
                   }}</span>
                   <br />
-                  <span class="text-muted">{{ $t("common.status") }}: </span>
-                  <span class="text-capitalize">{{
-                    state.user.subscription.status
-                  }}</span>
-                  <br />
                   <span class="text-muted">{{ $t("dates.from") }}: </span>
                   <DateDisplay :value="state.user.subscription.startDate" />
                   <br />

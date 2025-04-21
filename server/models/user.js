@@ -40,11 +40,6 @@ const UserSchema = new mongoose.Schema(
         enum: ["free", "paid"],
         default: "free",
       },
-      status: {
-        type: String,
-        enum: ["active", "canceled", "expired"],
-        default: "active",
-      },
       startDate: {
         type: Date,
         default: Date.now,
@@ -54,13 +49,6 @@ const UserSchema = new mongoose.Schema(
       },
       stripeSubscriptionId: String,
       stripeCustomerId: String,
-      paymentMethod: String,
-      lastPaymentDate: Date,
-      nextPaymentDate: Date,
-      autoRenew: {
-        type: Boolean,
-        default: true,
-      },
     },
   },
   { timestamps: { createdAt: "added", updatedAt: "updated" } }

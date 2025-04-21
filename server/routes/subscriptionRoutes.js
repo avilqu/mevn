@@ -59,7 +59,6 @@ const handleStripeWebhook = async (req, res, next) => {
               endDate: endDate,
               stripeCustomerId: session.customer,
               stripeSubscriptionId: session.subscription,
-              autoRenew: true,
             },
           }
         );
@@ -79,7 +78,6 @@ const handleStripeWebhook = async (req, res, next) => {
               status: "active",
               startDate: new Date(),
               stripeCustomerId: failedInvoice.customer,
-              autoRenew: false,
             },
           }
         );
@@ -94,7 +92,6 @@ const handleStripeWebhook = async (req, res, next) => {
         await User.findOneAndUpdate(
           { "subscription.stripeSubscriptionId": subscription.id },
           {
-            "subscription.status": subscription.status,
             "subscription.endDate": subscription.cancel_at
               ? new Date(subscription.cancel_at * 1000)
               : null,
