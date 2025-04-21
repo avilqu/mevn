@@ -1,24 +1,31 @@
 <script setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import apiClient from "@/lib/apiClient";
+import ConfirmationModal from "@/components/ConfirmationModal.vue";
 
 const authStore = useAuthStore();
 const state = reactive({
   isLoading: false,
   plans: [],
+  showCancelModal: false,
 });
 
 async function selectPlan(planType) {
   if (planType === "free") {
-    state.isLoading = true;
-    const res = await apiClient.cancelSubscription();
-    if (res.user) authStore.update(res.user);
-    state.isLoading = false;
+    state.showCancelModal = true;
   } else if (planType === "paid") {
     state.isLoading = true;
     await apiClient.createCheckoutSession();
   }
+}
+
+async function confirmCancel() {
+  state.isLoading = true;
+  const res = await apiClient.cancelSubscription();
+  if (res.user) authStore.update(res.user);
+  state.isLoading = false;
+  state.showCancelModal = false;
 }
 
 onMounted(async () => {
@@ -37,9 +44,7 @@ onMounted(async () => {
           <div
             class="card h-100"
             :class="{
-              'border-success':
-                authStore.user.subscription?.type === plan.name &&
-                authStore.user.subscription?.status === 'active',
+              'border-success': authStore.user.subscription?.type === plan.name,
             }"
           >
             <div class="card-body">
@@ -63,15 +68,13 @@ onMounted(async () => {
                 class="btn w-100 mb-2"
                 :class="[
                   'btn-success',
-                  authStore.user.subscription?.type === plan.name &&
-                  authStore.user.subscription?.status === 'active'
+                  authStore.user.subscription?.type === plan.name
                     ? 'btn-outline-secondary'
                     : '',
                 ]"
                 @click="selectPlan(plan.name)"
                 :disabled="
-                  (authStore.user.subscription?.type === plan.name &&
-                    authStore.user.subscription?.status === 'active') ||
+                  authStore.user.subscription?.type === plan.name ||
                   state.isLoading
                 "
               >
@@ -81,18 +84,14 @@ onMounted(async () => {
                 ></span>
                 <span :hidden="state.isLoading">
                   {{
-                    authStore.user.subscription?.type === plan.name &&
-                    authStore.user.subscription?.status === "active"
+                    authStore.user.subscription?.type === plan.name
                       ? $t("subscription.buttonCurrentPlan")
                       : $t("subscription.buttonSelectPlan")
                   }}
                 </span>
               </button>
               <button
-                v-if="
-                  authStore.user.subscription?.type === plan.name &&
-                  authStore.user.subscription?.status === 'active'
-                "
+                v-if="authStore.user.subscription?.type === plan.name"
                 class="btn btn-outline-danger w-100"
                 @click="selectPlan('free')"
                 :disabled="state.isLoading"
@@ -111,4 +110,14 @@ onMounted(async () => {
       </div>
     </div>
   </div>
+
+  <ConfirmationModal
+    :show="state.showCancelModal"
+    :title="$t('subscription.cancelModal.title')"
+    :message="$t('subscription.cancelModal.message')"
+    :confirm-text="$t('subscription.cancelModal.confirm')"
+    :cancel-text="$t('subscription.cancelModal.cancel')"
+    @confirm="confirmCancel"
+    @cancel="state.showCancelModal = false"
+  />
 </template>

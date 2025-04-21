@@ -61,6 +61,12 @@
     "pageTitle": "Choose Your Plan",
     "pageDescription": "Select the plan that best fits your needs",
     "buttonCurrentPlan": "Current Plan",
-    "buttonSelectPlan": "Select paid plan"
+    "buttonSelectPlan": "Select paid plan",
+    "cancelModal": {
+      "title": "Cancel subscription",
+      "message": "Are you sure you want to cancel your subscription? You will lose access to premium features.",
+      "confirm": "Cancel subscription",
+      "cancel": "Back"
+    }
   }
 }
