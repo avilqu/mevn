@@ -1,12 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "@/views/HomeView.vue";
-import LoginView from "@/views/LoginView.vue";
-import ProfileView from "@/views/ProfileView.vue";
-import UserListView from "@/views/UserListView.vue";
-import CreatePasswordView from "@/views/CreatePasswordView.vue";
-import UserCreateView from "@/views/UserCreateView.vue";
-import SubscriptionPlansView from "@/views/SubscriptionPlansView.vue";
 import { useAlertStore } from "@/stores/alert";
 
 const routes = [
@@ -18,36 +12,36 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: LoginView,
+    component: () => import("@/views/LoginView.vue"),
   },
   {
     path: "/profile",
     name: "profile",
-    component: ProfileView,
+    component: () => import("@/views/ProfileView.vue"),
   },
   {
     path: "/user/list",
     name: "user-list",
-    component: UserListView,
+    component: () => import("@/views/UserListView.vue"),
   },
   {
     path: "/user/create",
     name: "user-create",
-    component: UserCreateView,
+    component: () => import("@/views/UserCreateView.vue"),
   },
   {
     path: "/user/:id",
     name: "user-details",
-    component: ProfileView,
+    component: () => import("@/views/ProfileView.vue"),
   },
   {
     path: "/user/:id/password/:token",
-    component: CreatePasswordView,
+    component: () => import("@/views/CreatePasswordView.vue"),
   },
   {
     path: "/plans",
     name: "subscription-plans",
-    component: SubscriptionPlansView,
+    component: () => import("@/views/SubscriptionPlansView.vue"),
   },
 ];
 
