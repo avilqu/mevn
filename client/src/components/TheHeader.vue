@@ -57,6 +57,17 @@ const authStore = useAuthStore();
             }}
           </small>
         </li>
+        <li
+          v-if="
+            authStore.user.subscription?.type === 'paid' &&
+            !authStore.user.subscription?.autoRenew
+          "
+          class="px-3 py-1"
+        >
+          <small class="text-danger">{{
+            $t("subscription.willNotRenew")
+          }}</small>
+        </li>
         <li class="px-3 py-2">
           <router-link
             to="/plans"

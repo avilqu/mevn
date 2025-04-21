@@ -47,6 +47,10 @@ const UserSchema = new mongoose.Schema(
       endDate: {
         type: Date,
       },
+      autoRenew: {
+        type: Boolean,
+        default: true,
+      },
       stripeSubscriptionId: String,
       stripeCustomerId: String,
     },

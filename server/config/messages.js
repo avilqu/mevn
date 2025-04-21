@@ -30,7 +30,8 @@ const messages = {
     itemCreated: "Item was created.",
     itemDeleted: "Item was deleted.",
     itemSaved: "Item was saved.",
-    subscriptionCanceled: "Subscription was canceled.",
+    subscriptionCanceled:
+      "Your subscription was canceled and will end at the end of the current billing period.",
     subscriptionUpgraded: "Subscription was upgraded.",
   },
 };

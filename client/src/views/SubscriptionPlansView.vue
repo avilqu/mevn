@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted, ref } from "vue";
+import { reactive, onMounted, ref, computed } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import apiClient from "@/lib/apiClient";
 import ConfirmationModal from "@/components/ConfirmationModal.vue";
@@ -9,6 +9,12 @@ const state = reactive({
   isLoading: false,
   plans: [],
   showCancelModal: false,
+});
+
+const formattedEndDate = computed(() => {
+  if (!authStore.user.subscription?.endDate) return "";
+  const date = new Date(authStore.user.subscription.endDate);
+  return date.toLocaleDateString();
 });
 
 async function selectPlan(planType) {
@@ -38,6 +44,16 @@ onMounted(async () => {
     <div class="col-lg-8">
       <h1>{{ $t("subscription.pageTitle") }}</h1>
       <p class="text-muted">{{ $t("subscription.pageDescription") }}</p>
+
+      <div
+        v-if="
+          authStore.user.subscription?.type === 'paid' &&
+          !authStore.user.subscription?.autoRenew
+        "
+        class="alert alert-info mb-4"
+      >
+        {{ $t("subscription.cancelScheduled") }} {{ formattedEndDate }}.
+      </div>
 
       <div class="row mt-4">
         <div class="col-md-6" v-for="plan in state.plans" :key="plan.name">
@@ -91,7 +107,10 @@ onMounted(async () => {
                 </span>
               </button>
               <button
-                v-if="authStore.user.subscription?.type === plan.name"
+                v-if="
+                  authStore.user.subscription?.type === plan.name &&
+                  authStore.user.subscription?.autoRenew
+                "
                 class="btn btn-outline-danger w-100"
                 @click="selectPlan('free')"
                 :disabled="state.isLoading"

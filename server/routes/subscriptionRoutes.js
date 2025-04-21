@@ -103,9 +103,13 @@ const handleStripeWebhook = async (req, res, next) => {
         await User.findOneAndUpdate(
           { "subscription.stripeSubscriptionId": subscription.id },
           {
-            "subscription.endDate": subscription.cancel_at
-              ? new Date(subscription.cancel_at * 1000)
-              : null,
+            subscription: {
+              type: "free",
+              status: "active",
+              startDate: new Date(),
+              stripeCustomerId: subscription.customer,
+              autoRenew: false,
+            },
           }
         );
       } catch (error) {}
@@ -122,15 +126,48 @@ const cancelSubscription = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) throw new Error(process.env.ERR_NO_USER);
-    if (user.subscription?.stripeSubscriptionId)
-      await stripe.subscriptions.cancel(user.subscription.stripeSubscriptionId);
-    user.subscription = {
-      type: "free",
-      status: "active",
-      startDate: new Date(),
-      stripeCustomerId: user.subscription?.stripeCustomerId,
-      autoRenew: false,
-    };
+
+    let updatedSubscription = null;
+
+    if (user.subscription?.stripeSubscriptionId) {
+      updatedSubscription = await stripe.subscriptions.update(
+        user.subscription.stripeSubscriptionId,
+        { cancel_at_period_end: true }
+      );
+
+      const subscription = await stripe.subscriptions.retrieve(
+        user.subscription.stripeSubscriptionId
+      );
+
+      let endDate;
+      if (subscription && subscription.current_period_end) {
+        endDate = new Date(subscription.current_period_end * 1000);
+      } else {
+        endDate = new Date();
+        endDate.setMonth(endDate.getMonth() + 1);
+      }
+
+      // Keep the current subscription active until the end date
+      user.subscription = {
+        type: user.subscription.type,
+        status: user.subscription.status || "active",
+        startDate: user.subscription.startDate,
+        endDate: endDate,
+        willCancelAtPeriodEnd: true,
+        stripeCustomerId: user.subscription.stripeCustomerId,
+        stripeSubscriptionId: user.subscription.stripeSubscriptionId,
+        autoRenew: false,
+      };
+    } else {
+      user.subscription = {
+        type: "free",
+        status: "active",
+        startDate: new Date(),
+        stripeCustomerId: user.subscription?.stripeCustomerId,
+        autoRenew: false,
+      };
+    }
+
     await user.save();
     const updatedUser = await User.findById(req.user._id);
     return res.json({

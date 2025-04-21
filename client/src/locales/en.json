@@ -63,9 +63,11 @@
     "pageDescription": "Select the plan that best fits your needs",
     "buttonCurrentPlan": "Current Plan",
     "buttonSelectPlan": "Select paid plan",
+    "cancelScheduled": "Your subscription is scheduled to end on",
+    "willNotRenew": "Will not renew",
     "cancelModal": {
       "title": "Cancel subscription",
-      "message": "Are you sure you want to cancel your subscription? You will lose access to premium features.",
+      "message": "Are you sure you want to cancel your subscription? Your subscription will continue until the end of your current billing period.",
       "confirm": "Cancel subscription",
       "cancel": "Back"
     }
