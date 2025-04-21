@@ -33,6 +33,13 @@ async function deleteUser() {
   router.push("/user/list");
 }
 
+async function sendPasswordToken() {
+  state.isLoading = true;
+  await apiClient.sendPasswordToken(state.user.email);
+  state.displayMode = "";
+  state.isLoading = false;
+}
+
 async function refresh() {
   if (route.path == "/profile") state.user = authStore.user;
   else state.user = await apiClient.getItem("user", route.params.id);
@@ -220,6 +227,20 @@ watch(route, refresh);
               :hidden="!state.isLoading"
             ></span>
             <span :hidden="state.isLoading">{{ $t("common.delete") }}</span>
+          </button>
+          &nbsp;
+          <button
+            class="btn btn-outline-secondary btn-block"
+            @click="sendPasswordToken()"
+            :disabled="state.isLoading"
+          >
+            <span
+              class="spinner-border spinner-border-sm"
+              :hidden="!state.isLoading"
+            ></span>
+            <span :hidden="state.isLoading">{{
+              $t("auth.resetPassword")
+            }}</span>
           </button>
         </div>
       </div>

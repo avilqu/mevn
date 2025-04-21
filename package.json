@@ -25,6 +25,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
+    "datatables.net-vue3": "^3.0.4",
     "dotenv-cli": "^8.0.0"
   }
 }

@@ -41,6 +41,18 @@ const apiClient = {
     try {
       const res = await axios.post("/api/user/reset-password", { email });
       if (res.status === "success") alertStore.success(res.message);
+      else alertStore.error(res.message);
+      return res.data;
+    } catch (e) {
+      return e;
+    }
+  },
+
+  async sendPasswordToken(email) {
+    const alertStore = useAlertStore();
+    try {
+      const res = await axios.post("/api/user/reset-password", { email });
+      if (res.status === "success") alertStore.success(res.message);
       return res.data;
     } catch (e) {
       alertStore.error(e.message);

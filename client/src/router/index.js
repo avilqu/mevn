@@ -50,11 +50,7 @@ const router = createRouter({
   routes,
 });
 
-// Add global navigation guard
 router.beforeEach((to, from, next) => {
-  console.log("Navigation from:", from.path, "to:", to.path);
-  console.log("Navigation state:", to.state);
-
   const alertStore = useAlertStore();
   alertStore.reset();
 
