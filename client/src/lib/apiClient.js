@@ -1,27 +1,37 @@
 import axios from "axios";
 import { useAlertStore } from "@/stores/alert";
 
-axios.interceptors.response.use(function (res) {
-  return res.data;
-});
+axios.interceptors.response.use(
+  function (res) {
+    return res.data;
+  },
+  function (error) {
+    if (error.response && error.response.data) {
+      return Promise.reject(error.response.data);
+    }
+    return Promise.reject(error);
+  }
+);
 
 const apiClient = {
   async login(credentials) {
     const alertStore = useAlertStore();
     try {
       const res = await axios.post("/api/login", credentials);
-      if (res.status === "error") alertStore.error(res.message);
-      return res;
+      if (res.status === "success") return res;
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
 
   async logout() {
+    const alertStore = useAlertStore();
     try {
       const res = await axios.get("/api/logout");
       return res;
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
@@ -31,9 +41,9 @@ const apiClient = {
     try {
       const res = await axios.post("/api/user/reset-password", { email });
       if (res.status === "success") alertStore.success(res.message);
-      else alertStore.error(res.message);
       return res.data;
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
@@ -45,9 +55,9 @@ const apiClient = {
         password,
       });
       if (res.status === "success") alertStore.success(res.message);
-      else alertStore.error(res.message);
       return res.data.user;
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
@@ -59,18 +69,20 @@ const apiClient = {
       if (admin) res = await axios.post("/api/user/create", user);
       else res = await axios.post("/api/user/register", user);
       if (res.status === "success") alertStore.success(res.message);
-      else alertStore.error(res.message);
       return res.data.user;
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
 
   async getActiveUser() {
+    const alertStore = useAlertStore();
     try {
       const res = await axios.get("/api/user/profile");
       return res;
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
@@ -79,9 +91,9 @@ const apiClient = {
     const alertStore = useAlertStore();
     try {
       const res = await axios.get(`/api/${model}/${id}`);
-      if (res.status === "error") alertStore.error(res.message);
-      return res.data.item;
+      if (res.status === "success") return res.data.item;
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
@@ -90,9 +102,9 @@ const apiClient = {
     const alertStore = useAlertStore();
     try {
       const res = await axios.get(`/api/${model}/list`);
-      if (res.status === "error") alertStore.error(res.message);
-      return res.data.items;
+      if (res.status === "success") return res.data.items;
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
@@ -101,10 +113,12 @@ const apiClient = {
     const alertStore = useAlertStore();
     try {
       const res = await axios.post(`/api/${model}/create`, item);
-      if (res.status === "success") alertStore.success(res.message);
-      else alertStore.error(res.message);
-      return res.data.item;
+      if (res.status === "success") {
+        alertStore.success(res.message);
+        return res.data.item;
+      }
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
@@ -113,10 +127,12 @@ const apiClient = {
     const alertStore = useAlertStore();
     try {
       const res = await axios.post(`/api/${model}/${item._id}/update`, item);
-      if (res.status === "error") return alertStore.error(res.message);
-      else alertStore.success(res.message);
-      return res.data.item;
+      if (res.status === "success") {
+        alertStore.success(res.message);
+        return res.data.item;
+      }
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
@@ -125,44 +141,48 @@ const apiClient = {
     const alertStore = useAlertStore();
     try {
       const res = await axios.get(`/api/${model}/${id}/delete`);
-      if (res.status === "error") return alertStore.error(res.message);
-      else alertStore.success(res.message);
-      return res.data.item;
+      if (res.status === "success") {
+        alertStore.success(res.message);
+        return res.data.item;
+      }
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
 
   async getSubscriptionPlans() {
+    const alertStore = useAlertStore();
     try {
       const res = await axios.get("/api/subscription/plans");
       return res.data;
     } catch (e) {
+      alertStore.error(e.message);
       return e;
     }
   },
 
   async createCheckoutSession() {
+    const alertStore = useAlertStore();
     try {
       const res = await axios.post("/api/subscription/create-checkout-session");
       if (res.url) {
         window.location.href = res.url;
       }
       return res;
-    } catch (error) {
-      const alertStore = useAlertStore();
-      alertStore.error("Error creating checkout session");
-      return error;
+    } catch (e) {
+      alertStore.error(e.message);
+      return e;
     }
   },
 
   async cancelSubscription() {
+    const alertStore = useAlertStore();
     try {
       const res = await axios.get("/api/subscription/cancel");
       return res;
     } catch (e) {
-      const alertStore = useAlertStore();
-      alertStore.error("Error canceling subscription");
+      alertStore.error(e.message);
       return e;
     }
   },

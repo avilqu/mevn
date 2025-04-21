@@ -124,7 +124,7 @@ const cancelSubscription = async (req, res, next) => {
     };
     await user.save();
     const updatedUser = await User.findById(req.user._id);
-    res.json({
+    return res.json({
       status: "success",
       user: updatedUser.toJSON(),
       message: messages.info.subscriptionCanceled,
@@ -144,7 +144,7 @@ const getPlanDetails = async (req, res, next) => {
         interval: plan.interval,
         features: plan.features,
       }));
-    res.json({
+    return res.json({
       status: "success",
       data: formattedPlans,
     });
