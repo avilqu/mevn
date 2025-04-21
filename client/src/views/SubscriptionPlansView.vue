@@ -2,21 +2,21 @@
 import { reactive, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import apiClient from "@/lib/apiClient";
-import router from "@/router";
 
 const authStore = useAuthStore();
 const state = reactive({
+  isLoading: false,
   plans: [],
 });
 
 async function selectPlan(planType) {
   if (planType === "free") {
+    state.isLoading = true;
     const res = await apiClient.cancelSubscription();
-    if (res.status === "success") {
-      authStore.update(res.user);
-      router.push("/profile");
-    }
+    if (res.user) authStore.update(res.user);
+    state.isLoading = false;
   } else if (planType === "paid") {
+    state.isLoading = true;
     await apiClient.createCheckoutSession();
   }
 }
@@ -70,16 +70,23 @@ onMounted(async () => {
                 ]"
                 @click="selectPlan(plan.name)"
                 :disabled="
-                  authStore.user.subscription?.type === plan.name &&
-                  authStore.user.subscription?.status === 'active'
+                  (authStore.user.subscription?.type === plan.name &&
+                    authStore.user.subscription?.status === 'active') ||
+                  state.isLoading
                 "
               >
-                {{
-                  authStore.user.subscription?.type === plan.name &&
-                  authStore.user.subscription?.status === "active"
-                    ? $t("subscription.buttonCurrentPlan")
-                    : $t("subscription.buttonSelectPlan")
-                }}
+                <span
+                  class="spinner-border spinner-border-sm"
+                  :hidden="!state.isLoading"
+                ></span>
+                <span :hidden="state.isLoading">
+                  {{
+                    authStore.user.subscription?.type === plan.name &&
+                    authStore.user.subscription?.status === "active"
+                      ? $t("subscription.buttonCurrentPlan")
+                      : $t("subscription.buttonSelectPlan")
+                  }}
+                </span>
               </button>
               <button
                 v-if="
@@ -88,8 +95,15 @@ onMounted(async () => {
                 "
                 class="btn btn-outline-danger w-100"
                 @click="selectPlan('free')"
+                :disabled="state.isLoading"
               >
-                {{ $t("subscription.cancel") }}
+                <span
+                  class="spinner-border spinner-border-sm"
+                  :hidden="!state.isLoading"
+                ></span>
+                <span :hidden="state.isLoading">
+                  {{ $t("subscription.cancel") }}
+                </span>
               </button>
             </div>
           </div>

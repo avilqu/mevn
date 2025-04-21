@@ -14,40 +14,6 @@ const authStore = useAuthStore();
     </router-link>
 
     <ul class="nav" v-if="authStore.user._id">
-      <li class="nav-item dropdown" v-if="authStore.user.role == 'admin'">
-        <a
-          class="nav-link text-muted dropdown-toggle"
-          href="#"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          {{ $t("user.admin") }}
-        </a>
-        <ul class="dropdown-menu">
-          <li>
-            <h5 class="dropdown-header">{{ $t("user.user") }}</h5>
-          </li>
-          <li>
-            <router-link
-              to="/user/list"
-              class="dropdown-item nav-link text-muted __link"
-              href="#"
-            >
-              {{ $t("user.list") }}
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              to="/user/create"
-              class="dropdown-item nav-link text-muted __link"
-              href="#"
-            >
-              {{ $t("user.create") }}
-            </router-link>
-          </li>
-        </ul>
-      </li>
       <li class="nav-item">
         <router-link
           to="/items/list"
@@ -68,16 +34,6 @@ const authStore = useAuthStore();
         {{ authStore.user.name }}
       </button>
       <ul class="dropdown-menu dropdown-menu-end">
-        <li>
-          <router-link
-            to="/profile"
-            class="dropdown-item nav-link text-muted __link"
-          >
-            {{ $t("user.profile") }}
-          </router-link>
-        </li>
-        <li class="dropdown-divider"></li>
-
         <li v-if="authStore.user.role === 'user'" class="dropdown-divider"></li>
         <li class="dropdown-header">{{ $t("subscription.title") }}</li>
         <li class="px-3 py-1">
@@ -111,6 +67,36 @@ const authStore = useAuthStore();
           </router-link>
         </li>
         <li class="dropdown-divider"></li>
+        <template v-if="authStore.user.role === 'admin'">
+          <li class="dropdown-header">{{ $t("user.admin") }}</li>
+          <li>
+            <router-link
+              to="/user/list"
+              class="dropdown-item nav-link text-muted __link"
+              href="#"
+            >
+              {{ $t("user.list") }}
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              to="/user/create"
+              class="dropdown-item nav-link text-muted __link"
+              href="#"
+            >
+              {{ $t("user.create") }}
+            </router-link>
+          </li>
+          <li class="dropdown-divider"></li>
+        </template>
+        <li>
+          <router-link
+            to="/profile"
+            class="dropdown-item nav-link text-muted __link"
+          >
+            {{ $t("user.profile") }}
+          </router-link>
+        </li>
         <li>
           <a
             class="dropdown-item nav-link text-muted __link"

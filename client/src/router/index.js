@@ -7,6 +7,8 @@ import UserListView from "@/views/UserListView.vue";
 import CreatePasswordView from "@/views/CreatePasswordView.vue";
 import UserCreateView from "@/views/UserCreateView.vue";
 import SubscriptionPlansView from "@/views/SubscriptionPlansView.vue";
+import { useAlertStore } from "@/stores/alert";
+
 const routes = [
   {
     path: "/",
@@ -50,8 +52,23 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes,
+});
+
+// Add global navigation guard
+router.beforeEach((to, from, next) => {
+  console.log("Navigation from:", from.path, "to:", to.path);
+  console.log("Navigation state:", to.state);
+
+  const alertStore = useAlertStore();
+  alertStore.reset();
+
+  if (to.state?.alert) {
+    alertStore[to.state.alert.type](to.state.alert.message);
+  }
+
+  next();
 });
 
 export default router;

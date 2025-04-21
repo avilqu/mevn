@@ -51,15 +51,23 @@ watch(route, refresh);
 <template>
   <div class="row">
     <div class="col-lg-6">
-      <div v-if="route.path != '/profile'" class="mb-4">
-        <router-link to="/user/list" class="__link text-muted">
-          {{ $t("actions.backToList") }}
+      <div
+        v-if="route.path != '/profile'"
+        class="mb-4 d-flex align-items-center"
+      >
+        <router-link to="/user/list" class="__link text-muted me-4">
+          <fa :icon="['fas', 'arrow-left-long']" size="2x" />
         </router-link>
+        <div>
+          <h1 class="mb-0">{{ state.user.name }}</h1>
+          <p class="text-secondary mb-0">{{ state.user._id }}</p>
+        </div>
       </div>
-      <div class="col-sm-12">
+      <div v-else class="mb-4">
         <h1>{{ state.user.name }}</h1>
         <p class="text-secondary">{{ state.user._id }}</p>
-
+      </div>
+      <div class="col-sm-12">
         <br />
 
         <table class="table table-striped table-borderless">

@@ -155,7 +155,7 @@ const apiClient = {
     const alertStore = useAlertStore();
     try {
       const res = await axios.get("/api/subscription/plans");
-      return res.data;
+      if (res.status === "success") return res.data;
     } catch (e) {
       alertStore.error(e.message);
       return e;
@@ -165,10 +165,8 @@ const apiClient = {
   async createCheckoutSession() {
     const alertStore = useAlertStore();
     try {
-      const res = await axios.post("/api/subscription/create-checkout-session");
-      if (res.url) {
-        window.location.href = res.url;
-      }
+      const res = await axios.get("/api/subscription/checkout");
+      if (res.url) window.location.href = res.url;
       return res;
     } catch (e) {
       alertStore.error(e.message);
@@ -180,7 +178,10 @@ const apiClient = {
     const alertStore = useAlertStore();
     try {
       const res = await axios.get("/api/subscription/cancel");
-      return res;
+      if (res.status === "success") {
+        alertStore.success(res.message);
+        return res.data;
+      }
     } catch (e) {
       alertStore.error(e.message);
       return e;

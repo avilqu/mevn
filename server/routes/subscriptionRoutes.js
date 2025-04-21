@@ -64,7 +64,6 @@ const handleStripeWebhook = async (req, res, next) => {
           }
         );
       } catch (e) {
-        console.log(e);
         return next(e);
       }
       break;
@@ -105,7 +104,7 @@ const handleStripeWebhook = async (req, res, next) => {
       break;
 
     default:
-      console.log(`Unhandled event type: ${event.type}`);
+      break;
   }
 
   res.json({ received: true });
@@ -115,6 +114,8 @@ const cancelSubscription = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) throw new Error(process.env.ERR_NO_USER);
+    if (user.subscription?.stripeSubscriptionId)
+      await stripe.subscriptions.cancel(user.subscription.stripeSubscriptionId);
     user.subscription = {
       type: "free",
       status: "active",
@@ -126,7 +127,7 @@ const cancelSubscription = async (req, res, next) => {
     const updatedUser = await User.findById(req.user._id);
     return res.json({
       status: "success",
-      user: updatedUser.toJSON(),
+      data: { user: updatedUser.toJSON() },
       message: messages.info.subscriptionCanceled,
     });
   } catch (e) {
@@ -153,7 +154,7 @@ const getPlanDetails = async (req, res, next) => {
   }
 };
 
-router.post("/create-checkout-session", auth, createCheckoutSession);
+router.get("/checkout", auth, createCheckoutSession);
 
 router.post(
   "/webhook",
