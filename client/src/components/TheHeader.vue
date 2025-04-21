@@ -34,7 +34,6 @@ const authStore = useAuthStore();
         {{ authStore.user.name }}
       </button>
       <ul class="dropdown-menu dropdown-menu-end">
-        <li v-if="authStore.user.role === 'user'" class="dropdown-divider"></li>
         <li class="dropdown-header">{{ $t("subscription.title") }}</li>
         <li class="px-3 py-1">
           <small class="text-muted">{{ $t("subscription.plan") }}: </small>

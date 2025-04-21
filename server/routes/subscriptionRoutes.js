@@ -8,7 +8,7 @@ const plans = require("../config/plans");
 
 const createCheckoutSession = async (req, res, next) => {
   try {
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams = {
       payment_method_types: ["card"],
       line_items: [
         {
@@ -19,8 +19,14 @@ const createCheckoutSession = async (req, res, next) => {
       mode: "subscription",
       success_url: `${process.env.CLIENT_URL}/profile?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.CLIENT_URL}/plans`,
-      customer_email: req.user.email,
-    });
+    };
+    if (req.user.subscription?.stripeCustomerId) {
+      sessionParams.customer = req.user.subscription.stripeCustomerId;
+    } else {
+      sessionParams.customer_email = req.user.email;
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     res.json({ url: session.url });
   } catch (e) {
@@ -49,19 +55,24 @@ const handleStripeWebhook = async (req, res, next) => {
       const endDate = new Date();
       endDate.setMonth(endDate.getMonth() + 1);
       try {
-        await User.findOneAndUpdate(
-          { email: session.customer_email },
-          {
-            subscription: {
-              type: "paid",
-              status: "active",
-              startDate: new Date(),
-              endDate: endDate,
-              stripeCustomerId: session.customer,
-              stripeSubscriptionId: session.subscription,
-            },
-          }
-        );
+        // Find user by email or Stripe customer ID
+        let userQuery = {};
+        if (session.customer_email) {
+          userQuery = { email: session.customer_email };
+        } else if (session.customer) {
+          userQuery = { "subscription.stripeCustomerId": session.customer };
+        }
+
+        await User.findOneAndUpdate(userQuery, {
+          subscription: {
+            type: "paid",
+            status: "active",
+            startDate: new Date(),
+            endDate: endDate,
+            stripeCustomerId: session.customer,
+            stripeSubscriptionId: session.subscription,
+          },
+        });
       } catch (e) {
         return next(e);
       }

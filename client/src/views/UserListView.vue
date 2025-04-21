@@ -57,6 +57,10 @@ onMounted(async () => {
             v-for="user in state.userList"
             :key="user._id"
             class="__pointer"
+            :class="{
+              'table-info': user.role === 'admin',
+              'table-success': user.subscription.type !== 'free',
+            }"
             @click="router.push(`/user/${user._id}`)"
           >
             <td class="p-3">{{ user.name }}</td>

@@ -3,7 +3,7 @@ defineProps({ value: String });
 </script>
 
 <template>
-  <p style="display: inline">
+  <p v-if="value" style="display: inline">
     {{
       new Date(value).toLocaleDateString("en-NZ", {
         year: "numeric",
