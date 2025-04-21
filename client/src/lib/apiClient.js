@@ -134,18 +134,37 @@ const apiClient = {
   },
 
   async getSubscriptionPlans() {
-    const res = await axios.get("/api/subscription/plans");
-    return res.data;
+    try {
+      const res = await axios.get("/api/subscription/plans");
+      return res.data;
+    } catch (e) {
+      return e;
+    }
   },
 
-  async upgradeSubscription() {
-    const res = await axios.get("/api/subscription/upgrade");
-    return res;
+  async createCheckoutSession() {
+    try {
+      const res = await axios.post("/api/subscription/create-checkout-session");
+      if (res.url) {
+        window.location.href = res.url;
+      }
+      return res;
+    } catch (error) {
+      const alertStore = useAlertStore();
+      alertStore.error("Error creating checkout session");
+      return error;
+    }
   },
 
   async cancelSubscription() {
-    const res = await axios.get("/api/subscription/cancel");
-    return res;
+    try {
+      const res = await axios.get("/api/subscription/cancel");
+      return res;
+    } catch (e) {
+      const alertStore = useAlertStore();
+      alertStore.error("Error canceling subscription");
+      return e;
+    }
   },
 };
 

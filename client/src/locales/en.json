@@ -56,8 +56,11 @@
     "title": "Subscription",
     "plan": "Plan",
     "view": "View plans",
+    "cancel": "Cancel subscription",
     "nextPayment": "Next payment",
     "pageTitle": "Choose Your Plan",
-    "pageDescription": "Select the plan that best fits your needs"
+    "pageDescription": "Select the plan that best fits your needs",
+    "buttonCurrentPlan": "Current Plan",
+    "buttonSelectPlan": "Select paid plan"
   }
 }

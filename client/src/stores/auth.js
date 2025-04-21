@@ -52,6 +52,13 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
+    async refresh() {
+      const res = await apiClient.getActiveUser();
+      if (res.status === "success") {
+        this.update(res.data.user);
+      }
+    },
+
     async update(user) {
       localStorage.setItem("user", JSON.stringify(user));
       this.user = user;

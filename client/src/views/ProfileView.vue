@@ -38,8 +38,14 @@ async function refresh() {
   else state.user = await apiClient.getItem("user", route.params.id);
 }
 
+onMounted(async () => {
+  if (route.query.session_id) {
+    await authStore.refresh();
+  }
+  await refresh();
+});
+
 watch(route, refresh);
-onMounted(refresh);
 </script>
 
 <template>
@@ -146,9 +152,7 @@ onMounted(refresh);
                     state.user.subscription.type
                   }}</span>
                   <br />
-                  <span class="text-muted"
-                    >{{ $t("subscription.status") }}:
-                  </span>
+                  <span class="text-muted">{{ $t("common.status") }}: </span>
                   <span class="text-capitalize">{{
                     state.user.subscription.status
                   }}</span>

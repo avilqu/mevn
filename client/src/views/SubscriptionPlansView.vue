@@ -12,13 +12,12 @@ const state = reactive({
 async function selectPlan(planType) {
   if (planType === "free") {
     const res = await apiClient.cancelSubscription();
-    authStore.update(res.user);
-    router.push("/profile");
+    if (res.status === "success") {
+      authStore.update(res.user);
+      router.push("/profile");
+    }
   } else if (planType === "paid") {
-    const res = await apiClient.upgradeSubscription();
-    authStore.update(res.user);
-    router.push("/profile");
-    // window.location.href = response.data.url;
+    await apiClient.createCheckoutSession();
   }
 }
 
@@ -59,13 +58,11 @@ onMounted(async () => {
                 </li>
               </ul>
             </div>
-            <div class="card-footer bg-transparent">
+            <div v-if="plan.name === 'paid'" class="card-footer bg-transparent">
               <button
-                class="btn w-100"
+                class="btn w-100 mb-2"
                 :class="[
-                  plan.name === 'paid'
-                    ? 'btn-success'
-                    : 'btn-outline-secondary',
+                  'btn-success',
                   authStore.user.subscription?.type === plan.name &&
                   authStore.user.subscription?.status === 'active'
                     ? 'btn-outline-secondary'
@@ -80,9 +77,19 @@ onMounted(async () => {
                 {{
                   authStore.user.subscription?.type === plan.name &&
                   authStore.user.subscription?.status === "active"
-                    ? "Current Plan"
-                    : `Select ${plan.name} Plan`
+                    ? $t("subscription.buttonCurrentPlan")
+                    : $t("subscription.buttonSelectPlan")
                 }}
+              </button>
+              <button
+                v-if="
+                  authStore.user.subscription?.type === plan.name &&
+                  authStore.user.subscription?.status === 'active'
+                "
+                class="btn btn-outline-danger w-100"
+                @click="selectPlan('free')"
+              >
+                {{ $t("subscription.cancel") }}
               </button>
             </div>
           </div>
