@@ -6,6 +6,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 
 import DateDisplay from "@/components/DateDisplay";
+import ConfirmationModal from "@/components/ConfirmationModal";
 
 import apiClient from "@/lib/apiClient";
 import { useAuthStore } from "@/stores/auth";
@@ -15,6 +16,7 @@ const state = reactive({
   user: {},
   displayMode: "",
   isLoading: false,
+  showDeleteModal: false,
 });
 
 async function updateUser() {
@@ -25,7 +27,7 @@ async function updateUser() {
   state.isLoading = false;
 }
 
-async function deleteUser() {
+async function confirmDelete() {
   state.isLoading = true;
   await apiClient.deleteItem("user", state.user._id);
   state.displayMode = "";
@@ -219,7 +221,7 @@ watch(route, refresh);
           &nbsp;
           <button
             class="btn btn-outline-danger btn-block"
-            @click="deleteUser()"
+            @click="state.showDeleteModal = true"
             :disabled="state.isLoading"
           >
             <span
@@ -246,4 +248,13 @@ watch(route, refresh);
       </div>
     </div>
   </div>
+
+  <ConfirmationModal
+    v-model:show="state.showDeleteModal"
+    :title="$t('common.warning')"
+    :message="$t('common.deleteConfirmation')"
+    :confirmText="$t('common.delete')"
+    variant="danger"
+    @confirm="confirmDelete"
+  />
 </template>

@@ -7,12 +7,14 @@
     "edit": "Edit",
     "delete": "Delete",
     "cancel": "Cancel",
+    "warning": "Warning",
     "register": "Register",
     "status": "Status",
     "back": "Back",
     "items": "Items",
     "or": "OR",
-    "maintenanceMode": "This website is currently under maintenance."
+    "maintenanceMode": "This website is currently under maintenance.",
+    "deleteConfirmation": "Are you sure you want to delete this item? This action cannot be undone."
   },
 
   "fields": {

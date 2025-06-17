@@ -1,66 +1,66 @@
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
+  show: {
+    type: Boolean,
+    required: true
+  },
   title: {
     type: String,
-    required: true,
+    required: true
   },
   message: {
     type: String,
-    required: true,
+    required: true
   },
   confirmText: {
     type: String,
-    default: "Confirm",
+    default: 'Confirm'
   },
   cancelText: {
     type: String,
-    default: "Cancel",
+    default: 'Cancel'
   },
-  show: {
-    type: Boolean,
-    default: false,
-  },
+  variant: {
+    type: String,
+    default: 'danger'
+  }
 });
 
-const emit = defineEmits(["confirm", "cancel"]);
+const emit = defineEmits(['confirm', 'cancel', 'update:show']);
+
+const handleConfirm = () => {
+  emit('confirm');
+  emit('update:show', false);
+};
+
+const handleCancel = () => {
+  emit('cancel');
+  emit('update:show', false);
+};
 </script>
 
 <template>
   <Teleport to="body">
     <div v-if="show" class="modal-backdrop fade show"></div>
-    <div
-      v-if="show"
-      class="modal fade show"
-      style="display: block"
-      tabindex="-1"
-    >
+    <div v-if="show" class="modal fade show" style="display: block;" tabindex="-1">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" :class="`border-${variant}`">
           <div class="modal-header">
             <h5 class="modal-title">{{ title }}</h5>
-            <button
-              type="button"
-              class="btn-close"
-              @click="$emit('cancel')"
-            ></button>
           </div>
           <div class="modal-body">
             {{ message }}
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              @click="$emit('cancel')"
-            >
+            <button type="button" class="btn btn-secondary" @click="handleCancel">
               {{ cancelText }}
             </button>
-            <button
-              type="button"
-              class="btn btn-danger"
-              @click="$emit('confirm')"
+            <button 
+              type="button" 
+              :class="`btn btn-${variant}`" 
+              @click="handleConfirm"
             >
               {{ confirmText }}
             </button>
@@ -71,16 +71,6 @@ const emit = defineEmits(["confirm", "cancel"]);
   </Teleport>
 </template>
 
-<style scoped>
-.modal {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-dialog {
-  margin: 0;
-  max-width: 500px;
-  width: 100%;
-}
+<style>
+@import "@/assets/css/modals.css";
 </style>
