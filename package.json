@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "server": "GIT_BRANCH=$(git branch --show-current) nodemon server/index.js",
-    "dev": "(cd client && vue serve) & npm run server",
+    "dev": "(cd client && npm run serve) & (NODE_ENV=dev npm run server)",
     "stripe": "stripe listen --forward-to http://localhost:3000/api/subscription/webhook"
   },
   "author": "Adrien Vilquin Barrajon",
