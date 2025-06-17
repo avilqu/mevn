@@ -71,9 +71,10 @@ const authStore = useAuthStore();
         <li class="px-3 py-2">
           <router-link
             to="/plans"
-            class="btn btn-sm w-100 btn-outline-secondary"
+            class="btn btn-sm w-100"
+            :class="authStore.user.subscription?.type === 'free' ? 'btn-success' : 'btn-danger'"
           >
-            {{ $t("subscription.view") }}
+            {{ authStore.user.subscription?.type === 'free' ? $t("common.upgrade") : $t("common.cancel") }}
           </router-link>
         </li>
         <li class="dropdown-divider"></li>
