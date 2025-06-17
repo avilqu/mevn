@@ -3,6 +3,7 @@ import router from "@/router";
 
 import apiClient from "@/lib/apiClient";
 import { useAlertStore } from "@/stores/alert";
+import { useItemStore } from "@/stores/item";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
@@ -19,6 +20,8 @@ export const useAuthStore = defineStore("auth", {
         localStorage.setItem("user", JSON.stringify(res.data.user));
         this.status = { loggedIn: true };
         this.user = res.data.user;
+        const itemStore = useItemStore();
+        await itemStore.load();
         router.push("/");
       } else {
         const alert = useAlertStore();
