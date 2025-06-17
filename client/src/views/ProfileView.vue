@@ -29,10 +29,17 @@ async function updateUser() {
 
 async function confirmDelete() {
   state.isLoading = true;
+  const isSelfDeletion = state.user._id === authStore.user._id;
   await apiClient.deleteItem("user", state.user._id);
   state.displayMode = "";
   state.isLoading = false;
-  router.push("/user/list");
+  
+  if (isSelfDeletion) {
+    await authStore.logout();
+    router.push("/login");
+  } else {
+    router.push("/user/list");
+  }
 }
 
 async function sendPasswordToken() {
