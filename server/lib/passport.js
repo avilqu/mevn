@@ -48,28 +48,33 @@ passport.use(
       try {
         let user = await User.findOne({ googleId: profile.id });
         if (user) {
-          if (user.email != profile.emails[0].value) {
+          if (user.email !== profile.emails[0].value) {
             user.email = profile.emails[0].value;
-            user.save();
+            await user.save();
           }
           return done(null, user);
-        } else {
-          user = await User.findOne({
-            email: profile.emails[0].value,
-          });
-          if (user) {
-            user.googleId = profile.id;
-            user.save();
-            return done(null, user);
-          }
-          const newUser = await new User({
-            googleId: profile.id,
-            email: profile.emails[0].value,
-            name: profile.displayName,
-            verified: true,
-          }).save();
-          return done(null, newUser);
         }
+
+        user = await User.findOne({
+          email: profile.emails[0].value,
+        });
+        
+        if (user) {
+          if (!user.googleId) {
+            user.googleId = profile.id;
+            await user.save();
+          }
+          return done(null, user);
+        }
+
+        const newUser = await new User({
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          name: profile.displayName,
+          verified: true,
+        }).save();
+        
+        return done(null, newUser);
       } catch (e) {
         return done(e);
       }

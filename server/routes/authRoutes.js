@@ -13,21 +13,31 @@ const {
 const plans = require("../config/plans");
 
 const login = (strategy) => {
-  return (req, res, next) => {
-    passport.authenticate(
-      strategy,
-      { failureRedirect: "/login" },
-      (err, user) => {
-        if (err) return next(err);
-        req.login(user, (err) => {
+  return async (req, res, next) => {
+    try {
+      passport.authenticate(
+        strategy,
+        { failureRedirect: "/login" },
+        async (err, user) => {
           if (err) return next(err);
-          else if (strategy == "local")
-            res.json({ status: "success", data: { user } });
-          else res.redirect(`${process.env.CLIENT_URL}/?auth`);
-          user.updateLastConnected();
-        });
-      }
-    )(req, res, next);
+          req.login(user, async (err) => {
+            if (err) return next(err);
+            try {
+              await user.updateLastConnected();
+              if (strategy === "local") {
+                res.json({ status: "success", data: { user } });
+              } else {
+                res.redirect(`${process.env.CLIENT_URL}/?auth`);
+              }
+            } catch (error) {
+              next(error);
+            }
+          });
+        }
+      )(req, res, next);
+    } catch (error) {
+      next(error);
+    }
   };
 };
 

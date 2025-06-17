@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "server": "GIT_BRANCH=$(git branch --show-current) nodemon server/index.js",
-    "dev": "(cd client && npm run serve) & (NODE_ENV=dev npm run server)",
+    "dev": "(cd client && npm run serve) & npm run server",
     "stripe": "stripe listen --forward-to http://localhost:3000/api/subscription/webhook"
   },
   "author": "Adrien Vilquin Barrajon",
@@ -19,13 +19,6 @@
     "prettier": "^3.5.2"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.6.0",
-    "@fortawesome/free-brands-svg-icons": "^6.6.0",
-    "@fortawesome/free-solid-svg-icons": "^6.6.0",
-    "@fortawesome/vue-fontawesome": "^3.0.8",
-    "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.3",
-    "datatables.net-vue3": "^3.0.4",
     "dotenv-cli": "^8.0.0"
   }
 }

@@ -84,9 +84,22 @@ UserSchema.methods.verifyToken = function (token) {
   }
 };
 
-UserSchema.methods.updateLastConnected = function () {
-  this.lastConnected = Date.now();
-  this.save();
+UserSchema.methods.updateLastConnected = async function () {
+  try {
+    const updatedUser = await this.constructor.findOneAndUpdate(
+      { _id: this._id },
+      { $set: { lastConnected: Date.now() } },
+      { new: true }
+    );
+    
+    if (!updatedUser) {
+      throw new Error('Failed to update last connected time');
+    }
+    this.lastConnected = updatedUser.lastConnected;
+  } catch (error) {
+    console.error('Error updating last connected:', error);
+    throw error;
+  }
 };
 
 UserSchema.pre("save", function (next) {

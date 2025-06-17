@@ -4,16 +4,16 @@ const seedDatabase = async () => {
   try {
     const User = mongoose.model('user');
     const adminUser = await User.create({
-      email: 'avilqu@gmail.com',
+      email: 'marvin@mailinator.com',
       password: 'almagro',
-      name: 'Adrien',
+      name: 'Marvin',
       role: 'admin',
       verified: true
     });
     const regularUser = await User.create({
-      email: 'marvin@malinator.com',
+      email: 'avilqu@gmail.com',
       password: 'almagro',
-      name: 'Marvin',
+      name: 'Adrien',
       verified: true
     });
     console.log('Database seeded successfully');
