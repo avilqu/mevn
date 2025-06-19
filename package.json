@@ -5,7 +5,9 @@
   "scripts": {
     "server": "GIT_BRANCH=$(git branch --show-current) nodemon server/index.js",
     "dev": "(cd client && npm run serve) & npm run server",
-    "stripe": "stripe listen --forward-to http://localhost:3000/api/subscription/webhook"
+    "stripe": "stripe listen --forward-to http://localhost:3000/api/subscription/webhook",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "author": "Adrien Vilquin Barrajon",
   "license": "ISC",
