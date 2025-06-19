@@ -1,4 +1,6 @@
 const { defineConfig } = require("@vue/cli-service");
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -6,7 +8,7 @@ module.exports = defineConfig({
     devServer: {
       proxy: {
         "/api": {
-          target: "http://localhost:3000",
+          target: `http://localhost:${process.env.HTTP_PORT || 3000}`,
           changeOrigin: true,
           logLevel: "debug",
         },
