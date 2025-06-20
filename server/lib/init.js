@@ -1,6 +1,5 @@
 // mongodb init
 const mongoose = require("mongoose");
-// const { seedDatabase } = require("./seed");
 
 async function connectDB() {  
     await mongoose.connect(process.env.MONGODB_URL);
