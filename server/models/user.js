@@ -93,13 +93,13 @@ UserSchema.methods.updateLastConnected = async function () {
       { $set: { lastConnected: Date.now() } },
       { new: true }
     );
-    
+
     if (!updatedUser) {
-      throw new Error('Failed to update last connected time');
+      throw new Error("Failed to update last connected time");
     }
     this.lastConnected = updatedUser.lastConnected;
   } catch (error) {
-    console.error('Error updating last connected:', error);
+    console.error("Error updating last connected:", error);
     throw error;
   }
 };
