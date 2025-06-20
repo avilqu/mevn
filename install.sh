@@ -25,6 +25,18 @@ get_http_port() {
 
 echo -e "-- ${GREEN}Starting installation...${NC}"
 
+# Check if .env file exists
+if [ ! -f .env ]; then
+    echo -e "-- ${RED}Error: .env file not found!${NC}"
+    echo -e "---- Please create a .env file before running the install script."
+    if [ -f .env.example ]; then
+        echo -e "---- Copy .env.example to .env and edit file:"
+        echo -e "---- cp .env.example .env"
+        echo -e "---- nano .env"
+    fi
+    exit 1
+fi
+
 # Get the HTTP port from .env file
 HTTP_PORT=$(get_http_port)
 echo -e "-- ${GREEN}Using HTTP_PORT: ${HTTP_PORT}${NC}"
@@ -44,19 +56,6 @@ fi
 # Check if MongoDB is installed
 if ! command -v mongod &> /dev/null; then
     echo -e "-- ${YELLOW}Warning: MongoDB is not installed. Please install MongoDB for local development.${NC}"
-fi
-
-# Create .env file if it doesn't exist
-if [ ! -f .env ]; then
-    if [ -f .env.example ]; then
-        echo -e "-- ${GREEN}Copying .env.example to .env...${NC}"
-        cp .env.example .env
-        echo -e "-- ${GREEN}.env file created from .env.example. Please update the values with your configuration.${NC}"
-    else
-        echo -e "-- ${YELLOW}No .env.example found. Please create a .env file manually.${NC}"
-    fi
-else
-    echo -e "-- ${GREEN}.env file already exists.${NC}"
 fi
 
 # Install root dependencies
