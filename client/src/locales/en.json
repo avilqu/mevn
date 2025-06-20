@@ -1,78 +1,93 @@
 {
   "common": {
-    "save": "Save",
-    "send": "Send",
-    "login": "Login",
-    "logout": "Logout",
-    "edit": "Edit",
-    "delete": "Delete",
-    "cancel": "Cancel",
-    "upgrade": "Upgrade",
-    "warning": "Warning",
-    "register": "Register",
-    "status": "Status",
-    "back": "Back",
-    "items": "Items",
-    "or": "OR",
-    "maintenanceMode": "This website is currently under maintenance.",
-    "deleteConfirmation": "Are you sure you want to delete this item? This action cannot be undone."
-  },
-
-  "fields": {
-    "email": "Email",
-    "password": "Password",
-    "name": "Name",
-    "role": "Role"
-  },
-
-  "user": {
-    "user": "User",
-    "users": "Users",
-    "admin": "Admin",
-    "new": "New user",
-    "create": "Create user",
-    "list": "User list",
-    "profile": "Profile"
+    "actions": {
+      "save": "Save",
+      "send": "Send",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "upgrade": "Upgrade"
+    },
+    "navigation": {
+      "back": "Back",
+      "profile": "Profile",
+      "items": "Items"
+    },
+    "dates": {
+      "addedOn": "Added",
+      "updatedOn": "Updated",
+      "connectedOn": "Connected",
+      "from": "From",
+      "until": "Until"
+    },
+    "messages": {
+      "warning": "Warning!",
+      "maintenanceMode": "This website is currently under maintenance.",
+      "deleteConfirmation": "Are you sure you want to delete this item? This action cannot be undone."
+    }
   },
 
   "auth": {
-    "signIn": "Sign in",
-    "password": "Password",
-    "sendPasswordLink": "Send reset link",
-    "createPassword": "Create password",
-    "newPassword": "New password",
-    "confirmPassword": "Confirm password",
-    "forgottenPassword": "Forgotten password?",
-    "resetPassword": "Reset password",
-    "passwordLinkDetails": "A secure link with instructions to create a new password will be sent by email.",
-    "newUserDetails": "A secure link will be sent to the registered email address to create a password. This link will be valid 24 hours."
-  },
-
-  "dates": {
-    "addedOn": "Added",
-    "updatedOn": "Updated",
-    "connectedOn": "Connected",
-    "from": "From",
-    "until": "Until"
+    "fields": {
+      "email": "Email",
+      "password": "Password",
+      "role": "Role",
+      "name": "Name"
+    },
+    "roles": {
+      "user": "User",
+      "admin": "Admin"
+    },
+    "user": {
+      "single": "User",
+      "plural": "Users",
+      "create": "Create user",
+      "list": "User list",
+      "admin": "Admin"
+    },
+    "login": {
+      "title": "Login",
+      "signIn": "Sign in",
+      "or": "OR",
+      "logout": "Logout"
+    },
+    "register": {
+      "title": "New user",
+      "link": "Register",
+      "secureLinkDetails": "A secure link will be sent to the registered email address to create a password. This link will be valid 24 hours."
+    },
+    "forgottenPassword": {
+      "title": "Send reset link",
+      "link": "Forgotten password?",
+      "secureLinkDetails": "A secure link with instructions to create a new password will be sent by email."
+    },
+    "resetPassword": {
+      "title": "Create password",
+      "link": "Reset password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password"
+    }
   },
 
   "subscription": {
-    "title": "Subscription",
-    "plan": "Plan",
-    "view": "View plans",
-    "cancel": "Cancel subscription",
-    "nextPayment": "Next payment",
-    "pageTitle": "Choose Your Plan",
-    "pageDescription": "Select the plan that best fits your needs",
-    "buttonCurrentPlan": "Current Plan",
-    "buttonSelectPlan": "Select paid plan",
-    "cancelScheduled": "Your subscription is scheduled to end on",
-    "willNotRenew": "Will not renew",
+    "header": {
+      "title": "Subscription",
+      "plan": "Plan",
+      "willNotRenew": "Will not renew",
+      "nextPayment": "Next payment"
+    },
+    "page": {
+      "title": "Choose your plan",
+      "description": "Select the plan that best fits your needs",
+      "cancel": "Cancel subscription",
+      "buttonCurrentPlan": "Current Plan",
+      "buttonSelectPlan": "Select paid plan",
+      "cancelScheduled": "Your subscription is scheduled to end on"
+    },
     "cancelModal": {
       "title": "Cancel subscription",
       "message": "Are you sure you want to cancel your subscription? Your subscription will continue until the end of your current billing period.",
-      "confirm": "Cancel subscription",
-      "cancel": "Back"
+      "confirm": "Cancel subscription"
     }
   }
 }

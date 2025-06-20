@@ -35,7 +35,7 @@ onMounted(async () => {
 <template>
   <div class="row">
     <div class="col-lg-10">
-      <h1 class="mb-5">{{ $t("user.list") }}</h1>
+      <h1 class="mb-5">{{ $t("auth.user.list") }}</h1>
 
       <DataTable
         v-if="state.loaded"
@@ -44,12 +44,12 @@ onMounted(async () => {
       >
         <thead class="table-secondary">
           <tr>
-            <th>{{ $t("fields.name") }}</th>
-            <th>{{ $t("fields.email") }}</th>
-            <th>{{ $t("fields.role") }}</th>
-            <th>{{ $t("subscription.plan") }}</th>
-            <th>{{ $t("dates.addedOn") }}</th>
-            <th>{{ $t("dates.connectedOn") }}</th>
+            <th>{{ $t("auth.fields.name") }}</th>
+            <th>{{ $t("auth.fields.email") }}</th>
+            <th>{{ $t("auth.fields.role") }}</th>
+            <th>{{ $t("subscription.header.plan") }}</th>
+            <th>{{ $t("common.dates.addedOn") }}</th>
+            <th>{{ $t("common.dates.connectedOn") }}</th>
           </tr>
         </thead>
         <tbody>

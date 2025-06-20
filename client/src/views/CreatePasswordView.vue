@@ -42,13 +42,13 @@ async function createPassword() {
     <div class="col-xl-4 col-md-6 col-sm-9 mx-auto">
       <div class="card bg-black border-0 shadow">
         <div class="card-body p-4">
-          <h1 class="h2 mb-5 mt-3">{{ $t("auth.createPassword") }}</h1>
+          <h1 class="h2 mb-5 mt-3">{{ $t("auth.resetPassword.title") }}</h1>
           <form class="text-center p-4">
             <input
               type="password"
               class="form-control p-3 __input-top"
               :class="{ 'is-invalid': v$.password.$error === true }"
-              :placeholder="$t('auth.newPassword')"
+              :placeholder="$t('auth.resetPassword.newPassword')"
               autofocus
               v-model="state.password"
             />
@@ -56,7 +56,7 @@ async function createPassword() {
               type="password"
               class="form-control p-3 __input-bottom"
               :class="{ 'is-invalid': v$.confirmation.$error === true }"
-              :placeholder="$t('auth.confirmPassword')"
+              :placeholder="$t('auth.resetPassword.confirmPassword')"
               v-model="state.confirmation"
             />
             <button
@@ -68,7 +68,9 @@ async function createPassword() {
                 class="spinner-border spinner-border-sm"
                 :hidden="!state.isLoading"
               ></span>
-              <span :hidden="state.isLoading">{{ $t("common.save") }}</span>
+              <span :hidden="state.isLoading">{{
+                $t("common.actions.save")
+              }}</span>
             </button>
           </form>
         </div>

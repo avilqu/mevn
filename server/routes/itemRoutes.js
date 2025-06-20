@@ -108,7 +108,7 @@ const getItemList = async (req, res, next) => {
 };
 
 const getAllItems = async (req, res, next) => {
-  const Items = require("../lib/init").mongoose.model("item");
+  const Item = require("../lib/init").mongoose.model("item");
   const User = require("../lib/init").mongoose.model("user");
   try {
     const items = await Item.find();

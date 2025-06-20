@@ -84,14 +84,14 @@ async function sendPasswordToken() {
               <img src="@/assets/logo.png" width="72" height="72" />
             </router-link>
             <div v-if="state.displayMode == 'login'">
-              <h1 class="h2 mb-5 mt-3">{{ $t("auth.signIn") }}</h1>
+              <h1 class="h2 mb-5 mt-3">{{ $t("auth.login.signIn") }}</h1>
               <input
                 type="email"
                 class="form-control p-3 __input-top"
                 :class="{
                   'is-invalid': v$.loginCredentials.email.$error === true,
                 }"
-                :placeholder="$t('fields.email')"
+                :placeholder="$t('auth.fields.email')"
                 autofocus
                 v-model="state.loginCredentials.email"
               />
@@ -101,7 +101,7 @@ async function sendPasswordToken() {
                 :class="{
                   'is-invalid': v$.loginCredentials.password.$error === true,
                 }"
-                :placeholder="$t('fields.password')"
+                :placeholder="$t('auth.fields.password')"
                 v-model="state.loginCredentials.password"
               />
               <button
@@ -113,27 +113,29 @@ async function sendPasswordToken() {
                   class="spinner-border spinner-border-sm"
                   :hidden="!state.isLoading"
                 ></span>
-                <span :hidden="state.isLoading">{{ $t("common.login") }}</span>
+                <span :hidden="state.isLoading">{{
+                  $t("auth.login.title")
+                }}</span>
               </button>
               <p class="mt-5 mb-3 text-muted">
                 <span
                   class="fw-light __link"
                   @click="state.displayMode = 'register'"
                 >
-                  {{ $t("common.register") }}
+                  {{ $t("auth.register.link") }}
                 </span>
                 |
                 <span
                   class="fw-light __link"
                   @click="state.displayMode = 'reset'"
                 >
-                  {{ $t("auth.forgottenPassword") }}
+                  {{ $t("auth.forgottenPassword.link") }}
                 </span>
               </p>
 
               <div class="divider d-flex align-items-center my-4">
                 <p class="text-center mx-3 mb-0 text-secondary">
-                  {{ $t("common.or") }}
+                  {{ $t("auth.login.or") }}
                 </p>
               </div>
               <fa
@@ -152,16 +154,16 @@ async function sendPasswordToken() {
 
             <div v-if="state.displayMode == 'reset'">
               <h1 class="h3 mb-5 mt-3">
-                {{ $t("auth.sendPasswordLink") }}
+                {{ $t("auth.forgottenPassword.title") }}
               </h1>
               <p class="my-5 text-muted">
-                {{ $t("auth.passwordLinkDetails") }}
+                {{ $t("auth.forgottenPassword.secureLinkDetails") }}
               </p>
               <input
                 type="email"
                 class="form-control p-3"
                 :class="{ 'is-invalid': v$.passwordTokenEmail.$error === true }"
-                :placeholder="$t('fields.email')"
+                :placeholder="$t('auth.fields.email')"
                 autofocus
                 v-model="state.passwordTokenEmail"
               />
@@ -175,21 +177,21 @@ async function sendPasswordToken() {
                   :hidden="!state.isLoading"
                 ></span>
                 <span :hidden="state.isLoading">
-                  {{ $t("common.send") }}
+                  {{ $t("common.actions.send") }}
                 </span>
               </button>
               <p
                 class="mt-5 mb-3 text-muted __link"
                 @click="state.displayMode = 'login'"
               >
-                {{ $t("common.back") }}
+                {{ $t("common.navigation.back") }}
               </p>
             </div>
 
             <div v-if="state.displayMode == 'register'">
-              <h1 class="h3 mb-5 mt-3">{{ $t("user.new") }}</h1>
+              <h1 class="h3 mb-5 mt-3">{{ $t("auth.register.title") }}</h1>
               <p class="my-5 text-muted">
-                {{ $t("auth.newUserDetails") }}
+                {{ $t("auth.register.secureLinkDetails") }}
               </p>
               <input
                 type="text"
@@ -197,7 +199,7 @@ async function sendPasswordToken() {
                 :class="{
                   'is-invalid': v$.registerCredentials.name.$error === true,
                 }"
-                :placeholder="$t('fields.name')"
+                :placeholder="$t('auth.fields.name')"
                 autofocus
                 v-model="state.registerCredentials.name"
               />
@@ -207,7 +209,7 @@ async function sendPasswordToken() {
                 :class="{
                   'is-invalid': v$.registerCredentials.email.$error === true,
                 }"
-                :placeholder="$t('fields.email')"
+                :placeholder="$t('auth.fields.email')"
                 v-model="state.registerCredentials.email"
               />
               <button
@@ -220,14 +222,14 @@ async function sendPasswordToken() {
                   :hidden="!state.isLoading"
                 ></span>
                 <span :hidden="state.isLoading">
-                  {{ $t("common.register") }}
+                  {{ $t("auth.register.link") }}
                 </span>
               </button>
               <p
                 class="mt-5 mb-3 text-muted __link"
                 @click="state.displayMode = 'login'"
               >
-                {{ $t("common.back") }}
+                {{ $t("common.navigation.back") }}
               </p>
             </div>
           </form>

@@ -42,8 +42,8 @@ onMounted(async () => {
 <template>
   <div class="row">
     <div class="col-lg-8">
-      <h1>{{ $t("subscription.pageTitle") }}</h1>
-      <p class="text-muted">{{ $t("subscription.pageDescription") }}</p>
+      <h1>{{ $t("subscription.page.title") }}</h1>
+      <p class="text-muted">{{ $t("subscription.page.description") }}</p>
 
       <div
         v-if="
@@ -52,7 +52,7 @@ onMounted(async () => {
         "
         class="alert alert-info mb-4"
       >
-        {{ $t("subscription.cancelScheduled") }} {{ formattedEndDate }}.
+        {{ $t("subscription.page.cancelScheduled") }} {{ formattedEndDate }}.
       </div>
 
       <div class="row mt-4">
@@ -101,8 +101,8 @@ onMounted(async () => {
                 <span :hidden="state.isLoading">
                   {{
                     authStore.user.subscription?.type === plan.name
-                      ? $t("subscription.buttonCurrentPlan")
-                      : $t("subscription.buttonSelectPlan")
+                      ? $t("subscription.page.buttonCurrentPlan")
+                      : $t("subscription.page.buttonSelectPlan")
                   }}
                 </span>
               </button>
@@ -120,7 +120,7 @@ onMounted(async () => {
                   :hidden="!state.isLoading"
                 ></span>
                 <span :hidden="state.isLoading">
-                  {{ $t("subscription.cancel") }}
+                  {{ $t("subscription.page.cancel") }}
                 </span>
               </button>
             </div>
@@ -135,7 +135,7 @@ onMounted(async () => {
     :title="$t('subscription.cancelModal.title')"
     :message="$t('subscription.cancelModal.message')"
     :confirm-text="$t('subscription.cancelModal.confirm')"
-    :cancel-text="$t('subscription.cancelModal.cancel')"
+    :cancel-text="$t('common.actions.cancel')"
     @confirm="confirmCancel"
     @cancel="state.showCancelModal = false"
   />

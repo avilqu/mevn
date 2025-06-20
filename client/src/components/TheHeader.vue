@@ -20,7 +20,7 @@ const authStore = useAuthStore();
           class="nav-link text-muted __link"
           href="#"
         >
-          {{ $t("common.items") }}
+          {{ $t("common.navigation.items") }}
         </router-link>
       </li>
     </ul>
@@ -34,9 +34,11 @@ const authStore = useAuthStore();
         {{ authStore.user.name }}
       </button>
       <ul class="dropdown-menu dropdown-menu-end">
-        <li class="dropdown-header">{{ $t("subscription.title") }}</li>
+        <li class="dropdown-header">{{ $t("subscription.header.title") }}</li>
         <li class="px-3 py-1">
-          <small class="text-muted">{{ $t("subscription.plan") }}: </small>
+          <small class="text-muted"
+            >{{ $t("subscription.header.plan") }}:
+          </small>
           <small class="text-capitalize">
             {{ authStore.user.subscription?.type || "free" }}
           </small>
@@ -48,7 +50,7 @@ const authStore = useAuthStore();
           "
           class="px-3 py-1"
         >
-          <small class="text-muted">{{ $t("dates.until") }}: </small>
+          <small class="text-muted">{{ $t("common.dates.until") }}: </small>
           <small
             >{{
               new Date(
@@ -65,28 +67,36 @@ const authStore = useAuthStore();
           class="px-3 py-1"
         >
           <small class="text-danger">{{
-            $t("subscription.willNotRenew")
+            $t("subscription.header.willNotRenew")
           }}</small>
         </li>
         <li class="px-3 py-2">
           <router-link
             to="/plans"
             class="btn btn-sm w-100"
-            :class="authStore.user.subscription?.type === 'free' ? 'btn-success' : 'btn-danger'"
+            :class="
+              authStore.user.subscription?.type === 'free'
+                ? 'btn-success'
+                : 'btn-danger'
+            "
           >
-            {{ authStore.user.subscription?.type === 'free' ? $t("common.upgrade") : $t("common.cancel") }}
+            {{
+              authStore.user.subscription?.type === "free"
+                ? $t("common.actions.upgrade")
+                : $t("common.actions.cancel")
+            }}
           </router-link>
         </li>
         <li class="dropdown-divider"></li>
         <template v-if="authStore.user.role === 'admin'">
-          <li class="dropdown-header">{{ $t("user.admin") }}</li>
+          <li class="dropdown-header">{{ $t("auth.user.admin") }}</li>
           <li>
             <router-link
               to="/user/list"
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              {{ $t("user.list") }}
+              {{ $t("auth.user.list") }}
             </router-link>
           </li>
           <li>
@@ -95,7 +105,7 @@ const authStore = useAuthStore();
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              {{ $t("user.create") }}
+              {{ $t("auth.user.create") }}
             </router-link>
           </li>
           <li class="dropdown-divider"></li>
@@ -105,7 +115,7 @@ const authStore = useAuthStore();
             to="/profile"
             class="dropdown-item nav-link text-muted __link"
           >
-            {{ $t("user.profile") }}
+            {{ $t("common.navigation.profile") }}
           </router-link>
         </li>
         <li>
@@ -113,7 +123,7 @@ const authStore = useAuthStore();
             class="dropdown-item nav-link text-muted __link"
             @click="authStore.logout()"
           >
-            {{ $t("common.logout") }}
+            {{ $t("auth.login.logout") }}
           </a>
         </li>
       </ul>
@@ -125,7 +135,7 @@ const authStore = useAuthStore();
         to="/login"
         class="btn btn-outline-success"
       >
-        {{ $t("common.login") }}
+        {{ $t("auth.login.title") }}
       </router-link>
     </div>
   </nav>

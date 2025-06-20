@@ -33,7 +33,7 @@ async function confirmDelete() {
   await apiClient.deleteItem("user", state.user._id);
   state.displayMode = "";
   state.isLoading = false;
-  
+
   if (isSelfDeletion) {
     await authStore.logout();
     router.push("/login");
@@ -90,7 +90,7 @@ watch(route, refresh);
           <tbody>
             <tr>
               <td class="p-3">
-                <strong>{{ $t("fields.name") }}</strong>
+                <strong>{{ $t("auth.fields.name") }}</strong>
               </td>
               <td v-if="state.displayMode == 'edit'">
                 <input
@@ -106,14 +106,14 @@ watch(route, refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("fields.email") }}</strong>
+                <strong>{{ $t("auth.fields.email") }}</strong>
               </td>
               <td class="align-middle text-muted">{{ state.user.email }}</td>
             </tr>
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("fields.role") }}</strong>
+                <strong>{{ $t("auth.fields.role") }}</strong>
               </td>
               <td
                 v-if="
@@ -126,9 +126,9 @@ watch(route, refresh);
                   v-model="state.user.role"
                 >
                   <option value="user" selected>
-                    {{ $t("user.user") }}
+                    {{ $t("auth.user.single") }}
                   </option>
-                  <option value="admin">{{ $t("user.admin") }}</option>
+                  <option value="admin">{{ $t("auth.roles.admin") }}</option>
                 </select>
               </td>
               <td v-else class="align-middle text-muted">
@@ -138,7 +138,7 @@ watch(route, refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("dates.addedOn") }}</strong>
+                <strong>{{ $t("common.dates.addedOn") }}</strong>
               </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.added" />
@@ -147,7 +147,7 @@ watch(route, refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("dates.updatedOn") }}</strong>
+                <strong>{{ $t("common.dates.updatedOn") }}</strong>
               </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.updated" />
@@ -156,7 +156,7 @@ watch(route, refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("dates.connectedOn") }}</strong>
+                <strong>{{ $t("common.dates.connectedOn") }}</strong>
               </td>
               <td class="align-middle text-muted">
                 <DateDisplay :value="state.user.lastConnected" />
@@ -165,24 +165,26 @@ watch(route, refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("subscription.title") }}</strong>
+                <strong>{{ $t("subscription.header.title") }}</strong>
               </td>
               <td class="align-middle">
                 <div v-if="state.user.subscription">
                   <span class="text-muted"
-                    >{{ $t("subscription.plan") }}:
+                    >{{ $t("subscription.header.plan") }}:
                   </span>
                   <span class="text-capitalize">{{
                     state.user.subscription.type
                   }}</span>
                   <br />
-                  <span class="text-muted">{{ $t("dates.from") }}: </span>
+                  <span class="text-muted"
+                    >{{ $t("common.dates.from") }}:
+                  </span>
                   <DateDisplay :value="state.user.subscription.startDate" />
                   <br />
                   <span
                     v-if="state.user.subscription.endDate"
                     class="text-muted"
-                    >{{ $t("dates.until") }}:
+                    >{{ $t("common.dates.until") }}:
                   </span>
                   <DateDisplay
                     v-if="state.user.subscription.endDate"
@@ -192,7 +194,7 @@ watch(route, refresh);
                   <span
                     v-if="state.user.subscription.nextPaymentDate"
                     class="text-muted"
-                    >{{ $t("subscription.nextPayment") }}:
+                    >{{ $t("subscription.header.nextPayment") }}:
                   </span>
                   <DateDisplay
                     v-if="state.user.subscription.nextPaymentDate"
@@ -211,7 +213,7 @@ watch(route, refresh);
           class="btn btn-outline-secondary btn-block"
           @click="state.displayMode = 'edit'"
         >
-          {{ $t("common.edit") }}
+          {{ $t("common.actions.edit") }}
         </button>
         <div v-else>
           <button
@@ -223,7 +225,9 @@ watch(route, refresh);
               class="spinner-border spinner-border-sm"
               :hidden="!state.isLoading"
             ></span>
-            <span :hidden="state.isLoading">{{ $t("common.save") }}</span>
+            <span :hidden="state.isLoading">{{
+              $t("common.actions.save")
+            }}</span>
           </button>
           &nbsp;
           <button
@@ -235,7 +239,9 @@ watch(route, refresh);
               class="spinner-border spinner-border-sm"
               :hidden="!state.isLoading"
             ></span>
-            <span :hidden="state.isLoading">{{ $t("common.delete") }}</span>
+            <span :hidden="state.isLoading">{{
+              $t("common.actions.delete")
+            }}</span>
           </button>
           &nbsp;
           <button
@@ -248,7 +254,7 @@ watch(route, refresh);
               :hidden="!state.isLoading"
             ></span>
             <span :hidden="state.isLoading">{{
-              $t("auth.resetPassword")
+              $t("auth.resetPassword.link")
             }}</span>
           </button>
         </div>
@@ -258,9 +264,9 @@ watch(route, refresh);
 
   <ConfirmationModal
     v-model:show="state.showDeleteModal"
-    :title="$t('common.warning')"
-    :message="$t('common.deleteConfirmation')"
-    :confirmText="$t('common.delete')"
+    :title="$t('common.messages.warning')"
+    :message="$t('common.messages.deleteConfirmation')"
+    :confirmText="$t('common.actions.delete')"
     variant="danger"
     @confirm="confirmDelete"
   />
