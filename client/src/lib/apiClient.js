@@ -2,6 +2,12 @@ import axios from "axios";
 axios.interceptors.response.use(
   function (res) {
     return res.data;
+  },
+  function (error) {
+    if (error.response && error.response.data) {
+      return Promise.reject(error.response.data);
+    }
+    return Promise.reject(error);
   }
 );
 
@@ -9,23 +15,17 @@ import { useAlertStore } from "@/stores/alert";
 
 const apiClient = {
   async login(credentials) {
-    const alertStore = useAlertStore();
     try {
-      const res = await axios.post("/api/login", credentials);
-      if (res.status === "success") return res;
+      return await axios.post("/api/login", credentials);
     } catch (e) {
-      alertStore.error(e.message);
       return e;
     }
   },
 
   async logout() {
-    const alertStore = useAlertStore();
     try {
-      const res = await axios.get("/api/logout");
-      return res;
+      return await axios.get("/api/logout");
     } catch (e) {
-      alertStore.error(e.message);
       return e;
     }
   },
@@ -58,11 +58,11 @@ const apiClient = {
 
   async createUser(user, admin = false) {
     const alertStore = useAlertStore();
-    let res;
     try {
-      if (admin) res = await axios.post("/api/user/create", user);
-      else res = await axios.post("/api/user/register", user);
-      if (res.status === "success") alertStore.success(res.message);
+      const res = admin
+        ? await axios.post("/api/user/create", user)
+        : await axios.post("/api/user/register", user);
+      alertStore.success(res.message);
       return res.data.user;
     } catch (e) {
       alertStore.error(e.message);
