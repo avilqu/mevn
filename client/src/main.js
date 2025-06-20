@@ -11,11 +11,9 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowLeftLong, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
-
 library.add(faArrowLeftLong, faCheck, faGoogle, faFacebook);
 
 const app = createApp(App);
-
 app.use(router);
 app.use(createPinia());
 app.use(

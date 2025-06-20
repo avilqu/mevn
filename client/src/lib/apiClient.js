@@ -1,17 +1,11 @@
 import axios from "axios";
-import { useAlertStore } from "@/stores/alert";
-
 axios.interceptors.response.use(
   function (res) {
     return res.data;
-  },
-  function (error) {
-    if (error.response && error.response.data) {
-      return Promise.reject(error.response.data);
-    }
-    return Promise.reject(error);
   }
 );
+
+import { useAlertStore } from "@/stores/alert";
 
 const apiClient = {
   async login(credentials) {
@@ -44,18 +38,6 @@ const apiClient = {
       else alertStore.error(res.message);
       return res.data;
     } catch (e) {
-      return e;
-    }
-  },
-
-  async sendPasswordToken(email) {
-    const alertStore = useAlertStore();
-    try {
-      const res = await axios.post("/api/user/reset-password", { email });
-      if (res.status === "success") alertStore.success(res.message);
-      return res.data;
-    } catch (e) {
-      alertStore.error(e.message);
       return e;
     }
   },
@@ -117,6 +99,15 @@ const apiClient = {
       if (res.status === "success") return res.data.items;
     } catch (e) {
       alertStore.error(e.message);
+      return e;
+    }
+  },
+
+  async getAllItems() {
+    try {
+      const res = await axios.get(`/api/items/getall`);
+      return res.data;
+    } catch (e) {
       return e;
     }
   },

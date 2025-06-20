@@ -72,5 +72,5 @@ const handleCancel = () => {
 </template>
 
 <style>
-@import "@/assets/css/modals.css";
+@import "@/assets/css/modal.css";
 </style>

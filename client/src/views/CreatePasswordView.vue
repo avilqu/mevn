@@ -68,7 +68,7 @@ async function createPassword() {
                 class="spinner-border spinner-border-sm"
                 :hidden="!state.isLoading"
               ></span>
-              <span :hidden="state.isLoading">{{ $t("actions.save") }}</span>
+              <span :hidden="state.isLoading">{{ $t("common.save") }}</span>
             </button>
           </form>
         </div>

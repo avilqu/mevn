@@ -2,7 +2,14 @@ import { defineStore } from "pinia";
 
 import apiClient from "@/lib/apiClient";
 
-const items = JSON.parse(localStorage.getItem("items"));
+const items = (() => {
+  try {
+    return JSON.parse(localStorage.getItem("items")) || null;
+  } catch (e) {
+    return null;
+  }
+})();
+
 const initialState = items
   ? {
       status: { loaded: true },
@@ -19,6 +26,11 @@ export const useItemStore = defineStore("item", {
       this.items = items.items;
     },
 
-    async refresh() {},
+    async load() {
+      const res = await apiClient.getAllItems();
+      this.update({
+        items: res.items,
+      });
+    },
   },
 });

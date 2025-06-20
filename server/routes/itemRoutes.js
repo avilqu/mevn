@@ -107,6 +107,22 @@ const getItemList = async (req, res, next) => {
   }
 };
 
+const getAllItems = async (req, res, next) => {
+  const Items = require("../lib/init").mongoose.model("item");
+  const User = require("../lib/init").mongoose.model("user");
+  try {
+    const items = await Item.find();
+    const users = await User.find();
+    res.json({
+      status: "success",
+      data: { items, users },
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
+router.get("/items/getall", getAllItems);
 router.post("/:model/create", auth, modelLoader, createItem);
 router.get("/:model/list", auth, modelLoader, getItemList);
 router.get("/:model/:id/delete", auth, checkMongoId, modelLoader, deleteItem);
