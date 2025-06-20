@@ -70,6 +70,19 @@ cd client && npm install && cd ..
 echo -e "-- ${GREEN}Installing server dependencies...${NC}"
 cd server && npm install && cd ..
 
+# Build Vue.js application
+echo -e "-- ${GREEN}Building Vue.js application...${NC}"
+cd client && npm run build && cd ..
+
+# Verify build was successful
+if [ ! -d "client/dist" ] || [ -z "$(ls -A client/dist 2>/dev/null)" ]; then
+    echo -e "-- ${RED}Error: Vue.js build failed or dist folder is empty.${NC}"
+    echo -e "---- Please check the build output above for errors."
+    exit 1
+fi
+
+echo -e "-- ${GREEN}Vue.js application built successfully!${NC}"
+
 # Back-up configuration
 echo -e "-- ${YELLOW}Would you like to set up automatic backup engine? (y/n) [y]:${NC}"
 read -r setup_backup
