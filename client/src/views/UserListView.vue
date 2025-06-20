@@ -44,9 +44,9 @@ onMounted(async () => {
       >
         <thead class="table-secondary">
           <tr>
-            <th>{{ $t("auth.fields.name") }}</th>
-            <th>{{ $t("auth.fields.email") }}</th>
-            <th>{{ $t("auth.fields.role") }}</th>
+            <th>{{ $t("common.fields.name") }}</th>
+            <th>{{ $t("common.fields.email") }}</th>
+            <th>{{ $t("common.fields.role") }}</th>
             <th>{{ $t("subscription.header.plan") }}</th>
             <th>{{ $t("common.dates.addedOn") }}</th>
             <th>{{ $t("common.dates.connectedOn") }}</th>

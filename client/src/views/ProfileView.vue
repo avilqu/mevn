@@ -90,7 +90,7 @@ watch(route, refresh);
           <tbody>
             <tr>
               <td class="p-3">
-                <strong>{{ $t("auth.fields.name") }}</strong>
+                <strong>{{ $t("common.fields.name") }}</strong>
               </td>
               <td v-if="state.displayMode == 'edit'">
                 <input
@@ -106,14 +106,14 @@ watch(route, refresh);
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("auth.fields.email") }}</strong>
+                <strong>{{ $t("common.fields.email") }}</strong>
               </td>
               <td class="align-middle text-muted">{{ state.user.email }}</td>
             </tr>
 
             <tr>
               <td class="p-3">
-                <strong>{{ $t("auth.fields.role") }}</strong>
+                <strong>{{ $t("common.fields.role") }}</strong>
               </td>
               <td
                 v-if="

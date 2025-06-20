@@ -48,7 +48,7 @@ async function createUser() {
               type="text"
               class="form-control p-3 __input-top"
               :class="{ 'is-invalid': v$.name.$error === true }"
-              :placeholder="$t('auth.fields.name')"
+              :placeholder="$t('common.fields.name')"
               autofocus
               v-model="state.name"
             />
@@ -59,7 +59,7 @@ async function createUser() {
               :class="{
                 'is-invalid': v$.email.$error === true,
               }"
-              :placeholder="$t('auth.fields.email')"
+              :placeholder="$t('common.fields.email')"
               v-model="state.email"
             />
             <div class="form-group">
@@ -71,7 +71,7 @@ async function createUser() {
                 id="role-selection"
                 v-model="state.role"
               >
-                <option value="">{{ $t("auth.fields.role") }}</option>
+                <option value="">{{ $t("common.fields.role") }}</option>
                 <option value="user">{{ $t("user.single") }}</option>
                 <option value="admin">{{ $t("auth.roles.admin") }}</option>
               </select>

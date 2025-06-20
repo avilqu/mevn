@@ -91,7 +91,7 @@ async function sendPasswordToken() {
                 :class="{
                   'is-invalid': v$.loginCredentials.email.$error === true,
                 }"
-                :placeholder="$t('auth.fields.email')"
+                :placeholder="$t('common.fields.email')"
                 autofocus
                 v-model="state.loginCredentials.email"
               />
@@ -101,7 +101,7 @@ async function sendPasswordToken() {
                 :class="{
                   'is-invalid': v$.loginCredentials.password.$error === true,
                 }"
-                :placeholder="$t('auth.fields.password')"
+                :placeholder="$t('common.fields.password')"
                 v-model="state.loginCredentials.password"
               />
               <button
@@ -163,7 +163,7 @@ async function sendPasswordToken() {
                 type="email"
                 class="form-control p-3"
                 :class="{ 'is-invalid': v$.passwordTokenEmail.$error === true }"
-                :placeholder="$t('auth.fields.email')"
+                :placeholder="$t('common.fields.email')"
                 autofocus
                 v-model="state.passwordTokenEmail"
               />
@@ -199,7 +199,7 @@ async function sendPasswordToken() {
                 :class="{
                   'is-invalid': v$.registerCredentials.name.$error === true,
                 }"
-                :placeholder="$t('auth.fields.name')"
+                :placeholder="$t('common.fields.name')"
                 autofocus
                 v-model="state.registerCredentials.name"
               />
@@ -209,7 +209,7 @@ async function sendPasswordToken() {
                 :class="{
                   'is-invalid': v$.registerCredentials.email.$error === true,
                 }"
-                :placeholder="$t('auth.fields.email')"
+                :placeholder="$t('common.fields.email')"
                 v-model="state.registerCredentials.email"
               />
               <button
