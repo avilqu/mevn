@@ -70,28 +70,34 @@ cd client && npm install && cd ..
 echo -e "-- ${GREEN}Installing server dependencies...${NC}"
 cd server && npm install && cd ..
 
-# Create backup directory
-echo -e "-- ${GREEN}Setting up backup directory...${NC}"
-mkdir -p ~/backup
+# Back-up configuration
+echo -e "-- ${YELLOW}Would you like to set up automatic backup engine? (y/n) [y]:${NC}"
+read -r setup_backup
 
-# Set up backup cron job
-echo -e "-- ${GREEN}Setting up backup cron job...${NC}"
-chmod +x server/lib/backup.js
+if [ "$setup_backup" = "y" ] || [ "$setup_backup" = "Y" ] || [ "$setup_backup" = "" ]; then
+    # Create backup directory
+    echo -e "-- ${GREEN}Setting up backup directory...${NC}"
+    mkdir -p ~/backup
 
-# Get the absolute path to the backup script
-BACKUP_SCRIPT="$(pwd)/server/lib/backup.js"
-CRON_JOB="0 2 * * * $BACKUP_SCRIPT"
+    # Set up backup cron job
+    echo -e "-- ${GREEN}Setting up backup cron job...${NC}"
+    chmod +x server/lib/backup.js
 
-if crontab -l 2>/dev/null | grep -q "$BACKUP_SCRIPT"; then
-    echo -e "-- ${YELLOW}Cron job already exists${NC}"
-else
-    (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
-    echo -e "-- ${GREEN}Cron job has been added successfully${NC}"
-    echo -e "-- ${GREEN}The backup will run every day at 2 AM${NC}"
+    # Get the absolute path to the backup script
+    BACKUP_SCRIPT="$(pwd)/server/lib/backup.js"
+    CRON_JOB="0 2 * * * $BACKUP_SCRIPT"
+
+    if crontab -l 2>/dev/null | grep -q "$BACKUP_SCRIPT"; then
+        echo -e "-- ${YELLOW}Cron job already exists${NC}"
+    else
+        (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
+        echo -e "-- ${GREEN}Cron job has been added successfully${NC}"
+        echo -e "-- ${GREEN}The backup will run every day at 2 AM${NC}"
+    fi
+
+    echo -e "-- ${GREEN}Current crontab entries:${NC}"
+    crontab -l
 fi
-
-echo -e "-- ${GREEN}Current crontab entries:${NC}"
-crontab -l
 
 # Auto-start configuration
 echo -e "-- ${YELLOW}Would you like to set up auto-start on boot? (y/n) [y]:${NC}"
