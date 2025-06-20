@@ -35,7 +35,7 @@ onMounted(async () => {
 <template>
   <div class="row">
     <div class="col-lg-10">
-      <h1 class="mb-5">{{ $t("auth.user.list") }}</h1>
+      <h1 class="mb-5">{{ $t("user.list") }}</h1>
 
       <DataTable
         v-if="state.loaded"

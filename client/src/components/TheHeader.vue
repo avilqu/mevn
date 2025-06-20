@@ -89,14 +89,14 @@ const authStore = useAuthStore();
         </li>
         <li class="dropdown-divider"></li>
         <template v-if="authStore.user.role === 'admin'">
-          <li class="dropdown-header">{{ $t("auth.user.admin") }}</li>
+          <li class="dropdown-header">{{ $t("auth.roles.admin") }}</li>
           <li>
             <router-link
               to="/user/list"
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              {{ $t("auth.user.list") }}
+              {{ $t("user.list") }}
             </router-link>
           </li>
           <li>
@@ -105,7 +105,7 @@ const authStore = useAuthStore();
               class="dropdown-item nav-link text-muted __link"
               href="#"
             >
-              {{ $t("auth.user.create") }}
+              {{ $t("user.create") }}
             </router-link>
           </li>
           <li class="dropdown-divider"></li>

@@ -1,4 +1,5 @@
 {
+  "title": "MEVN",
   "common": {
     "actions": {
       "save": "Save",
@@ -38,13 +39,6 @@
       "user": "User",
       "admin": "Admin"
     },
-    "user": {
-      "single": "User",
-      "plural": "Users",
-      "create": "Create user",
-      "list": "User list",
-      "admin": "Admin"
-    },
     "login": {
       "title": "Login",
       "signIn": "Sign in",
@@ -69,6 +63,13 @@
     }
   },
 
+  "user": {
+    "single": "User",
+    "plural": "Users",
+    "create": "Create user",
+    "list": "User list"
+  },
+
   "subscription": {
     "header": {
       "title": "Subscription",
@@ -77,7 +78,7 @@
       "nextPayment": "Next payment"
     },
     "page": {
-      "title": "Choose your plan",
+      "title": "Subscription plans",
       "description": "Select the plan that best fits your needs",
       "cancel": "Cancel subscription",
       "buttonCurrentPlan": "Current Plan",

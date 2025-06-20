@@ -126,7 +126,7 @@ watch(route, refresh);
                   v-model="state.user.role"
                 >
                   <option value="user" selected>
-                    {{ $t("auth.user.single") }}
+                    {{ $t("user.single") }}
                   </option>
                   <option value="admin">{{ $t("auth.roles.admin") }}</option>
                 </select>

@@ -72,7 +72,7 @@ async function createUser() {
                 v-model="state.role"
               >
                 <option value="">{{ $t("auth.fields.role") }}</option>
-                <option value="user">{{ $t("auth.user.single") }}</option>
+                <option value="user">{{ $t("user.single") }}</option>
                 <option value="admin">{{ $t("auth.roles.admin") }}</option>
               </select>
             </div>
