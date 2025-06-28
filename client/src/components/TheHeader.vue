@@ -77,13 +77,19 @@ const authStore = useAuthStore();
             :class="
               authStore.user.subscription?.type === 'free'
                 ? 'btn-success'
-                : 'btn-danger'
+                : authStore.user.subscription?.type === 'paid' &&
+                    !authStore.user.subscription?.autoRenew
+                  ? 'btn-danger'
+                  : 'btn-danger'
             "
           >
             {{
               authStore.user.subscription?.type === "free"
                 ? $t("common.actions.upgrade")
-                : $t("common.actions.cancel")
+                : authStore.user.subscription?.type === "paid" &&
+                    !authStore.user.subscription?.autoRenew
+                  ? $t("subscription.header.viewPlans")
+                  : $t("common.actions.cancel")
             }}
           </router-link>
         </li>

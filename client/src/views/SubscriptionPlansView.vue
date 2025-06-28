@@ -23,7 +23,21 @@ async function selectPlan(planType) {
   } else if (planType === "paid") {
     state.isLoading = true;
     await apiClient.createCheckoutSession();
+    state.isLoading = false;
   }
+}
+
+async function reactivatePlan() {
+  state.isLoading = true;
+  const res = await apiClient.updateUser({
+    _id: authStore.user._id,
+    "subscription.autoRenew": true,
+  });
+  console.log(res);
+  if (res) {
+    await authStore.refresh();
+  }
+  state.isLoading = false;
 }
 
 async function confirmCancel() {
@@ -104,6 +118,23 @@ onMounted(async () => {
                       ? $t("subscription.page.buttonCurrentPlan")
                       : $t("subscription.page.buttonSelectPlan")
                   }}
+                </span>
+              </button>
+              <button
+                v-if="
+                  authStore.user.subscription?.type === plan.name &&
+                  !authStore.user.subscription?.autoRenew
+                "
+                class="btn btn-outline-success w-100 mb-2"
+                @click="reactivatePlan"
+                :disabled="state.isLoading"
+              >
+                <span
+                  class="spinner-border spinner-border-sm"
+                  :hidden="!state.isLoading"
+                ></span>
+                <span :hidden="state.isLoading">
+                  {{ $t("subscription.page.reactivateSubscription") }}
                 </span>
               </button>
               <button

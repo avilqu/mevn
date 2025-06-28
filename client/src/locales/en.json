@@ -78,7 +78,8 @@
       "title": "Subscription",
       "plan": "Plan",
       "willNotRenew": "Will not renew",
-      "nextPayment": "Next payment"
+      "nextPayment": "Next payment",
+      "viewPlans": "View plans"
     },
     "page": {
       "title": "Subscription plans",
@@ -86,7 +87,8 @@
       "cancel": "Cancel subscription",
       "buttonCurrentPlan": "Current Plan",
       "buttonSelectPlan": "Select paid plan",
-      "cancelScheduled": "Your subscription is scheduled to end on"
+      "cancelScheduled": "Your subscription is scheduled to end on",
+      "reactivateSubscription": "Reactivate subscription"
     },
     "cancelModal": {
       "title": "Cancel subscription",

@@ -70,6 +70,20 @@ const apiClient = {
     }
   },
 
+  async updateUser(user) {
+    const alertStore = useAlertStore();
+    try {
+      const res = await axios.post(`/api/user/${user._id}/update`, user);
+      if (res.status === "success") {
+        alertStore.success(res.message);
+        return res.data.user;
+      }
+    } catch (e) {
+      alertStore.error(e.message);
+      return e;
+    }
+  },
+
   async getActiveUser() {
     const alertStore = useAlertStore();
     try {
